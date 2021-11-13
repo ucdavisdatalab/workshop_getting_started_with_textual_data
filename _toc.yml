@@ -1,0 +1,8 @@
+format: jb-book
+root: intro
+parts:
+  - caption: Chapters
+    numbered: true
+    chapters:
+      - file: 01_from-text-to-data.ipynb
+      - file: 02_cleaning-and-counting.ipynb
