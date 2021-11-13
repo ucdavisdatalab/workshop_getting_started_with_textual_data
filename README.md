@@ -1,4 +1,4 @@
-# Workshop: Getting Start with Textual Data
+# Workshop: Getting Started with Textual Data
 
 _[UC Davis DataLab](https://datalab.ucdavis.edu/)_  
 _Winter 2021_  
