@@ -628,7 +628,7 @@ but this time, our metrics are much more robust. Let’s use <code class="docuti
 
 <span class="n">cleaned_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cleaned</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">])</span>
 <span class="n">cleaned_counts</span> <span class="o">=</span> <span class="n">cleaned_counts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;WORD&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;COUNT&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;COUNT&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -759,106 +759,6 @@ but this time, our metrics are much more robust. Let’s use <code class="docuti
       <th>this</th>
       <td>402</td>
     </tr>
-    <tr>
-      <th>from</th>
-      <td>385</td>
-    </tr>
-    <tr>
-      <th>her</th>
-      <td>373</td>
-    </tr>
-    <tr>
-      <th>have</th>
-      <td>365</td>
-    </tr>
-    <tr>
-      <th>be</th>
-      <td>360</td>
-    </tr>
-    <tr>
-      <th>when</th>
-      <td>328</td>
-    </tr>
-    <tr>
-      <th>at</th>
-      <td>317</td>
-    </tr>
-    <tr>
-      <th>were</th>
-      <td>308</td>
-    </tr>
-    <tr>
-      <th>is</th>
-      <td>307</td>
-    </tr>
-    <tr>
-      <th>she</th>
-      <td>255</td>
-    </tr>
-    <tr>
-      <th>your</th>
-      <td>252</td>
-    </tr>
-    <tr>
-      <th>him</th>
-      <td>222</td>
-    </tr>
-    <tr>
-      <th>an</th>
-      <td>211</td>
-    </tr>
-    <tr>
-      <th>so</th>
-      <td>210</td>
-    </tr>
-    <tr>
-      <th>they</th>
-      <td>210</td>
-    </tr>
-    <tr>
-      <th>one</th>
-      <td>206</td>
-    </tr>
-    <tr>
-      <th>all</th>
-      <td>200</td>
-    </tr>
-    <tr>
-      <th>could</th>
-      <td>197</td>
-    </tr>
-    <tr>
-      <th>will</th>
-      <td>194</td>
-    </tr>
-    <tr>
-      <th>if</th>
-      <td>194</td>
-    </tr>
-    <tr>
-      <th>been</th>
-      <td>190</td>
-    </tr>
-    <tr>
-      <th>their</th>
-      <td>186</td>
-    </tr>
-    <tr>
-      <th>would</th>
-      <td>184</td>
-    </tr>
-    <tr>
-      <th>are</th>
-      <td>176</td>
-    </tr>
-    <tr>
-      <th>or</th>
-      <td>176</td>
-    </tr>
-    <tr>
-      <th>who</th>
-      <td>174</td>
-    </tr>
   </tbody>
 </table>
 </div></div></div>
@@ -866,7 +766,7 @@ but this time, our metrics are much more robust. Let’s use <code class="docuti
 </div>
 <div class="section" id="removing-stop-words">
 <h3><span class="section-number">2.1.5. </span>Removing stop words<a class="headerlink" href="#removing-stop-words" title="Permalink to this headline">¶</a></h3>
-<p>With the first few steps of our text cleaning done, we can take a closer look at the output. Inspecting the 50-most
+<p>With the first few steps of our text cleaning done, we can take a closer look at the output. Inspecting the 25-most
 frequent words in <em>Frankenstein</em> shows a pattern: nearly all of them are what we call <strong>deictics</strong>, or words that
 are highly dependent on the contexts in which they appear. We use these constantly to refer to specific times,
 places, and persons – indeed, they’re the very sinew of language, and their high frequency counts reflect this.</p>
@@ -958,14 +858,8 @@ which you can quickly load.</p>
 
 <span class="n">nltk_stopwords</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
 <span class="n">gensim_stopwords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">STOPWORDS</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>There are, however, substantial differences between stop lists, and you should carefully consider what they contain.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+
+<span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Number of entries in `ntlk` stop list:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nltk_stopwords</span><span class="p">),</span>
     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of entries in `gensim` stop list:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">gensim_stopwords</span><span class="p">)</span>
 <span class="p">)</span>
@@ -979,7 +873,7 @@ Number of entries in `gensim` stop list: 337
 </div>
 </div>
 </div>
-<p>Consider, for example, some of the stranger entries in the <code class="docutils literal notranslate"><span class="pre">gensim</span></code> stop list. While it contains the usual
+<p>There are, however, substantial differences between stop lists, and you should carefully consider what they contain. Consider, for example, some of the stranger entries in the <code class="docutils literal notranslate"><span class="pre">gensim</span></code> stop list. While it contains the usual
 suspects:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1095,7 +989,7 @@ remove stop words with list comprehension. For example:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/02_cleaning-and-counting_58_0.png" src="_images/02_cleaning-and-counting_58_0.png" />
+<img alt="_images/02_cleaning-and-counting_56_0.png" src="_images/02_cleaning-and-counting_56_0.png" />
 </div>
 </div>
 </div>
@@ -1142,7 +1036,7 @@ We can combine the two with a set union…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/02_cleaning-and-counting_64_0.png" src="_images/02_cleaning-and-counting_64_0.png" />
+<img alt="_images/02_cleaning-and-counting_62_0.png" src="_images/02_cleaning-and-counting_62_0.png" />
 </div>
 </div>
 <p>Notice how, in each iteration through these stop lists, more and more “meaningful” words appear in our plot. From
@@ -1380,7 +1274,7 @@ best results, you need to pipe in a tag for each word, which the lemmatizer will
 principle, this is easy enough to do. There are software libraries, including <code class="docutils literal notranslate"><span class="pre">nltk</span></code>, that will automatically
 assign POS tags through a process called <strong>dependency parsing</strong>. This proces analyzes the grammatical structure of
 a text string and tags words accordingly.</p>
-<p>But now for the catch: to work at their best, <em>dependency parses require both stop words and some punctuation
+<p>But now for the catch: to work at their best, <em>dependency parsers require both stop words and some punctuation
 marks</em>. Because of this, if you know you want to lemmatize your text, you’re going to have to tag your text before
 doing other steps in the text cleaning process. Further, it’s better to let an automatic tokenizer handle which
 pieces of punctuation to leave in and which ones to leave out. You’ll still need to remove everything later on, but
@@ -1413,7 +1307,7 @@ understand the differences between texts, we will. For now, we’ll demonstrate 
 <span class="s2">&quot;&quot;&quot;</span>
 <span class="n">tokenized</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">sample_string</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;String after `nltk` tokenization:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;String after `nltk` tokenization:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">tokenized</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 </pre></div>
@@ -1460,7 +1354,7 @@ one of its special cases (“.” or “$”, for example), it simply repeats th
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tagged</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">pos_tag</span><span class="p">(</span><span class="n">tokenized</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tagged tokens:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tagged tokens:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">tagged</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 </pre></div>
@@ -1668,9 +1562,72 @@ one of its special cases (“.” or “$”, for example), it simply repeats th
 <span class="n">tagged</span> <span class="o">=</span> <span class="n">tagged</span><span class="p">[</span><span class="o">~</span><span class="n">tagged</span><span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;$&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">])]</span>
 <span class="n">tagged</span> <span class="o">=</span> <span class="n">tagged</span><span class="p">[</span><span class="n">tagged</span><span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()]</span>
 <span class="n">tagged</span> <span class="o">=</span> <span class="n">tagged</span><span class="p">[</span><span class="o">~</span><span class="n">tagged</span><span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">custom_stopwords</span><span class="p">)]</span>
+<span class="n">tagged</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>WORD</th>
+      <th>TAG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>strong</td>
+      <td>JJ</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>coffee</td>
+      <td>NN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>lunch</td>
+      <td>NN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>kept</td>
+      <td>VBD</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>going</td>
+      <td>VBG</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>rest</td>
+      <td>NN</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>day</td>
+      <td>NN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Now we can load a lemmatizer – and write a function to handle discrepancies between the tags we have up above and
 the tags that this lemmatizer expects. We did say this step is more complicated!</p>
@@ -1896,17 +1853,17 @@ complicity  =&gt; complicity
 </div>
 </div>
 </div>
-<p>We are now finished with text cleaning!</p>
 </div>
 </div>
 </div>
 <div class="section" id="chunking-with-n-grams">
 <h2><span class="section-number">2.3. </span>Chunking with N-Grams<a class="headerlink" href="#chunking-with-n-grams" title="Permalink to this headline">¶</a></h2>
-<p>The last thing we’ll discuss in this session is <strong>chunking</strong>. Chunking is closely related to tokenization. It
-involves breaking text into multi-token spans. This is useful if, for example, we want to find phrases in our data,
-or even entities. To wit: the processes above would dissolve “New York” into two separate tokens, and it would be
-very difficult to know how to reattach “new” and “york” from something like raw count metrics – we may not even
-know this entity exists in the first place. Chunking, on the other hand, would lead us to identify it.</p>
+<p>With that, we are now done cleaning text. The last thing we’ll discuss in this session is <strong>chunking</strong>. Chunking is
+closely related to tokenization. It involves breaking text into multi-token spans. This is useful if, for example,
+we want to find phrases in our data, or even entities. To wit: the processes above would dissolve “New York” into
+two separate tokens, and it would be very difficult to know how to reattach “new” and “york” from something like
+raw count metrics – we may not even know this entity exists in the first place. Chunking, on the other hand, would
+lead us to identify it.</p>
 <p>In this sense, it’s often useful to count not only single words in our text, but continuous two word strings, even
 three. We call these strings <strong>n-grams</strong>, where <em>n</em> is the number of tokens with which we chunk. “Bigrams” are
 two-token chunks. “Trigrams” are three-token chunks. Then, there are “4-grams,” “5-grams,” and so on. Technically,
@@ -2074,9 +2031,14 @@ method. That can be stored in a dataframe, which we’ll sort by value.</p>
 </table>
 </div></div></div>
 </div>
-<p>A more useful metric, however, would be a PMI, or <strong>pointwise mutual information</strong>, score. PMI measures the
-association strength of a pair of outcomes. In our case, the higher the score, the more likely a given bigram pair
-will be with respect to the other bigrams in which the two words of the present one appear.</p>
+<p>Looks good! We can see some phrases peeking through. But while bigram counts provide us with information about
+frequently occuring phrases in our text, it’s hard to know how <em>unique</em> these phrases are. For example: “man”
+appears throughout the text, so it’s likely to appear in a lot of bigrams; indeed, we can even see it appearing
+again in “young man.” How, then, might we determine whether there’s something unique about whether “old” and “man”
+consistently stick together?</p>
+<p>One way we can do this is with a PMI, or <strong>pointwise mutual information</strong>, score. PMI measures the association
+strength of a pair of outcomes. In our case, the higher the score, the more likely a given bigram pair will be with
+respect to the other bigrams in which the two words of the present one appear.</p>
 <p>We can get a PMI score for each bigram using the <code class="docutils literal notranslate"><span class="pre">score_ngrams</span></code> and <code class="docutils literal notranslate"><span class="pre">pmi</span></code> methods of our collocator and measurer,
 respectively. This will return a list of nested tuples, which will take a little work to coerce into a dataframe.</p>
 <div class="margin sidebar">
@@ -2300,129 +2262,129 @@ respectively. This will return a list of nested tuples, which will take a little
   </thead>
   <tbody>
     <tr>
-      <th>resist</th>
-      <td>shocks</td>
+      <th>peak</th>
+      <td>andes</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>prosperous</th>
-      <td>guarded</td>
+      <th>uninterested</th>
+      <td>observer</td>
+      <td>14.894534</td>
+    </tr>
+    <tr>
+      <th>bustle</th>
+      <td>preparation</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>drove</th>
-      <td>trained</td>
+      <th>crawling</th>
+      <td>folds</td>
+      <td>13.894534</td>
+    </tr>
+    <tr>
+      <th>frequent</th>
+      <td>recurrence</td>
       <td>13.309571</td>
     </tr>
     <tr>
-      <th>wholly</th>
-      <td>uneducated</td>
-      <td>13.309571</td>
-    </tr>
-    <tr>
-      <th>resolve</th>
-      <td>chained</td>
-      <td>13.309571</td>
-    </tr>
-    <tr>
-      <th>unrestrained</th>
-      <td>heartless</td>
+      <th>grand</th>
+      <td>jury</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>heroes</th>
-      <td>roncesvalles</td>
+      <th>timorous</th>
+      <td>unwilling</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>scenery</th>
-      <td>external</td>
+      <th>sting</th>
+      <td>venom</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>asia</th>
-      <td>immured</td>
-      <td>12.894534</td>
+      <th>east</th>
+      <td>affording</td>
+      <td>12.309571</td>
     </tr>
     <tr>
-      <th>dungeon</th>
-      <td>palace</td>
-      <td>12.572605</td>
+      <th>associates</th>
+      <td>desolation</td>
+      <td>12.309571</td>
     </tr>
     <tr>
-      <th>hanging</th>
-      <td>listlessly</td>
-      <td>12.087179</td>
-    </tr>
-    <tr>
-      <th>asleep</th>
-      <td>noon</td>
+      <th>gnashed</th>
+      <td>teeth</td>
       <td>11.894534</td>
     </tr>
     <tr>
-      <th>measures</th>
-      <td>conceal</td>
+      <th>scared</th>
+      <td>horrid</td>
       <td>11.572605</td>
     </tr>
     <tr>
-      <th>sobs</th>
-      <td>rise</td>
+      <th>plank</th>
+      <td>procure</td>
       <td>11.572605</td>
     </tr>
     <tr>
-      <th>right</th>
-      <td>refusing</td>
+      <th>shone</th>
+      <td>brightly</td>
+      <td>11.572605</td>
+    </tr>
+    <tr>
+      <th>circumstance</th>
+      <td>strengthened</td>
+      <td>11.572605</td>
+    </tr>
+    <tr>
+      <th>people</th>
+      <td>considerate</td>
       <td>11.435102</td>
     </tr>
     <tr>
-      <th>judges</th>
-      <td>settled</td>
-      <td>11.309571</td>
-    </tr>
-    <tr>
-      <th>shades</th>
-      <td>wander</td>
-      <td>11.309571</td>
-    </tr>
-    <tr>
-      <th>attractive</th>
-      <td>public</td>
-      <td>11.309571</td>
-    </tr>
-    <tr>
-      <th>features</th>
-      <td>moulded</td>
+      <th>bedim</th>
+      <td>sky</td>
       <td>11.087179</td>
     </tr>
     <tr>
-      <th>unfortunate</th>
-      <td>muhammadan</td>
-      <td>10.987643</td>
-    </tr>
-    <tr>
-      <th>summit</th>
-      <td>sloping</td>
+      <th>overcome</th>
+      <td>pitied</td>
       <td>10.894534</td>
     </tr>
     <tr>
-      <th>pieces</th>
-      <td>triumph</td>
+      <th>crime</th>
+      <td>alleged</td>
+      <td>10.894534</td>
+    </tr>
+    <tr>
+      <th>probable</th>
+      <td>papers</td>
+      <td>10.894534</td>
+    </tr>
+    <tr>
+      <th>vanished</th>
+      <td>gush</td>
       <td>10.724609</td>
     </tr>
     <tr>
-      <th>exculpated</th>
-      <td>suffered</td>
+      <th>angry</th>
+      <td>countenances</td>
+      <td>10.724609</td>
+    </tr>
+    <tr>
+      <th>meantime</th>
+      <td>overjoyed</td>
+      <td>10.724609</td>
+    </tr>
+    <tr>
+      <th>enounced</th>
+      <td>destroy</td>
+      <td>10.572605</td>
+    </tr>
+    <tr>
+      <th>dictated</th>
+      <td>answer</td>
       <td>10.502216</td>
-    </tr>
-    <tr>
-      <th>war</th>
-      <td>species</td>
-      <td>10.435102</td>
-    </tr>
-    <tr>
-      <th>scion</th>
-      <td>evil</td>
-      <td>10.370972</td>
     </tr>
   </tbody>
 </table>
