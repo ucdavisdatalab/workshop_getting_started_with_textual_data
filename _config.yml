@@ -2,6 +2,7 @@ title: Getting Started with Textual Data
 author: Tyler Shoemaker and Carl Stahmer
 copyright: "2021"
 logo: img/datalab-logo-full-color-rgb.png
+only_build_toc_files: true
 
 repository:
   url: https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data
