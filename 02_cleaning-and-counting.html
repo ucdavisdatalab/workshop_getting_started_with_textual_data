@@ -620,15 +620,14 @@ text as before will also take care of this step.</p>
 </div>
 </div>
 <p>And with that, we are back to the list representation of <em>Frankenstein</em> that we worked with in the last chapter –
-but this time, our metrics are much more robust. Let’s use <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> to make a quick dataframe and then count
-(<code class="docutils literal notranslate"><span class="pre">size()</span></code>) and sort (<code class="docutils literal notranslate"><span class="pre">sort_values()</span></code>) the words as a series object.</p>
+but this time, our metrics are much more robust. Let’s store <code class="docutils literal notranslate"><span class="pre">cleaned</span></code> in a <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> series so we can quickly
+count and plot the remaining words. We run <code class="docutils literal notranslate"><span class="pre">value_counts()</span></code> on the series to get our counts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">cleaned_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cleaned</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">])</span>
-<span class="n">cleaned_counts</span> <span class="o">=</span> <span class="n">cleaned_counts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;WORD&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;COUNT&#39;</span><span class="p">])</span>
+<span class="n">cleaned_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;COUNT&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -652,10 +651,6 @@ but this time, our metrics are much more robust. Let’s use <code class="docuti
     <tr style="text-align: right;">
       <th></th>
       <th>COUNT</th>
-    </tr>
-    <tr>
-      <th>WORD</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -792,14 +787,16 @@ granularity (here we use <code class="docutils literal notranslate"><span class=
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_counts</span><span class="p">(</span><span class="n">word_counts</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">label_sample</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_counts</span><span class="p">(</span><span class="n">word_counts</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">label_sample</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>    
     <span class="n">xticks_sample</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_words</span><span class="p">,</span> <span class="n">label_sample</span><span class="p">)</span>
-    <span class="n">word_counts</span><span class="p">[:</span><span class="n">n_words</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> 
-                               <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Count&quot;</span><span class="p">,</span> 
-                               <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Word&quot;</span><span class="p">,</span>
-                               <span class="n">xticks</span> <span class="o">=</span> <span class="n">xticks_sample</span><span class="p">,</span>
-                               <span class="n">rot</span> <span class="o">=</span> <span class="mi">90</span>
-                              <span class="p">);</span>
+    
+    <span class="n">word_counts</span><span class="p">[:</span><span class="n">n_words</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Count&quot;</span><span class="p">,</span> 
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Word&quot;</span><span class="p">,</span>
+        <span class="n">xticks</span> <span class="o">=</span> <span class="n">xticks_sample</span><span class="p">,</span>
+        <span class="n">rot</span> <span class="o">=</span> <span class="mi">90</span>
+    <span class="p">);</span>
 
 <span class="n">plot_counts</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">label_sample</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
@@ -906,7 +903,8 @@ thick    in `gensim` stop list: True
 </div>
 </div>
 </div>
-<p>“Computer” isn’t likely to turn up in <em>Frankenstein</em>, but “thick” comes up several times in the novel:</p>
+<p>“Computer” isn’t likely to turn up in <em>Frankenstein</em>, but “thick” comes up several times in the novel. We can see
+these instances if we return to <code class="docutils literal notranslate"><span class="pre">cleaned</span></code>, which stores the novel in a list:</p>
 <div class="margin sidebar">
 <p class="sidebar-title">What we’re doing here:</p>
 <p>First, use list comprehension to find the index positions of every instance of “thick.”</p>
@@ -1071,10 +1069,6 @@ clearly. Here’s unstopped:</p>
       <th></th>
       <th>COUNT</th>
     </tr>
-    <tr>
-      <th>WORD</th>
-      <th></th>
-    </tr>
   </thead>
   <tbody>
     <tr>
@@ -1148,10 +1142,6 @@ clearly. Here’s unstopped:</p>
     <tr style="text-align: right;">
       <th></th>
       <th>COUNT</th>
-    </tr>
-    <tr>
-      <th>WORD</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -1892,25 +1882,37 @@ research questions.</p>
 </div>
 </div>
 </div>
-<p>This contains stop words though, so we’ll take them out using list comprehension.</p>
+<p>As before, let’s load this into a series. Remember too that, while <code class="docutils literal notranslate"><span class="pre">cleaned</span></code> no longer contains punctuation,
+numbers, and extra whitespaces, it still contains stop words. We’ll need to filter them out.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note:</p>
+<p>Unlike in the code above, we do not need to use <code class="docutils literal notranslate"><span class="pre">.index</span></code> on our series because our words are stored in the series’
+values.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stopped</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">cleaned</span> <span class="k">if</span> <span class="p">(</span><span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">custom_stopwords</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
+
+<span class="n">to_remove</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">custom_stopwords</span><span class="p">)</span>
+<span class="n">stopped</span> <span class="o">=</span> <span class="n">cleaned</span><span class="p">[</span><span class="o">~</span><span class="n">to_remove</span><span class="p">]</span>
+<span class="n">stopped</span> <span class="o">=</span> <span class="n">stopped</span><span class="p">[</span><span class="n">stopped</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">]</span>
+
 <span class="n">stopped</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;letter&#39;,
- &#39;mrs&#39;,
- &#39;saville&#39;,
- &#39;england&#39;,
- &#39;petersburgh&#39;,
- &#39;dec&#39;,
- &#39;rejoice&#39;,
- &#39;hear&#39;,
- &#39;disaster&#39;,
- &#39;accompanied&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0          letter
+2             mrs
+3         saville
+4         england
+6     petersburgh
+7             dec
+11        rejoice
+13           hear
+16       disaster
+18    accompanied
+dtype: object
 </pre></div>
 </div>
 </div>
@@ -2262,129 +2264,129 @@ respectively. This will return a list of nested tuples, which will take a little
   </thead>
   <tbody>
     <tr>
-      <th>peak</th>
-      <td>andes</td>
+      <th>unequalled</th>
+      <td>clearness</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>uninterested</th>
-      <td>observer</td>
+      <th>modified</th>
+      <td>eradicated</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>bustle</th>
-      <td>preparation</td>
+      <th>microscope</th>
+      <td>crucible</td>
+      <td>14.894534</td>
+    </tr>
+    <tr>
+      <th>vicinity</th>
+      <td>chimney</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>crawling</th>
-      <td>folds</td>
+      <th>aided</th>
+      <td>glimmering</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>frequent</th>
-      <td>recurrence</td>
+      <th>carelessly</th>
+      <td>title</td>
+      <td>13.894534</td>
+    </tr>
+    <tr>
+      <th>hovels</th>
+      <td>hardy</td>
+      <td>13.894534</td>
+    </tr>
+    <tr>
+      <th>pulpit</th>
+      <td>recollected</td>
       <td>13.309571</td>
     </tr>
     <tr>
-      <th>grand</th>
-      <td>jury</td>
+      <th>becomes</th>
+      <td>malignant</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>timorous</th>
-      <td>unwilling</td>
+      <th>reverse</th>
+      <td>happen</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>sting</th>
-      <td>venom</td>
+      <th>freely</th>
+      <td>veins</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>east</th>
-      <td>affording</td>
+      <th>author</th>
+      <td>speedy</td>
+      <td>12.572605</td>
+    </tr>
+    <tr>
+      <th>fearless</th>
+      <td>powerful</td>
+      <td>12.572605</td>
+    </tr>
+    <tr>
+      <th>revel</th>
+      <td>groans</td>
+      <td>12.572605</td>
+    </tr>
+    <tr>
+      <th>cultivated</th>
+      <td>speaks</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>associates</th>
-      <td>desolation</td>
+      <th>gladness</th>
+      <td>akin</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>gnashed</th>
-      <td>teeth</td>
+      <th>thick</th>
+      <td>fog</td>
+      <td>12.087179</td>
+    </tr>
+    <tr>
+      <th>community</th>
+      <td>enemies</td>
+      <td>12.087179</td>
+    </tr>
+    <tr>
+      <th>repast</th>
+      <td>prepared</td>
       <td>11.894534</td>
     </tr>
     <tr>
-      <th>scared</th>
-      <td>horrid</td>
+      <th>fearful</th>
+      <td>howlings</td>
+      <td>11.724609</td>
+    </tr>
+    <tr>
+      <th>ass</th>
+      <td>intentions</td>
       <td>11.572605</td>
     </tr>
     <tr>
-      <th>plank</th>
-      <td>procure</td>
-      <td>11.572605</td>
-    </tr>
-    <tr>
-      <th>shone</th>
-      <td>brightly</td>
-      <td>11.572605</td>
-    </tr>
-    <tr>
-      <th>circumstance</th>
-      <td>strengthened</td>
-      <td>11.572605</td>
-    </tr>
-    <tr>
-      <th>people</th>
-      <td>considerate</td>
-      <td>11.435102</td>
-    </tr>
-    <tr>
-      <th>bedim</th>
-      <td>sky</td>
+      <th>past</th>
+      <td>anticipation</td>
       <td>11.087179</td>
     </tr>
     <tr>
-      <th>overcome</th>
-      <td>pitied</td>
-      <td>10.894534</td>
-    </tr>
-    <tr>
-      <th>crime</th>
-      <td>alleged</td>
-      <td>10.894534</td>
-    </tr>
-    <tr>
-      <th>probable</th>
-      <td>papers</td>
-      <td>10.894534</td>
-    </tr>
-    <tr>
-      <th>vanished</th>
-      <td>gush</td>
+      <th>son</th>
+      <td>kinsman</td>
       <td>10.724609</td>
     </tr>
     <tr>
-      <th>angry</th>
-      <td>countenances</td>
+      <th>middle</th>
+      <td>month</td>
       <td>10.724609</td>
     </tr>
     <tr>
-      <th>meantime</th>
-      <td>overjoyed</td>
-      <td>10.724609</td>
-    </tr>
-    <tr>
-      <th>enounced</th>
-      <td>destroy</td>
+      <th>reward</th>
+      <td>tedious</td>
       <td>10.572605</td>
-    </tr>
-    <tr>
-      <th>dictated</th>
-      <td>answer</td>
-      <td>10.502216</td>
     </tr>
   </tbody>
 </table>
