@@ -16,7 +16,7 @@ parse:
     - substitution
 
 execute:
-  execute_notebooks: auto
+  execute_notebooks: force
 
 html:
   use_repository_button: true
