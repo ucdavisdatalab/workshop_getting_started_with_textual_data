@@ -2,7 +2,8 @@
 
 _[UC Davis DataLab](https://datalab.ucdavis.edu/)_  
 _Winter 2021_  
-_Instructors: Tyler Shoemaker <<tshoemaker@ucdavis.edu>>_  
+_Instructors: Tyler Shoemaker <<tshoemaker@ucdavis.edu>> and 
+Carl Stahmer <<cstahmer@ucdavis.edu>>_  
 
 In this three-part workshop series you will learn the basics of text mining with 
 Python. We will focus primarily on unstructured text data, discussing how to format 
