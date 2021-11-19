@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introduction &#8212; Getting Started with Textual Data</title>
+    <title>1. Logistics &#8212; Getting Started with Textual Data</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="1. From Text to Data" href="01_from-text-to-data.html" />
+    <link rel="next" title="2. From Text to Data" href="02_from-text-to-data.html" />
+    <link rel="prev" title="Overview" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -86,26 +87,26 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
-   Introduction
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Overview
   </a>
  </li>
 </ul>
-<p class="caption">
- <span class="caption-text">
-  Chapters
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="01_from-text-to-data.html">
-   1. From Text to Data
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   1. Logistics
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="02_cleaning-and-counting.html">
-   2. Cleaning and Counting
+  <a class="reference internal" href="02_from-text-to-data.html">
+   2. From Text to Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cleaning-and-counting.html">
+   3. Cleaning and Counting
   </a>
  </li>
 </ul>
@@ -149,7 +150,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/01_logistics.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -187,7 +188,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/intro.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/01_logistics.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -204,6 +205,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#file-and-data-setup">
+   1.1. File and Data Setup
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -212,9 +226,23 @@
         
               <div>
                 
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="logistics">
+<h1><span class="section-number">1. </span>Logistics<a class="headerlink" href="#logistics" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-learning-objectives admonition">
+<p class="admonition-title">Learning objectives</p>
+<p>By the end of this series, you will be able to:</p>
+<ul class="simple">
+<li><p>Prepare textual data for analysis using a variety of cleaning proceses</p></li>
+<li><p>Recognize and explain how these cleaning processes impact research findings</p></li>
+<li><p>Explain key terminology in text mining, including “tokenization,” “n-grams,” “dependency parsing,” “stylometry”</p></li>
+<li><p>Use special data structures such as document-term matrices to efficiently analyze multiple texts</p></li>
+<li><p>Use statistical measures (pointwise mutual information, tf-idf) to identify significant patterns in text</p></li>
+<li><p>Classify texts on the basis of such measures</p></li>
+<li><p>Produce statistical models of “topics” from/about a collection of texts</p></li>
+</ul>
+</div>
+<div class="section" id="file-and-data-setup">
+<h2><span class="section-number">1.1. </span>File and Data Setup<a class="headerlink" href="#file-and-data-setup" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -247,11 +275,20 @@
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="index.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Overview</p>
+            </div>
+        </a>
+    </div>
      <div id="next">
-        <a class="right-next" href="01_from-text-to-data.html" title="next page">
+        <a class="right-next" href="02_from-text-to-data.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">1. </span>From Text to Data</p>
+                <p class="prevnext-title"><span class="section-number">2. </span>From Text to Data</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

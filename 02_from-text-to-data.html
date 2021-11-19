@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. From Text to Data &#8212; Getting Started with Textual Data</title>
+    <title>2. From Text to Data &#8212; Getting Started with Textual Data</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2. Cleaning and Counting" href="02_cleaning-and-counting.html" />
-    <link rel="prev" title="Introduction" href="intro.html" />
+    <link rel="next" title="3. Cleaning and Counting" href="03_cleaning-and-counting.html" />
+    <link rel="prev" title="1. Logistics" href="01_logistics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -88,25 +88,25 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction
+  <a class="reference internal" href="index.html">
+   Overview
   </a>
  </li>
 </ul>
-<p class="caption">
- <span class="caption-text">
-  Chapters
- </span>
-</p>
 <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_logistics.html">
+   1. Logistics
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   1. From Text to Data
+   2. From Text to Data
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="02_cleaning-and-counting.html">
-   2. Cleaning and Counting
+  <a class="reference internal" href="03_cleaning-and-counting.html">
+   3. Cleaning and Counting
   </a>
  </li>
 </ul>
@@ -150,7 +150,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/01_from-text-to-data.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/02_from-text-to-data.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -188,7 +188,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/01_from-text-to-data.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/02_from-text-to-data.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -212,51 +212,51 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#loading-text">
-   1.1. Loading Text
+   2.1. Loading Text
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#plain-text">
-     1.1.1. Plain text
+     2.1.1. Plain text
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#character-sequences">
-     1.1.2. Character sequences
+     2.1.2. Character sequences
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#tokenizing-strings">
-     1.1.3. Tokenizing strings
+     2.1.3. Tokenizing strings
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#counting-words">
-   1.2. Counting Words
+   2.2. Counting Words
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#a-first-pass">
-     1.2.1. A first pass
+     2.2.1. A first pass
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#top-words">
-     1.2.2. Top words
+     2.2.2. Top words
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#investigating-duplicates">
-     1.2.3. Investigating duplicates
+     2.2.3. Investigating duplicates
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#wait-what-s-a-word">
-   1.3. Wait, What’s a Word?
+   2.3. Wait, What’s a Word?
   </a>
  </li>
 </ul>
@@ -271,7 +271,7 @@
               <div>
                 
   <div class="section" id="from-text-to-data">
-<h1><span class="section-number">1. </span>From Text to Data<a class="headerlink" href="#from-text-to-data" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">2. </span>From Text to Data<a class="headerlink" href="#from-text-to-data" title="Permalink to this headline">¶</a></h1>
 <p>This chapter, which we’ve asked you to read prior to the first workshop, is a general discussion of working with
 textual data in Python. While the workshop series assumes you have at least a basic understanding of Python, we’ll
 quickly review how to load, or “read in,” a single text file and format it for text analysis. We’ll do so both as a
@@ -292,7 +292,7 @@ below, you should be prepared for our sessions. The skills covered in this chapt
 reader and recording on our <a class="reference external" href="https://datalab.ucdavis.edu/workshops/">Workshop Archive page</a>.</p>
 </div>
 <div class="section" id="loading-text">
-<h2><span class="section-number">1.1. </span>Loading Text<a class="headerlink" href="#loading-text" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.1. </span>Loading Text<a class="headerlink" href="#loading-text" title="Permalink to this headline">¶</a></h2>
 <p>To open a text file, we’ll use <code class="docutils literal notranslate"><span class="pre">with...open</span></code>. This saves us from forgetting to close the file stream and thereby
 frees up a little memory for later computation. The memory strain a single text file puts on your computer isn’t
 very large at all, but dozens, to say nothing of hundreds or thousands of texts, can start to slow things down, so
@@ -306,7 +306,7 @@ it’s good to get in the habit of automatically closing file streams right from
 </div>
 </div>
 <div class="section" id="plain-text">
-<h3><span class="section-number">1.1.1. </span>Plain text<a class="headerlink" href="#plain-text" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.1.1. </span>Plain text<a class="headerlink" href="#plain-text" title="Permalink to this headline">¶</a></h3>
 <p>Here we use <code class="docutils literal notranslate"><span class="pre">r</span></code> in the <code class="docutils literal notranslate"><span class="pre">mode</span></code> argument because we’re working with <strong>plain text</strong> data (as opposed to <strong>binary</strong>
 data, which would require <code class="docutils literal notranslate"><span class="pre">rb</span></code>). In computing, plain text has multiple fuzzy, interlocking meanings, but generally
 it refers to some kind of data that is stored in a human-readable form, which is to say, it is comprised of a
@@ -366,7 +366,7 @@ difference between <strong>print conventions</strong> and <strong>code conventio
 an addressable unit in the latter.</p>
 </div>
 <div class="section" id="character-sequences">
-<h3><span class="section-number">1.1.2. </span>Character sequences<a class="headerlink" href="#character-sequences" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.1.2. </span>Character sequences<a class="headerlink" href="#character-sequences" title="Permalink to this headline">¶</a></h3>
 <p>The distinction between print and code conventions has some significant consequences for us, both practical and
 conceptual. While, in the print view of the world, we tend to think of the word as the atomic unit of text, in the
 code view of the world, text is – again – a <strong>sequence of characters</strong>. We can see this if we try to count how
@@ -390,7 +390,7 @@ giant blob. This blob makes no distinction between the start of one word and the
 character, and so most of the operations we can run on it will thus address characters, not words.</p>
 </div>
 <div class="section" id="tokenizing-strings">
-<h3><span class="section-number">1.1.3. </span>Tokenizing strings<a class="headerlink" href="#tokenizing-strings" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.1.3. </span>Tokenizing strings<a class="headerlink" href="#tokenizing-strings" title="Permalink to this headline">¶</a></h3>
 <p>But we want to address our text at the level of words. To do so, we’ll need to manipulate how Python represents our
 data, changing it from a long stream of characters to discrete (and preferably indexed) units. The process of doing
 this is called <strong>tokenization</strong>. <em>To tokenize</em> means to break a continuous sequence of text data into substrings,
@@ -437,7 +437,7 @@ that there are many different and valid ways to tokenize text.</p>
 </div>
 </div>
 <div class="section" id="counting-words">
-<h2><span class="section-number">1.2. </span>Counting Words<a class="headerlink" href="#counting-words" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>Counting Words<a class="headerlink" href="#counting-words" title="Permalink to this headline">¶</a></h2>
 <p>With our text data loaded and properly formatted, we can start one of the core tasks of text analysis: counting words. While the next chapter will discuss this process in greater detail, we’ll preview it here to get a sense of
 what’s to come and to review the basics of control flow in Python.</p>
 <p>Splitting text transforms it into a list, where each word has its own separate index position. Remember that, in
@@ -445,7 +445,7 @@ Python, lists are ordered arrays that store multiple, potentially repeatable val
 our data, it’s much easier get global word counts using something as simple as a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop: we can simply iterate
 through every item in the list and tally them all up.</p>
 <div class="section" id="a-first-pass">
-<h3><span class="section-number">1.2.1. </span>A first pass<a class="headerlink" href="#a-first-pass" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.1. </span>A first pass<a class="headerlink" href="#a-first-pass" title="Permalink to this headline">¶</a></h3>
 <p>Let’s do this now. We can build a little loop to find the cumulative number of times each word occurs in
 <em>Frankenstein</em>. To store this information, we’ll use a dictionary. This will provide us with a way to access the
 counts of individual words once we’ve looped through the entire novel.</p>
@@ -525,7 +525,7 @@ letter       17
 </div>
 </div>
 <div class="section" id="top-words">
-<h3><span class="section-number">1.2.2. </span>Top words<a class="headerlink" href="#top-words" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.2. </span>Top words<a class="headerlink" href="#top-words" title="Permalink to this headline">¶</a></h3>
 <p>Great! This all seems to work well, though we won’t get very far if we continue to take a top-down approach and
 spot check single words. How would we know what all is in the novel and what isn’t? Instead of approaching the data
 in this way, it would be more useful to see what turns up if we just look at the count distribution as a whole.</p>
@@ -784,7 +784,7 @@ going on here?</p>
 </div>
 </div>
 <div class="section" id="investigating-duplicates">
-<h3><span class="section-number">1.2.3. </span>Investigating duplicates<a class="headerlink" href="#investigating-duplicates" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.3. </span>Investigating duplicates<a class="headerlink" href="#investigating-duplicates" title="Permalink to this headline">¶</a></h3>
 <p>Let’s investigate. To see whether something might be off in the way we’ve generated our counts, we’ll look back at
 our third example, “letter”.</p>
 <p>Let’s grab the value for “letter” one more time.</p>
@@ -1007,7 +1007,7 @@ datatypes.</p>
 </div>
 </div>
 <div class="section" id="wait-what-s-a-word">
-<h2><span class="section-number">1.3. </span>Wait, What’s a Word?<a class="headerlink" href="#wait-what-s-a-word" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3. </span>Wait, What’s a Word?<a class="headerlink" href="#wait-what-s-a-word" title="Permalink to this headline">¶</a></h2>
 <p>The outputs above should make clear what is happening. <em>We have a problem in the way we’ve defined the concept of a
 word.</em> Remember, to our computers, text is just a sequence of characters. Computers are highly literal in this
 respect; they only ever read character-by-character. And while they don’t have an in-built concept of what words
@@ -1071,19 +1071,19 @@ begin analyzing words.</p>
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="intro.html" title="previous page">
+        <a class="left-prev" href="01_logistics.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Introduction</p>
+                <p class="prevnext-title"><span class="section-number">1. </span>Logistics</p>
             </div>
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="02_cleaning-and-counting.html" title="next page">
+        <a class="right-next" href="03_cleaning-and-counting.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">2. </span>Cleaning and Counting</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Cleaning and Counting</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

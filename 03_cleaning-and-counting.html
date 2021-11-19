@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. Cleaning and Counting &#8212; Getting Started with Textual Data</title>
+    <title>3. Cleaning and Counting &#8212; Getting Started with Textual Data</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="1. From Text to Data" href="01_from-text-to-data.html" />
+    <link rel="prev" title="2. From Text to Data" href="02_from-text-to-data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -87,25 +87,25 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction
+  <a class="reference internal" href="index.html">
+   Overview
   </a>
  </li>
 </ul>
-<p class="caption">
- <span class="caption-text">
-  Chapters
- </span>
-</p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="01_from-text-to-data.html">
-   1. From Text to Data
+  <a class="reference internal" href="01_logistics.html">
+   1. Logistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_from-text-to-data.html">
+   2. From Text to Data
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   2. Cleaning and Counting
+   3. Cleaning and Counting
   </a>
  </li>
 </ul>
@@ -149,7 +149,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/02_cleaning-and-counting.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/03_cleaning-and-counting.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -187,7 +187,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/02_cleaning-and-counting.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/03_cleaning-and-counting.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -211,47 +211,47 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#text-cleaning-basics">
-   2.1. Text Cleaning: Basics
+   3.1. Text Cleaning: Basics
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#case-normalization">
-     2.1.1. Case normalization
+     3.1.1. Case normalization
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#removing-punctuation">
-     2.1.2. Removing punctuation
+     3.1.2. Removing punctuation
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#removing-numbers">
-     2.1.3. Removing numbers
+     3.1.3. Removing numbers
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#text-formatting">
-     2.1.4. Text formatting
+     3.1.4. Text formatting
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#removing-stop-words">
-     2.1.5. Removing stop words
+     3.1.5. Removing stop words
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#words-with-high-occurence">
-       2.1.5.1. Words with high occurence
+       3.1.5.1. Words with high occurence
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#defining-a-stop-list">
-       2.1.5.2. Defining a stop list
+       3.1.5.2. Defining a stop list
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#iteratively-building-stop-lists">
-       2.1.5.3. Iteratively building stop lists
+       3.1.5.3. Iteratively building stop lists
       </a>
      </li>
     </ul>
@@ -260,27 +260,27 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#text-cleaning-advanced">
-   2.2. Text Cleaning: Advanced
+   3.2. Text Cleaning: Advanced
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#stemming">
-     2.2.1. Stemming
+     3.2.1. Stemming
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#lemmatizing">
-     2.2.2. Lemmatizing
+     3.2.2. Lemmatizing
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#part-of-speech-tags-and-dependency-parsing">
-       2.2.2.1. Part-of-speech tags and dependency parsing
+       3.2.2.1. Part-of-speech tags and dependency parsing
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#sample-lemmatization-workflow">
-       2.2.2.2. Sample lemmatization workflow
+       3.2.2.2. Sample lemmatization workflow
       </a>
      </li>
     </ul>
@@ -289,7 +289,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#chunking-with-n-grams">
-   2.3. Chunking with N-Grams
+   3.3. Chunking with N-Grams
   </a>
  </li>
 </ul>
@@ -304,7 +304,7 @@
               <div>
                 
   <div class="section" id="cleaning-and-counting">
-<h1><span class="section-number">2. </span>Cleaning and Counting<a class="headerlink" href="#cleaning-and-counting" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3. </span>Cleaning and Counting<a class="headerlink" href="#cleaning-and-counting" title="Permalink to this headline">¶</a></h1>
 <p>At the end of the last chapter, we caught a glimpse of the complexities involved in working with textual data. Text
 is incredibly unruly. It presents a number of challenges – which stem as much from general truths about linguistic
 phenomena as they do from the idiosyncracies of data representation – that we’ll need to address so that we may
@@ -329,7 +329,7 @@ applying those metrics to multiple texts.</p>
 </ul>
 </div>
 <div class="section" id="text-cleaning-basics">
-<h2><span class="section-number">2.1. </span>Text Cleaning: Basics<a class="headerlink" href="#text-cleaning-basics" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.1. </span>Text Cleaning: Basics<a class="headerlink" href="#text-cleaning-basics" title="Permalink to this headline">¶</a></h2>
 <p>To begin: think back to the end of the last chapter. There, we discussed a few differences between how computers
 represent and process textual data and our own way of reading. One of the key differences between these two poles
 involves details like spelling or capitalization. For us, the <em>meaning</em> of text tends to cut across these details.
@@ -392,7 +392,7 @@ to generate counts. This removes the need to perform the <code class="docutils l
 </div>
 </div>
 <div class="section" id="case-normalization">
-<h3><span class="section-number">2.1.1. </span>Case normalization<a class="headerlink" href="#case-normalization" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.1.1. </span>Case normalization<a class="headerlink" href="#case-normalization" title="Permalink to this headline">¶</a></h3>
 <p>The first step in cleaning is straightforward. Since our computer treats capitalized and lowercase letters as two
 different things, we’ll need to collapse them together. This will eliminate problems like “the”/”The” and
 “letter”/”Letter.” It’s standard to change all letters to their lowercase forms.</p>
@@ -445,7 +445,7 @@ Number of times &#39;the&#39; appears: 4152
 found ~250 more instances of this word after changing its case (it was 3897 earlier).</p>
 </div>
 <div class="section" id="removing-punctuation">
-<h3><span class="section-number">2.1.2. </span>Removing punctuation<a class="headerlink" href="#removing-punctuation" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.1.2. </span>Removing punctuation<a class="headerlink" href="#removing-punctuation" title="Permalink to this headline">¶</a></h3>
 <p>It’s now time to tackle punctuation. This step is a bit trickier, and typically it involves a lot of going back and
 forth between inspecting the original text and the output. This is because punctuation marks have different uses,
 so they can’t all be handled in the same way.</p>
@@ -561,7 +561,7 @@ OCR, which offers a particularly good example of how extended the process of pun
 </div>
 </div>
 <div class="section" id="removing-numbers">
-<h3><span class="section-number">2.1.3. </span>Removing numbers<a class="headerlink" href="#removing-numbers" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.1.3. </span>Removing numbers<a class="headerlink" href="#removing-numbers" title="Permalink to this headline">¶</a></h3>
 <p>With our punctuation removed, we can turn our attention to numbers. They should present less of a problem. While
 our regex method above ended up keeping them around, we can remove them by simply finding characters 0-9 and
 replacing them with a blank.</p>
@@ -593,7 +593,7 @@ left with only words.</p>
 <p>That’s nearly a 40% reduction in the number of unique words!</p>
 </div>
 <div class="section" id="text-formatting">
-<h3><span class="section-number">2.1.4. </span>Text formatting<a class="headerlink" href="#text-formatting" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.1.4. </span>Text formatting<a class="headerlink" href="#text-formatting" title="Permalink to this headline">¶</a></h3>
 <p>Our punctuation and number removal process introduced a lot of extra spaces into the text. Look at the first few
 lines, as an example:</p>
 <div class="cell docutils container">
@@ -760,13 +760,13 @@ count and plot the remaining words. We run <code class="docutils literal notrans
 </div>
 </div>
 <div class="section" id="removing-stop-words">
-<h3><span class="section-number">2.1.5. </span>Removing stop words<a class="headerlink" href="#removing-stop-words" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.1.5. </span>Removing stop words<a class="headerlink" href="#removing-stop-words" title="Permalink to this headline">¶</a></h3>
 <p>With the first few steps of our text cleaning done, we can take a closer look at the output. Inspecting the 25-most
 frequent words in <em>Frankenstein</em> shows a pattern: nearly all of them are what we call <strong>deictics</strong>, or words that
 are highly dependent on the contexts in which they appear. We use these constantly to refer to specific times,
 places, and persons – indeed, they’re the very sinew of language, and their high frequency counts reflect this.</p>
 <div class="section" id="words-with-high-occurence">
-<h4><span class="section-number">2.1.5.1. </span>Words with high occurence<a class="headerlink" href="#words-with-high-occurence" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.1.5.1. </span>Words with high occurence<a class="headerlink" href="#words-with-high-occurence" title="Permalink to this headline">¶</a></h4>
 <p>We can see the full extent to which we rely on these kinds of words if we plot our counts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -775,7 +775,7 @@ places, and persons – indeed, they’re the very sinew of language, and their 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/02_cleaning-and-counting_39_0.png" src="_images/02_cleaning-and-counting_39_0.png" />
+<img alt="_images/03_cleaning-and-counting_39_0.png" src="_images/03_cleaning-and-counting_39_0.png" />
 </div>
 </div>
 <p>See that giant drop? Let’s look at the 200-most frequent words and sample more words from the series index (which
@@ -803,7 +803,7 @@ granularity (here we use <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/02_cleaning-and-counting_41_0.png" src="_images/02_cleaning-and-counting_41_0.png" />
+<img alt="_images/03_cleaning-and-counting_41_0.png" src="_images/03_cleaning-and-counting_41_0.png" />
 </div>
 </div>
 <div class="margin sidebar">
@@ -842,7 +842,7 @@ analyses is going to have a very similar distribution in terms – they’re jus
 to do this is to simply remove them, or <strong>stop</strong> them out. But how do we know which <strong>stop words</strong> to remove?</p>
 </div>
 <div class="section" id="defining-a-stop-list">
-<h4><span class="section-number">2.1.5.2. </span>Defining a stop list<a class="headerlink" href="#defining-a-stop-list" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.1.5.2. </span>Defining a stop list<a class="headerlink" href="#defining-a-stop-list" title="Permalink to this headline">¶</a></h4>
 <p>The answer to this comes in two parts. First, compiling various <strong>stop lists</strong> has been an ongoing research area in
 natural language processing (NLP) since the emergence of information retrieval in the 1950s. There are a few
 popular ones, like the Buckley-Salton list or the Brown list, which capture many of the words we’d think to remove:
@@ -987,12 +987,12 @@ remove stop words with list comprehension. For example:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/02_cleaning-and-counting_56_0.png" src="_images/02_cleaning-and-counting_56_0.png" />
+<img alt="_images/03_cleaning-and-counting_56_0.png" src="_images/03_cleaning-and-counting_56_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="iteratively-building-stop-lists">
-<h4><span class="section-number">2.1.5.3. </span>Iteratively building stop lists<a class="headerlink" href="#iteratively-building-stop-lists" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.1.5.3. </span>Iteratively building stop lists<a class="headerlink" href="#iteratively-building-stop-lists" title="Permalink to this headline">¶</a></h4>
 <p>This is better, though there are still some words like “one” and “yet” that it would be best to remove. The list
 provided by <code class="docutils literal notranslate"><span class="pre">nltk</span></code> is good, but it’s a little <em>too</em> conservative, so we’ll want to modify it. This is perfectly
 normal: like removing punctuation, getting a stop list just right is an iterative process that takes multiple
@@ -1034,7 +1034,7 @@ We can combine the two with a set union…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/02_cleaning-and-counting_62_0.png" src="_images/02_cleaning-and-counting_62_0.png" />
+<img alt="_images/03_cleaning-and-counting_62_0.png" src="_images/03_cleaning-and-counting_62_0.png" />
 </div>
 </div>
 <p>Notice how, in each iteration through these stop lists, more and more “meaningful” words appear in our plot. From
@@ -1193,13 +1193,13 @@ clearly. Here’s unstopped:</p>
 </div>
 </div>
 <div class="section" id="text-cleaning-advanced">
-<h2><span class="section-number">2.2. </span>Text Cleaning: Advanced<a class="headerlink" href="#text-cleaning-advanced" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Text Cleaning: Advanced<a class="headerlink" href="#text-cleaning-advanced" title="Permalink to this headline">¶</a></h2>
 <p>With our stop words removed, we could consider our text cleaning to be complete. But there are two more steps that
 we could do to further process our data: stemming and lemmatizing. We’ll consider these separately from the steps
 above because they entail making significant changes to our data. Instead of simply removing pieces of irrelevant
 information, as with stop word removal, stemming and lemmatizing transform the forms of words.</p>
 <div class="section" id="stemming">
-<h3><span class="section-number">2.2.1. </span>Stemming<a class="headerlink" href="#stemming" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.2.1. </span>Stemming<a class="headerlink" href="#stemming" title="Permalink to this headline">¶</a></h3>
 <p><strong>Stemming</strong> algorithms are rule-based procedures that reduce words to their root forms. They cut down on the
 amount of morphological variance in your corpus, merging plurals into singulars, changing gerunds into static
 verbs, etc. This can be useful for a number of reasons. It cuts down on corpus size, which might be necessary when
@@ -1250,7 +1250,7 @@ is too baggy (it merges together two different words); and b) is harder to inter
 we know what “complic” means when looking at word count distributions?).</p>
 </div>
 <div class="section" id="lemmatizing">
-<h3><span class="section-number">2.2.2. </span>Lemmatizing<a class="headerlink" href="#lemmatizing" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">3.2.2. </span>Lemmatizing<a class="headerlink" href="#lemmatizing" title="Permalink to this headline">¶</a></h3>
 <p><strong>Lemmatizing</strong> textual data solves some of these problems, though at the cost of more complexity and more
 computational resources. Like stemming, lemmatization removes the inflectional forms of words. While it tends to be
 more conservative in its approach, it is better at avoiding lexical merges like “complicated” and “complicity”
@@ -1258,7 +1258,7 @@ becoming “complic.” More, the result of lemmatization is always a fully read
 trying to remember what “malleabl” means. If, say, you want to know something about the <em>theme</em> or <em>topicality</em> of
 a text, lemmatization would be a valuable step.</p>
 <div class="section" id="part-of-speech-tags-and-dependency-parsing">
-<h4><span class="section-number">2.2.2.1. </span>Part-of-speech tags and dependency parsing<a class="headerlink" href="#part-of-speech-tags-and-dependency-parsing" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.2.2.1. </span>Part-of-speech tags and dependency parsing<a class="headerlink" href="#part-of-speech-tags-and-dependency-parsing" title="Permalink to this headline">¶</a></h4>
 <p>Lemmatizers can do all this because they use the context provided by <strong>part-of-speech tags</strong> (POS tags). To get the
 best results, you need to pipe in a tag for each word, which the lemmatizer will use to make its decisions. In
 principle, this is easy enough to do. There are software libraries, including <code class="docutils literal notranslate"><span class="pre">nltk</span></code>, that will automatically
@@ -1281,7 +1281,7 @@ only after the dependency parser has done its work. The revised text cleaning st
 </ol>
 </div>
 <div class="section" id="sample-lemmatization-workflow">
-<h4><span class="section-number">2.2.2.2. </span>Sample lemmatization workflow<a class="headerlink" href="#sample-lemmatization-workflow" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">3.2.2.2. </span>Sample lemmatization workflow<a class="headerlink" href="#sample-lemmatization-workflow" title="Permalink to this headline">¶</a></h4>
 <p>We won’t do all of this for <em>Frankenstein</em>, but in the next session, when we start to use classification models to
 understand the differences between texts, we will. For now, we’ll demonstrate an example of POS tagging using the
 <code class="docutils literal notranslate"><span class="pre">nltk</span></code> tokenizer in concert with its lemmatizer.</p>
@@ -1847,7 +1847,7 @@ complicity  =&gt; complicity
 </div>
 </div>
 <div class="section" id="chunking-with-n-grams">
-<h2><span class="section-number">2.3. </span>Chunking with N-Grams<a class="headerlink" href="#chunking-with-n-grams" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.3. </span>Chunking with N-Grams<a class="headerlink" href="#chunking-with-n-grams" title="Permalink to this headline">¶</a></h2>
 <p>With that, we are now done cleaning text. The last thing we’ll discuss in this session is <strong>chunking</strong>. Chunking is
 closely related to tokenization. It involves breaking text into multi-token spans. This is useful if, for example,
 we want to find phrases in our data, or even entities. To wit: the processes above would dissolve “New York” into
@@ -2264,129 +2264,129 @@ respectively. This will return a list of nested tuples, which will take a little
   </thead>
   <tbody>
     <tr>
-      <th>unequalled</th>
-      <td>clearness</td>
+      <th>envelop</th>
+      <td>victory</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>modified</th>
-      <td>eradicated</td>
-      <td>14.894534</td>
-    </tr>
-    <tr>
-      <th>microscope</th>
-      <td>crucible</td>
-      <td>14.894534</td>
-    </tr>
-    <tr>
-      <th>vicinity</th>
-      <td>chimney</td>
+      <th>sunny</th>
+      <td>climate</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>aided</th>
-      <td>glimmering</td>
+      <th>appearing</th>
+      <td>publicly</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>carelessly</th>
-      <td>title</td>
-      <td>13.894534</td>
-    </tr>
-    <tr>
-      <th>hovels</th>
-      <td>hardy</td>
-      <td>13.894534</td>
-    </tr>
-    <tr>
-      <th>pulpit</th>
-      <td>recollected</td>
-      <td>13.309571</td>
-    </tr>
-    <tr>
-      <th>becomes</th>
-      <td>malignant</td>
+      <th>rowing</th>
+      <td>middle</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>reverse</th>
-      <td>happen</td>
-      <td>12.894534</td>
-    </tr>
-    <tr>
-      <th>freely</th>
-      <td>veins</td>
-      <td>12.894534</td>
-    </tr>
-    <tr>
-      <th>author</th>
-      <td>speedy</td>
+      <th>meeting</th>
+      <td>anticipated</td>
       <td>12.572605</td>
     </tr>
     <tr>
-      <th>fearless</th>
-      <td>powerful</td>
-      <td>12.572605</td>
-    </tr>
-    <tr>
-      <th>revel</th>
-      <td>groans</td>
-      <td>12.572605</td>
-    </tr>
-    <tr>
-      <th>cultivated</th>
-      <td>speaks</td>
+      <th>respectable</th>
+      <td>employment</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>gladness</th>
-      <td>akin</td>
+      <th>injuries</th>
+      <td>inflict</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>thick</th>
-      <td>fog</td>
+      <th>alleviated</th>
+      <td>bright</td>
       <td>12.087179</td>
     </tr>
     <tr>
-      <th>community</th>
-      <td>enemies</td>
-      <td>12.087179</td>
-    </tr>
-    <tr>
-      <th>repast</th>
-      <td>prepared</td>
+      <th>extremely</th>
+      <td>averse</td>
       <td>11.894534</td>
     </tr>
     <tr>
-      <th>fearful</th>
-      <td>howlings</td>
+      <th>daily</th>
+      <td>vows</td>
+      <td>11.894534</td>
+    </tr>
+    <tr>
+      <th>pronounce</th>
+      <td>distinguished</td>
       <td>11.724609</td>
     </tr>
     <tr>
-      <th>ass</th>
-      <td>intentions</td>
+      <th>efface</th>
+      <td>recollection</td>
       <td>11.572605</td>
     </tr>
     <tr>
-      <th>past</th>
-      <td>anticipation</td>
-      <td>11.087179</td>
+      <th>emulation</th>
+      <td>virtue</td>
+      <td>11.309571</td>
     </tr>
     <tr>
-      <th>son</th>
-      <td>kinsman</td>
-      <td>10.724609</td>
+      <th>shut</th>
+      <td>avenue</td>
+      <td>11.309571</td>
     </tr>
     <tr>
-      <th>middle</th>
-      <td>month</td>
-      <td>10.724609</td>
+      <th>names</th>
+      <td>homer</td>
+      <td>10.894534</td>
     </tr>
     <tr>
-      <th>reward</th>
-      <td>tedious</td>
+      <th>perfectly</th>
+      <td>incredulous</td>
+      <td>10.894534</td>
+    </tr>
+    <tr>
+      <th>overcome</th>
+      <td>pitied</td>
+      <td>10.894534</td>
+    </tr>
+    <tr>
+      <th>link</th>
+      <td>held</td>
+      <td>10.894534</td>
+    </tr>
+    <tr>
+      <th>stump</th>
+      <td>visited</td>
+      <td>10.807071</td>
+    </tr>
+    <tr>
+      <th>peeping</th>
+      <td>forth</td>
+      <td>10.646606</td>
+    </tr>
+    <tr>
+      <th>conceal</th>
+      <td>shade</td>
       <td>10.572605</td>
+    </tr>
+    <tr>
+      <th>actions</th>
+      <td>certain</td>
+      <td>10.572605</td>
+    </tr>
+    <tr>
+      <th>resigned</th>
+      <td>guilty</td>
+      <td>10.435102</td>
+    </tr>
+    <tr>
+      <th>white</th>
+      <td>shining</td>
+      <td>10.435102</td>
+    </tr>
+    <tr>
+      <th>lifted</th>
+      <td>heaven</td>
+      <td>10.435102</td>
     </tr>
   </tbody>
 </table>
@@ -2428,11 +2428,11 @@ pairings. The latter especially begin to sketch out the specific qualities of Sh
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="01_from-text-to-data.html" title="previous page">
+        <a class="left-prev" href="02_from-text-to-data.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">1. </span>From Text to Data</p>
+                <p class="prevnext-title"><span class="section-number">2. </span>From Text to Data</p>
             </div>
         </a>
     </div>
