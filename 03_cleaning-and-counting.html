@@ -51,6 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Corpus Analytics" href="04_corpus-analytics.html" />
     <link rel="prev" title="2. From Text to Data" href="02_from-text-to-data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -106,6 +107,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    3. Cleaning and Counting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_corpus-analytics.html">
+   4. Corpus Analytics
   </a>
  </li>
 </ul>
@@ -351,7 +357,7 @@ they alter the original text to show why you might (or might not) implement them
 <p>To make these comparisons, let’s first load in <em>Frankenstein</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/shelley_frankenstein.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/session_one/shelley_frankenstein.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">frankenstein</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2264,129 +2270,129 @@ respectively. This will return a list of nested tuples, which will take a little
   </thead>
   <tbody>
     <tr>
-      <th>envelop</th>
-      <td>victory</td>
+      <th>cows</th>
+      <td>oatmeal</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>sunny</th>
-      <td>climate</td>
+      <th>grecians</th>
+      <td>wars</td>
+      <td>14.894534</td>
+    </tr>
+    <tr>
+      <th>instructor</th>
+      <td>letting</td>
+      <td>14.894534</td>
+    </tr>
+    <tr>
+      <th>sentences</th>
+      <td>pulpit</td>
+      <td>14.894534</td>
+    </tr>
+    <tr>
+      <th>persian</th>
+      <td>arabic</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>appearing</th>
-      <td>publicly</td>
-      <td>13.894534</td>
+      <th>variegated</th>
+      <td>landscape</td>
+      <td>13.309571</td>
     </tr>
     <tr>
-      <th>rowing</th>
-      <td>middle</td>
+      <th>abandoned</th>
+      <td>abortion</td>
+      <td>13.309571</td>
+    </tr>
+    <tr>
+      <th>influenced</th>
+      <td>menaces</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>meeting</th>
-      <td>anticipated</td>
+      <th>rugged</th>
+      <td>bosoms</td>
+      <td>12.894534</td>
+    </tr>
+    <tr>
+      <th>afforded</th>
+      <td>stolen</td>
       <td>12.572605</td>
     </tr>
     <tr>
-      <th>respectable</th>
-      <td>employment</td>
+      <th>audibly</th>
+      <td>pronounced</td>
+      <td>12.572605</td>
+    </tr>
+    <tr>
+      <th>extensive</th>
+      <td>utility</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>injuries</th>
-      <td>inflict</td>
+      <th>northern</th>
+      <td>highlands</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>alleviated</th>
-      <td>bright</td>
+      <th>dogs</th>
+      <td>harnessed</td>
       <td>12.087179</td>
     </tr>
     <tr>
-      <th>extremely</th>
-      <td>averse</td>
+      <th>going</th>
+      <td>careless</td>
       <td>11.894534</td>
     </tr>
     <tr>
-      <th>daily</th>
-      <td>vows</td>
+      <th>veins</th>
+      <td>tingling</td>
       <td>11.894534</td>
     </tr>
     <tr>
-      <th>pronounce</th>
-      <td>distinguished</td>
-      <td>11.724609</td>
+      <th>inaccessible</th>
+      <td>peaks</td>
+      <td>11.894534</td>
     </tr>
     <tr>
-      <th>efface</th>
-      <td>recollection</td>
-      <td>11.572605</td>
+      <th>canopy</th>
+      <td>enjoyed</td>
+      <td>11.194094</td>
     </tr>
     <tr>
-      <th>emulation</th>
-      <td>virtue</td>
-      <td>11.309571</td>
+      <th>facility</th>
+      <td>expression</td>
+      <td>10.987643</td>
     </tr>
     <tr>
-      <th>shut</th>
-      <td>avenue</td>
-      <td>11.309571</td>
+      <th>babe</th>
+      <td>innocence</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>names</th>
-      <td>homer</td>
-      <td>10.894534</td>
+      <th>noisy</th>
+      <td>way</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>perfectly</th>
-      <td>incredulous</td>
-      <td>10.894534</td>
+      <th>triumph</th>
+      <td>affording</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>overcome</th>
-      <td>pitied</td>
-      <td>10.894534</td>
+      <th>inferior</th>
+      <td>object</td>
+      <td>10.502216</td>
     </tr>
     <tr>
-      <th>link</th>
-      <td>held</td>
-      <td>10.894534</td>
+      <th>youth</th>
+      <td>instructor</td>
+      <td>10.502216</td>
     </tr>
     <tr>
-      <th>stump</th>
-      <td>visited</td>
-      <td>10.807071</td>
-    </tr>
-    <tr>
-      <th>peeping</th>
-      <td>forth</td>
-      <td>10.646606</td>
-    </tr>
-    <tr>
-      <th>conceal</th>
-      <td>shade</td>
-      <td>10.572605</td>
-    </tr>
-    <tr>
-      <th>actions</th>
-      <td>certain</td>
-      <td>10.572605</td>
-    </tr>
-    <tr>
-      <th>resigned</th>
-      <td>guilty</td>
-      <td>10.435102</td>
-    </tr>
-    <tr>
-      <th>white</th>
-      <td>shining</td>
-      <td>10.435102</td>
-    </tr>
-    <tr>
-      <th>lifted</th>
-      <td>heaven</td>
-      <td>10.435102</td>
+      <th>hopes</th>
+      <td>germans</td>
+      <td>10.370972</td>
     </tr>
   </tbody>
 </table>
@@ -2436,6 +2442,15 @@ pairings. The latter especially begin to sketch out the specific qualities of Sh
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="04_corpus-analytics.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">4. </span>Corpus Analytics</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         

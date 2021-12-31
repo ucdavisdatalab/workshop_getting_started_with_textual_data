@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Corpus Analytics &#8212; Getting Started with Textual Data</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="3. Cleaning and Counting" href="03_cleaning-and-counting.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/datalab-logo-full-color-rgb.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Getting Started with Textual Data</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Overview
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_logistics.html">
+   1. Logistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_from-text-to-data.html">
+   2. From Text to Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_cleaning-and-counting.html">
+   3. Cleaning and Counting
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   4. Corpus Analytics
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/04_corpus-analytics.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/04_corpus-analytics.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-data">
+   4.1. The Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#text-cleaning">
+   4.2. Text Cleaning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recap">
+     4.2.1. Recap
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-our-text-cleaning-functions">
+     4.2.2. Defining our text cleaning functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cleaning-our-texts">
+     4.2.3. Cleaning our texts
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="corpus-analytics">
+<h1><span class="section-number">4. </span>Corpus Analytics<a class="headerlink" href="#corpus-analytics" title="Permalink to this headline">¶</a></h1>
+<p>Now that we’ve overviewed all the steps involved in preparing text for computational analysis, we can begin the
+work of analysis proper. Whereas the last chapter suggested a few ways we might do this with a single novel, this
+one will build out to a whole collection of texts, or what’s called a <strong>corpus</strong>. Computational analysis can help
+us discover many interesting things about a single text, but looking at this text in the context of many others
+will do much to clarify and expand any potential findings we might make. Accordingly, we’ll learn how to implement
+our cleaning steps on multiple files and then format them in a way that enables us to make connections between
+them. We’ll then generate several metrics about these texts and use them to observe similarities/differences across
+the corpus.</p>
+<p>We’ll also leave <em>Frankenstein</em> behind, at least for now. In place of this novel, we will use Andrew Piper’s
+<a class="reference external" href="https://doi.org/10.6084/m9.figshare.17425571.v1">collection of English short stories</a>, which gathers together 50
+stories from 1981 to 2006. <strong>UNCLEAR WHETHER WE’LL ULTIMATELY USE THIS ONE—PLUGGING IT IN TO OUTLINE THE
+CHAPTER.</strong></p>
+<div class="admonition-learning-objectives admonition">
+<p class="admonition-title">Learning Objectives</p>
+<p>By the end of this workshop, you will be able to:</p>
+<ul class="simple">
+<li><p>Develop a workflow for cleaning multiple texts and compiling them into a corpus</p></li>
+<li><p>Use a document-term matrix, to represent relationships between texts in a corpus</p></li>
+<li><p>Generate metrics about texts in a corpus, including document length, term frequency, lexical diversity, etc.</p></li>
+<li><p>Explain the difference between raw term metrics and weighted term scoring (specifically, TF-IDF scoring)</p></li>
+<li><p>Cluster texts according to their shared/similar features</p></li>
+</ul>
+</div>
+<div class="section" id="the-data">
+<h2><span class="section-number">4.1. </span>The Data<a class="headerlink" href="#the-data" title="Permalink to this headline">¶</a></h2>
+<p>Before we begin cleaning, we’ll load in a file manifest to get a quick overview of what will be in our corpus.
+We’ll also use this manifest to sequentially load each file, clean it, and add it to our corpus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">indir</span> <span class="o">=</span>  <span class="s2">&quot;data/session_two/&quot;</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span> <span class="o">+</span> <span class="s2">&quot;manifest.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Number of stories:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">),</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of authors:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Columns in the manifest:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
+<span class="p">)</span>
+<span class="n">manifest</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;YEAR&#39;</span><span class="p">)[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
+                                                   <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Number of Stories per Year&quot;</span><span class="p">,</span>
+                                                   <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Year&quot;</span><span class="p">,</span>
+                                                   <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Count&quot;</span><span class="p">,</span>
+                                                   <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+                                                  <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of stories: 50 
+Number of authors: 50 
+Columns in the manifest: [&#39;NAME&#39; &#39;TITLE&#39; &#39;YEAR&#39; &#39;FILE_NAME&#39;]
+</pre></div>
+</div>
+<img alt="_images/04_corpus-analytics_2_1.png" src="_images/04_corpus-analytics_2_1.png" />
+</div>
+</div>
+<p>Here are a few story titles, selected at random:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;TITLE&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WALKER, Alice: NineteenFifty-five
+ORRINGER, Julie: Pilgrims
+HANSEN, Ron: Wickedness
+DAVIESHO, Peter: Relief
+MCKNIGHT, Reginald: TheKindofLightThatShinesonTexas
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="text-cleaning">
+<h2><span class="section-number">4.2. </span>Text Cleaning<a class="headerlink" href="#text-cleaning" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="recap">
+<h3><span class="section-number">4.2.1. </span>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">¶</a></h3>
+<p>With that done, we can review our cleaning steps. For each short story in our corpus, we want to:</p>
+<ol class="simple">
+<li><p>Resolve casing</p></li>
+<li><p>Remove punctuation, numbers, and any extra formatting</p></li>
+<li><p>Remove stop words</p></li>
+</ol>
+<div class="margin sidebar">
+<p class="sidebar-title">Note:</p>
+<p>For this analysis, we won’t stem or lemmatize our tokens, but below we’ll make note of where doing so might be
+useful.</p>
+</div>
+<p>This should feel familiar, though our workflow here will differ slightly from the one in the last chapter because
+we’ll be cleaning multiple texts, not only one. All the principles remain the same, we just want to implement our
+cleaning steps in a way that successively works through every text in our data directory without much intervention
+on our part. This is where functions are helpful; we’ll define a series of them. Each one will perform a separate
+step in the cleaning process. We’ll also define a main function, <code class="docutils literal notranslate"><span class="pre">clean()</span></code>, which we’ll use to control each
+function in the series. That way, we can simply load in a text file and pass it to <code class="docutils literal notranslate"><span class="pre">clean()</span></code> and <code class="docutils literal notranslate"><span class="pre">clean()</span></code> will
+handle the rest.</p>
+</div>
+<div class="section" id="defining-our-text-cleaning-functions">
+<h3><span class="section-number">4.2.2. </span>Defining our text cleaning functions<a class="headerlink" href="#defining-our-text-cleaning-functions" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">clean()</span></code> will call the following five functions:</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">to_lower()</span></code>: a simple function that returns a lowercase version of all tokens in a text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remove_punctuation()</span></code>: removes all punctuation, doing so in phases: hyphens, em dashes, and underscores
+first, then everything else</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remove_digits()</span></code>: removes digits</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokenize()</span></code>: removes any extra whitespace and returns a list of all tokens in a text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remove_stop_words()</span></code>: filters out stop words from the list of tokens; we’ll also remove any words that are two
+or less characters long</p></li>
+</ol>
+<p>Let’s get coding!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/voyant_stoplist.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">stopwords</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">to_lower</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[-]|[—]|[_]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w\s]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">doc</span>
+
+<span class="k">def</span> <span class="nf">remove_digits</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">remove_stop_words</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">doc</span>
+
+<span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="n">lowercase</span> <span class="o">=</span> <span class="n">to_lower</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="n">no_punct</span> <span class="o">=</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">lowercase</span><span class="p">)</span>
+    <span class="n">no_digits</span> <span class="o">=</span> <span class="n">remove_digits</span><span class="p">(</span><span class="n">no_punct</span><span class="p">)</span>
+    <span class="n">tokenized</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">no_digits</span><span class="p">)</span>
+    <span class="n">stopped</span> <span class="o">=</span> <span class="n">remove_stop_words</span><span class="p">(</span><span class="n">tokenized</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stopped</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-about-the-above admonition">
+<p class="admonition-title">About the above…</p>
+<p>These functions are written with <strong>clarity</strong> and <strong>modularity</strong> in mind. The intent here is to demonstrate each
+step of the cleaning process in as discrete a manner as possible. But you might find that some of this code is
+redundant (as an example, ask yourself: which step might be wrapped up inside another function?). Further, we could
+very probably re-factor this code to optimize it, which would be important when working with a large number of
+texts. We won’t cover something like that in this session however. For now, know that these functions are meant to
+act as templates, which you can modify to suit your own needs.</p>
+</div>
+</div>
+<div class="section" id="cleaning-our-texts">
+<h3><span class="section-number">4.2.3. </span>Cleaning our texts<a class="headerlink" href="#cleaning-our-texts" title="Permalink to this headline">¶</a></h3>
+<p>With our functions defined, we can now load each story, roll through all the cleaning steps, and append the cleaned
+text to a list. The result will be a fifty-item list of lists, where each sublist contains all the tokens in a
+given story. The <em>order</em> of these entries will be important for work want to do later on, so we need to make sure
+that each sublist always has the same position in the larger list of texts. This is where the file manifest comes
+in: <em>we’ll load texts in the order provided by the <code class="docutils literal notranslate"><span class="pre">FILE_NAME</span></code> column of <code class="docutils literal notranslate"><span class="pre">manifest</span></code></em>. Doing so ensures that the
+first index (<code class="docutils literal notranslate"><span class="pre">0</span></code>) of our list of lists corresponds to the first short story, the second index (<code class="docutils literal notranslate"><span class="pre">1</span></code>) to the second,
+and so on.</p>
+<p>Let’s write all this out in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop and do our cleaning.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">What this loop does:</p>
+<ol class="simple">
+<li><p>For every row (<code class="docutils literal notranslate"><span class="pre">idx</span></code>) in <code class="docutils literal notranslate"><span class="pre">manifest</span></code>, collect the item in the row’s <code class="docutils literal notranslate"><span class="pre">FILE_NAME</span></code> column and append it to <code class="docutils literal notranslate"><span class="pre">indir</span></code></p></li>
+<li><p>Use the resultant filepath in a <code class="docutils literal notranslate"><span class="pre">with...open</span></code> statement to read in the text</p></li>
+<li><p>Clean the story with <code class="docutils literal notranslate"><span class="pre">clean()</span></code></p></li>
+<li><p>Append the result to the list, <code class="docutils literal notranslate"><span class="pre">cleaned_stories</span></code></p></li>
+</ol>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned_stories</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;FILE_NAME&#39;</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">story</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">cleaned_story</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">story</span><span class="p">)</span>
+        <span class="n">cleaned_stories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cleaned_story</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a sanity check, we can run an assertion statement, which checks that <code class="docutils literal notranslate"><span class="pre">cleaned_stories</span></code> has as many stories in it
+as <code class="docutils literal notranslate"><span class="pre">manifest</span></code> does…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cleaned_stories</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>…and we can inspect a few pieces of some stories to make sure all is well:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">39</span><span class="p">]:</span>
+    <span class="n">fragment</span> <span class="o">=</span> <span class="n">cleaned_stories</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">10</span><span class="p">:</span><span class="mi">21</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fragment</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>behind card table outside food minutes sun shifts moves chair table
+barbie away ken practicing future sat sisters room watching barbie lived
+silver clouds floating horizon robins sparrows calling trees son joshuas seventh
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looks great!</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "nlp"
+        },
+        kernelOptions: {
+            kernelName: "nlp",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'nlp'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="03_cleaning-and-counting.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title"><span class="section-number">3. </span>Cleaning and Counting</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Tyler Shoemaker and Carl Stahmer<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
