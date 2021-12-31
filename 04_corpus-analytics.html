@@ -214,58 +214,51 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   4. Corpus Analytics
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-data">
+   4.1. The Data
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-data">
-     4.1. The Data
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#text-cleaning">
+   4.2. Text Cleaning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recap">
+     4.2.1. Recap
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#text-cleaning">
-     4.2. Text Cleaning
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-our-text-cleaning-functions">
+     4.2.2. Defining our text cleaning functions
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#recap">
-       4.2.1. Recap
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#defining-our-text-cleaning-functions">
-       4.2.2. Defining our text cleaning functions
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#cleaning-our-texts">
-       4.2.3. Cleaning our texts
-      </a>
-     </li>
-    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cleaning-our-texts">
+     4.2.3. Cleaning our texts
+    </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-document-term-matrix">
-   5. The Document-Term Matrix
+   4.3. The Document-Term Matrix
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#term-metrics">
-   6. Term Metrics
+   4.4. Term Metrics
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#raw-metrics">
-     6.1. Raw Metrics
+     4.4.1. Raw Metrics
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#weighted-metrics">
-     6.2. Weighted Metrics
+     4.4.2. Weighted Metrics
     </a>
    </li>
   </ul>
@@ -348,11 +341,11 @@ Columns in the manifest: [&#39;NAME&#39; &#39;TITLE&#39; &#39;YEAR&#39; &#39;FIL
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JOHNSON, Denis: CarCrashWhileHitchhiking
-YARBROUGH, Steve: TheRestofHerLife
-MEANS, David: TheSecretGoldfish
-BAUSCH, Richard: TheFireman’sWife
-MOODY, Rick: Boys
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NELSON, Antonya: FemaleTrouble
+JOHNSON, Denis: CarCrashWhileHitchhiking
+O’BRIEN, Tim: TheThingsTheyCarried
+GILB, DAGOBERTO: WinnersonthePassLine
+WALKER, Alice: NineteenFifty-five
 </pre></div>
 </div>
 </div>
@@ -511,9 +504,8 @@ silver cloud float horizon robin sparrow trees son joshuas seventh
 <p>Looks great!</p>
 </div>
 </div>
-</div>
 <div class="section" id="the-document-term-matrix">
-<h1><span class="section-number">5. </span>The Document-Term Matrix<a class="headerlink" href="#the-document-term-matrix" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">4.3. </span>The Document-Term Matrix<a class="headerlink" href="#the-document-term-matrix" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
@@ -841,9 +833,9 @@ column values with row values.</p>
 </div>
 </div>
 <div class="section" id="term-metrics">
-<h1><span class="section-number">6. </span>Term Metrics<a class="headerlink" href="#term-metrics" title="Permalink to this headline">¶</a></h1>
+<h2><span class="section-number">4.4. </span>Term Metrics<a class="headerlink" href="#term-metrics" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="raw-metrics">
-<h2><span class="section-number">6.1. </span>Raw Metrics<a class="headerlink" href="#raw-metrics" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">4.4.1. </span>Raw Metrics<a class="headerlink" href="#raw-metrics" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -958,7 +950,7 @@ Number of stories where &#39;said&#39; is the top word: 2
 </div>
 </div>
 <div class="section" id="weighted-metrics">
-<h2><span class="section-number">6.2. </span>Weighted Metrics<a class="headerlink" href="#weighted-metrics" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">4.4.2. </span>Weighted Metrics<a class="headerlink" href="#weighted-metrics" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
@@ -982,6 +974,7 @@ Number of stories where &#39;said&#39; is the top word: 2
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/04_corpus-analytics_30_0.png" src="_images/04_corpus-analytics_30_0.png" />
+</div>
 </div>
 </div>
 </div>
