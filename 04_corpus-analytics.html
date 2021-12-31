@@ -214,29 +214,58 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-data">
-   4.1. The Data
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   4. Corpus Analytics
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-data">
+     4.1. The Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#text-cleaning">
+     4.2. Text Cleaning
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#recap">
+       4.2.1. Recap
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#defining-our-text-cleaning-functions">
+       4.2.2. Defining our text cleaning functions
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cleaning-our-texts">
+       4.2.3. Cleaning our texts
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-document-term-matrix">
+   5. The Document-Term Matrix
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#text-cleaning">
-   4.2. Text Cleaning
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#term-metrics">
+   6. Term Metrics
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#recap">
-     4.2.1. Recap
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#raw-metrics">
+     6.1. Raw Metrics
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#defining-our-text-cleaning-functions">
-     4.2.2. Defining our text cleaning functions
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cleaning-our-texts">
-     4.2.3. Cleaning our texts
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weighted-metrics">
+     6.2. Weighted Metrics
     </a>
    </li>
   </ul>
@@ -256,12 +285,11 @@
 <h1><span class="section-number">4. </span>Corpus Analytics<a class="headerlink" href="#corpus-analytics" title="Permalink to this headline">¶</a></h1>
 <p>Now that we’ve overviewed all the steps involved in preparing text for computational analysis, we can begin the
 work of analysis proper. Whereas the last chapter suggested a few ways we might do this with a single novel, this
-one will build out to a whole collection of texts, or what’s called a <strong>corpus</strong>. Computational analysis can help
-us discover many interesting things about a single text, but looking at this text in the context of many others
-will do much to clarify and expand any potential findings we might make. Accordingly, we’ll learn how to implement
-our cleaning steps on multiple files and then format them in a way that enables us to make connections between
-them. We’ll then generate several metrics about these texts and use them to observe similarities/differences across
-the corpus.</p>
+one will build out to a whole collection of texts, or a <strong>corpus</strong>. Computational analysis can help us discover
+many interesting things about a single text, but looking at this text in the context of many others will do much to
+clarify and expand any potential findings we might make. Accordingly, we’ll learn how to implement our cleaning
+steps on multiple files and then format them in a way that enables us to make connections between them. We’ll then
+generate several metrics about these texts and use them to observe similarities/differences across the corpus.</p>
 <p>We’ll also leave <em>Frankenstein</em> behind, at least for now. In place of this novel, we will use Andrew Piper’s
 <a class="reference external" href="https://doi.org/10.6084/m9.figshare.17425571.v1">collection of English short stories</a>, which gathers together 50
 stories from 1981 to 2006. <strong>UNCLEAR WHETHER WE’LL ULTIMATELY USE THIS ONE—PLUGGING IT IN TO OUTLINE THE
@@ -279,14 +307,14 @@ CHAPTER.</strong></p>
 </div>
 <div class="section" id="the-data">
 <h2><span class="section-number">4.1. </span>The Data<a class="headerlink" href="#the-data" title="Permalink to this headline">¶</a></h2>
-<p>Before we begin cleaning, we’ll load in a file manifest to get a quick overview of what will be in our corpus.
+<p>Before we begin cleaning, let’s load in a file manifest to get a quick overview of what will be in our corpus.
 We’ll also use this manifest to sequentially load each file, clean it, and add it to our corpus.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">indir</span> <span class="o">=</span>  <span class="s2">&quot;data/session_two/&quot;</span>
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span> <span class="o">+</span> <span class="s2">&quot;manifest.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span> <span class="o">+</span> <span class="s2">&quot;manifest.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Number of stories:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">),</span>
@@ -320,21 +348,27 @@ Columns in the manifest: [&#39;NAME&#39; &#39;TITLE&#39; &#39;YEAR&#39; &#39;FIL
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WALKER, Alice: NineteenFifty-five
-ORRINGER, Julie: Pilgrims
-HANSEN, Ron: Wickedness
-DAVIESHO, Peter: Relief
-MCKNIGHT, Reginald: TheKindofLightThatShinesonTexas
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SILKO, LeslieMarmon: Tony’sStory
+SONTAG, Susan: TheWayWeLiveNow
+BLOOM, Amy: SilverWater
+MINOT, Susan: Lust
+BAXTER, Charles: TheDisappeared
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Using a metadata sheet like this is a good habit to develop. Use it as a common reference point for any processes
+you run on your data, and you’ll mitigate major headaches stemming from undocumented projects. For more about this,
+see the DataLab’s <a class="reference external" href="https://ucdavisdatalab.github.io/workshop_how-to-data-documentation/">workshop on project organization and data documentation</a>.</p>
 </div>
 </div>
 <div class="section" id="text-cleaning">
 <h2><span class="section-number">4.2. </span>Text Cleaning<a class="headerlink" href="#text-cleaning" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="recap">
 <h3><span class="section-number">4.2.1. </span>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">¶</a></h3>
-<p>With that done, we can review our cleaning steps. For each short story in our corpus, we want to:</p>
+<p>With our manifest loaded, we can review our cleaning steps. For each short story in our corpus, we want to:</p>
 <ol class="simple">
 <li><p>Resolve casing</p></li>
 <li><p>Remove punctuation, numbers, and any extra formatting</p></li>
@@ -342,26 +376,25 @@ MCKNIGHT, Reginald: TheKindofLightThatShinesonTexas
 </ol>
 <div class="margin sidebar">
 <p class="sidebar-title">Note:</p>
-<p>For this analysis, we won’t stem or lemmatize our tokens, but below we’ll make note of where doing so might be
-useful.</p>
+<p>Because lemmatization can be labor-intensive, these texts have already been processed with <code class="docutils literal notranslate"><span class="pre">nltk</span></code>’s lemmatizer.</p>
 </div>
 <p>This should feel familiar, though our workflow here will differ slightly from the one in the last chapter because
 we’ll be cleaning multiple texts, not only one. All the principles remain the same, we just want to implement our
 cleaning steps in a way that successively works through every text in our data directory without much intervention
-on our part. This is where functions are helpful; we’ll define a series of them. Each one will perform a separate
-step in the cleaning process. We’ll also define a main function, <code class="docutils literal notranslate"><span class="pre">clean()</span></code>, which we’ll use to control each
-function in the series. That way, we can simply load in a text file and pass it to <code class="docutils literal notranslate"><span class="pre">clean()</span></code> and <code class="docutils literal notranslate"><span class="pre">clean()</span></code> will
-handle the rest.</p>
+on our part. This is where functions are helpful; we’ll define a series of them, with each performing a separate
+step in the cleaning process. We’ll also define a main function, <code class="docutils literal notranslate"><span class="pre">clean()</span></code>, which we’ll use to control the various
+cleaning steps. That way, we can simply load in a text file and pass it to <code class="docutils literal notranslate"><span class="pre">clean()</span></code> and <code class="docutils literal notranslate"><span class="pre">clean()</span></code> will handle the
+rest.</p>
 </div>
 <div class="section" id="defining-our-text-cleaning-functions">
 <h3><span class="section-number">4.2.2. </span>Defining our text cleaning functions<a class="headerlink" href="#defining-our-text-cleaning-functions" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">clean()</span></code> will call the following five functions:</p>
 <ol class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">to_lower()</span></code>: a simple function that returns a lowercase version of all tokens in a text</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">remove_punctuation()</span></code>: removes all punctuation, doing so in phases: hyphens, em dashes, and underscores
-first, then everything else</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to_lower()</span></code>: returns a lowercase version of all tokens in a text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remove_punctuation()</span></code>: removes all punctuation in phases: hyphens, em dashes, and underscores first, then
+everything else</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">remove_digits()</span></code>: removes digits</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tokenize()</span></code>: removes any extra whitespace and returns a list of all tokens in a text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remove_whitespace()</span></code>: removes any extra whitespace</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">remove_stop_words()</span></code>: filters out stop words from the list of tokens; we’ll also remove any words that are two
 or less characters long</p></li>
 </ol>
@@ -384,21 +417,23 @@ or less characters long</p></li>
 <span class="k">def</span> <span class="nf">remove_digits</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">remove_whitespace</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">doc</span>
 
 <span class="k">def</span> <span class="nf">remove_stop_words</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">doc</span>
 
 <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
     <span class="n">lowercase</span> <span class="o">=</span> <span class="n">to_lower</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
     <span class="n">no_punct</span> <span class="o">=</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">lowercase</span><span class="p">)</span>
     <span class="n">no_digits</span> <span class="o">=</span> <span class="n">remove_digits</span><span class="p">(</span><span class="n">no_punct</span><span class="p">)</span>
-    <span class="n">tokenized</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">no_digits</span><span class="p">)</span>
-    <span class="n">stopped</span> <span class="o">=</span> <span class="n">remove_stop_words</span><span class="p">(</span><span class="n">tokenized</span><span class="p">)</span>
+    <span class="n">no_whitespace</span> <span class="o">=</span> <span class="n">remove_whitespace</span><span class="p">(</span><span class="n">no_digits</span><span class="p">)</span>
+    <span class="n">stopped</span> <span class="o">=</span> <span class="n">remove_stop_words</span><span class="p">(</span><span class="n">no_whitespace</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">stopped</span>
 </pre></div>
 </div>
@@ -410,71 +445,500 @@ or less characters long</p></li>
 step of the cleaning process in as discrete a manner as possible. But you might find that some of this code is
 redundant (as an example, ask yourself: which step might be wrapped up inside another function?). Further, we could
 very probably re-factor this code to optimize it, which would be important when working with a large number of
-texts. We won’t cover something like that in this session however. For now, know that these functions are meant to
+texts. We won’t cover something like that in this session, however. For now, know that these functions are meant to
 act as templates, which you can modify to suit your own needs.</p>
 </div>
 </div>
 <div class="section" id="cleaning-our-texts">
 <h3><span class="section-number">4.2.3. </span>Cleaning our texts<a class="headerlink" href="#cleaning-our-texts" title="Permalink to this headline">¶</a></h3>
 <p>With our functions defined, we can now load each story, roll through all the cleaning steps, and append the cleaned
-text to a list. The result will be a fifty-item list of lists, where each sublist contains all the tokens in a
-given story. The <em>order</em> of these entries will be important for work want to do later on, so we need to make sure
-that each sublist always has the same position in the larger list of texts. This is where the file manifest comes
-in: <em>we’ll load texts in the order provided by the <code class="docutils literal notranslate"><span class="pre">FILE_NAME</span></code> column of <code class="docutils literal notranslate"><span class="pre">manifest</span></code></em>. Doing so ensures that the
-first index (<code class="docutils literal notranslate"><span class="pre">0</span></code>) of our list of lists corresponds to the first short story, the second index (<code class="docutils literal notranslate"><span class="pre">1</span></code>) to the second,
-and so on.</p>
+story to a list. The result will be our <strong>corpus</strong>, a fifty-item list of strings, where each string contains all
+the tokens in a given story. The <em>order</em> of these entries will be important for work we want to do later on, so we
+need to make sure that each string always has the same position in the larger list of stories. This is where the
+file manifest comes in: <em>we’ll load stories in the order provided by the <code class="docutils literal notranslate"><span class="pre">FILE_NAME</span></code> column of <code class="docutils literal notranslate"><span class="pre">manifest</span></code></em>. Doing
+so ensures that the first index (<code class="docutils literal notranslate"><span class="pre">0</span></code>) of our corpus corresponds to the first short story, the second index (<code class="docutils literal notranslate"><span class="pre">1</span></code>) to
+the second, and so on.</p>
 <p>Let’s write all this out in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop and do our cleaning.</p>
 <div class="margin sidebar">
 <p class="sidebar-title">What this loop does:</p>
 <ol class="simple">
 <li><p>For every row (<code class="docutils literal notranslate"><span class="pre">idx</span></code>) in <code class="docutils literal notranslate"><span class="pre">manifest</span></code>, collect the item in the row’s <code class="docutils literal notranslate"><span class="pre">FILE_NAME</span></code> column and append it to <code class="docutils literal notranslate"><span class="pre">indir</span></code></p></li>
-<li><p>Use the resultant filepath in a <code class="docutils literal notranslate"><span class="pre">with...open</span></code> statement to read in the text</p></li>
+<li><p>Put the resultant filepath in a <code class="docutils literal notranslate"><span class="pre">with...open</span></code> statement to read in a file</p></li>
 <li><p>Clean the story with <code class="docutils literal notranslate"><span class="pre">clean()</span></code></p></li>
-<li><p>Append the result to the list, <code class="docutils literal notranslate"><span class="pre">cleaned_stories</span></code></p></li>
+<li><p>Append the result to <code class="docutils literal notranslate"><span class="pre">corpus</span></code></p></li>
 </ol>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned_stories</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
     <span class="n">filepath</span> <span class="o">=</span> <span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;FILE_NAME&#39;</span><span class="p">]</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">story</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="n">cleaned_story</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">story</span><span class="p">)</span>
-        <span class="n">cleaned_stories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cleaned_story</span><span class="p">)</span>
+        <span class="n">corpus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cleaned_story</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>As a sanity check, we can run an assertion statement, which checks that <code class="docutils literal notranslate"><span class="pre">cleaned_stories</span></code> has as many stories in it
-as <code class="docutils literal notranslate"><span class="pre">manifest</span></code> does…</p>
+<p>As a sanity check, we can run an assertion statement, which checks that <code class="docutils literal notranslate"><span class="pre">corpus</span></code> has as many stories in it as
+<code class="docutils literal notranslate"><span class="pre">manifest</span></code> does…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cleaned_stories</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>…and we can inspect a few pieces of some stories to make sure all is well:</p>
+<p>…and we can inspect some tokens from a few stories to make sure all is well:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">39</span><span class="p">]:</span>
-    <span class="n">fragment</span> <span class="o">=</span> <span class="n">cleaned_stories</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">10</span><span class="p">:</span><span class="mi">21</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fragment</span><span class="p">))</span>
+    <span class="n">fragment</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fragment</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">20</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>behind card table outside food minutes sun shifts moves chair table
-barbie away ken practicing future sat sisters room watching barbie lived
-silver clouds floating horizon robins sparrows calling trees son joshuas seventh
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>behind card table outside food minutes sun shifts moves chair
+barbie away ken practicing future sat sisters room watching barbie
+silver clouds floating horizon robins sparrows calling trees son joshuas
 </pre></div>
 </div>
 </div>
 </div>
 <p>Looks great!</p>
 </div>
+</div>
+</div>
+<div class="section" id="the-document-term-matrix">
+<h1><span class="section-number">5. </span>The Document-Term Matrix<a class="headerlink" href="#the-document-term-matrix" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">vectorized</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Shape of our document-term matrix: </span><span class="si">{</span><span class="n">vectorized</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">,&quot;</span><span class="p">,</span> 
+    <span class="sa">f</span><span class="s2">&quot;or </span><span class="si">{</span><span class="n">vectorized</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> documents and </span><span class="si">{</span><span class="n">vectorized</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> words&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of our document-term matrix: (50, 18603), or 50 documents and 18603 words
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> returns a <strong>sparse matrix</strong>, or a matrix comprised mostly of zeros. This matrix has been
+formatted to be highly memory efficient (which is useful when dealing with giant datasets), but it’s not
+particularly accessible for data exploration. Since our corpus is relatively small, we’ll convert this sparse
+matrix into a <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> dataframe.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="n">dtm</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+      <th>12</th>
+      <th>13</th>
+      <th>14</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>As it stands, this dataframe is hard to understand. But luckily, we’ve kept track of which row corresponds to which
+story: this is why we used our manifest to control our file order. Further, <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> has a special
+method, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code>, which will generate an array of all the tokens from all the files. The order of
+this array corresponds to the order of our columns. Accordingly, we can assign this array to the column names of
+<code class="docutils literal notranslate"><span class="pre">dtm</span></code> and assign the story titles in <code class="docutils literal notranslate"><span class="pre">manifest['TITLE']</span></code> to its index names, making it much easier to associate
+column values with row values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="n">dtm</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">]</span>
+<span class="n">dtm</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aaa</th>
+      <th>aaaaargh</th>
+      <th>aaaargh</th>
+      <th>aachen</th>
+      <th>aachens</th>
+      <th>aahed</th>
+      <th>aback</th>
+      <th>abandon</th>
+      <th>abandoned</th>
+      <th>abandoning</th>
+      <th>abbey</th>
+      <th>abbreviated</th>
+      <th>abby</th>
+      <th>abbylucyferny</th>
+      <th>abdomen</th>
+    </tr>
+    <tr>
+      <th>TITLE</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TheSchool</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Tony’sStory</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>NineteenFifty-five</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Girl</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Territory</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="term-metrics">
+<h1><span class="section-number">6. </span>Term Metrics<a class="headerlink" href="#term-metrics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="raw-metrics">
+<h2><span class="section-number">6.1. </span>Raw Metrics<a class="headerlink" href="#raw-metrics" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TOKENS</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TYPES</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TTR</span> <span class="o">=</span> <span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;TTR&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
+                                                        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;TITLE&#39;</span><span class="p">,</span> 
+                                                        <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;TTR&#39;</span><span class="p">,</span>
+                                                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratios&#39;</span><span class="p">,</span>
+                                                        <span class="n">legend</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                                        <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Story Title&#39;</span><span class="p">,</span>
+                                                        <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratio %&#39;</span><span class="p">,</span>
+                                                        <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+                                                       <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_corpus-analytics_25_0.png" src="_images/04_corpus-analytics_25_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># use to pivot to tf-idf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TITLE
+TheSchool                                  said
+Tony’sStory                                leon
+NineteenFifty-five                         said
+Girl                                       dont
+Territory                                  neil
+HowFarSheWent                              girl
+SarahColeATypeofLoveStory                 sarah
+Caviar                                    marie
+WinnersonthePassLine                        ray
+TheWayWeLiveNow                            said
+Communist                                  said
+TheManagementofGrief                       says
+TheFireman’sWife                           says
+Wickedness                                 snow
+Lust                                       like
+TwoKinds                                 mother
+TheDisappeared                             said
+ARealDoll                                barbie
+TheThingsTheyCarried                    carried
+NeverMarryaMexican                         like
+CarCrashWhileHitchhiking                   said
+Marie                                      said
+TheKindofLightThatShinesonTexas          oakley
+SilverWater                                rose
+ThePugilistatRest                      jorgeson
+TheTranslation                           oliver
+Orientation                                sits
+JealousHusbandReturnsinFormofParrot        bird
+Relief                                 bromhead
+AfterRosaParks                             said
+Tiny, Smiling Daddy                       kitty
+Xmas,JamaicaPlain                         emile
+TheRestofHerLife                          daddy
+Nilda                                      rafa
+ATemporaryMatter                          shoba
+TheHalf-SkinnedSteer                       said
+SeaOak                                     says
+Boys                                       boys
+TheCavemenintheHedges                       kim
+TheHermit&#39;sStory                           said
+TheCeiling                                 dogs
+TheCaretaker                             joseph
+Pilgrims                                   said
+Brownies                                   said
+WeDidn’t                                  night
+TheSecretGoldfish                          fish
+MyShape                                    said
+Stone Animals                              said
+FemaleTrouble                           mcbride
+TwilightoftheSuperheroes                 lucien
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="weighted-metrics">
+<h2><span class="section-number">6.2. </span>Weighted Metrics<a class="headerlink" href="#weighted-metrics" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
