@@ -6,3 +6,4 @@ chapters:
 - file: 01_logistics.ipynb
 - file: 02_from-text-to-data.ipynb
 - file: 03_cleaning-and-counting.ipynb
+- file: 04_corpus-analytics.ipynb
