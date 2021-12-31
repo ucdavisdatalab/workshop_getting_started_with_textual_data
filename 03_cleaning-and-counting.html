@@ -749,11 +749,11 @@ count and plot the remaining words. We run <code class="docutils literal notrans
       <td>498</td>
     </tr>
     <tr>
-      <th>on</th>
+      <th>by</th>
       <td>460</td>
     </tr>
     <tr>
-      <th>by</th>
+      <th>on</th>
       <td>460</td>
     </tr>
     <tr>
@@ -1629,17 +1629,9 @@ one of its special cases (“.” or “$”, for example), it simply repeats th
 the tags that this lemmatizer expects. We did say this step is more complicated!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
-<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">wordnet</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
 
-<span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convert_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">convert_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">):</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="n">wordnet</span><span class="o">.</span><span class="n">ADJ</span>
     <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">):</span>
@@ -2270,128 +2262,128 @@ respectively. This will return a list of nested tuples, which will take a little
   </thead>
   <tbody>
     <tr>
-      <th>industrious</th>
-      <td>painstaking</td>
-      <td>14.894534</td>
-    </tr>
-    <tr>
-      <th>equitable</th>
-      <td>trample</td>
+      <th>invented</th>
+      <td>tales</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>blunt</th>
-      <td>encomiums</td>
+      <th>lieutenant</th>
+      <td>instance</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>romans</th>
-      <td>subsequent</td>
-      <td>13.894534</td>
-    </tr>
-    <tr>
-      <th>hearers</th>
-      <td>godlike</td>
+      <th>madman</th>
+      <td>exculpated</td>
       <td>13.309571</td>
     </tr>
     <tr>
-      <th>opinion</th>
-      <td>confirms</td>
+      <th>shrieked</th>
+      <td>loudly</td>
       <td>13.309571</td>
     </tr>
     <tr>
-      <th>monday</th>
-      <td>july</td>
+      <th>bondage</th>
+      <td>reduced</td>
       <td>13.309571</td>
     </tr>
     <tr>
-      <th>completion</th>
-      <td>tremulous</td>
-      <td>12.572605</td>
+      <th>thickly</th>
+      <td>plains</td>
+      <td>13.309571</td>
     </tr>
     <tr>
-      <th>trials</th>
-      <td>reserved</td>
-      <td>12.572605</td>
-    </tr>
-    <tr>
-      <th>kneel</th>
-      <td>shades</td>
+      <th>paid</th>
+      <td>debts</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>persuasions</th>
-      <td>restrained</td>
+      <th>sagacity</th>
+      <td>changes</td>
+      <td>12.309571</td>
+    </tr>
+    <tr>
+      <th>cheered</th>
+      <td>loveliness</td>
       <td>11.894534</td>
     </tr>
     <tr>
-      <th>spared</th>
-      <td>disgrace</td>
+      <th>letting</th>
+      <td>escape</td>
+      <td>11.724609</td>
+    </tr>
+    <tr>
+      <th>disgust</th>
+      <td>affright</td>
       <td>11.572605</td>
     </tr>
     <tr>
-      <th>intercept</th>
-      <td>reach</td>
+      <th>swallowed</th>
+      <td>habit</td>
       <td>11.572605</td>
     </tr>
     <tr>
-      <th>precipice</th>
-      <td>island</td>
-      <td>11.572605</td>
-    </tr>
-    <tr>
-      <th>trifled</th>
-      <td>demand</td>
-      <td>11.572605</td>
-    </tr>
-    <tr>
-      <th>checked</th>
-      <td>impatient</td>
+      <th>dante</th>
+      <td>conceived</td>
       <td>11.309571</td>
     </tr>
     <tr>
-      <th>acorns</th>
-      <td>berries</td>
+      <th>expanded</th>
+      <td>company</td>
       <td>11.309571</td>
     </tr>
     <tr>
-      <th>judgment</th>
-      <td>fitted</td>
+      <th>muscles</th>
+      <td>veins</td>
       <td>11.309571</td>
     </tr>
     <tr>
-      <th>spring</th>
-      <td>uncommonly</td>
-      <td>11.309571</td>
-    </tr>
-    <tr>
-      <th>yearned</th>
-      <td>known</td>
-      <td>11.087179</td>
-    </tr>
-    <tr>
-      <th>eagerness</th>
-      <td>perpetually</td>
+      <th>severe</th>
+      <td>tone</td>
       <td>10.987643</td>
     </tr>
     <tr>
-      <th>pursuits</th>
-      <td>eager</td>
-      <td>10.894534</td>
+      <th>laws</th>
+      <td>electricity</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>refuse</th>
-      <td>glut</td>
-      <td>10.894534</td>
+      <th>future</th>
+      <td>imparted</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>alas</th>
-      <td>prophesied</td>
+      <th>leghorn</th>
+      <td>quitting</td>
+      <td>10.724609</td>
+    </tr>
+    <tr>
+      <th>sail</th>
+      <td>sooner</td>
       <td>10.572605</td>
     </tr>
     <tr>
-      <th>act</th>
-      <td>plays</td>
+      <th>sign</th>
+      <td>violence</td>
+      <td>10.572605</td>
+    </tr>
+    <tr>
+      <th>gentleness</th>
+      <td>tinged</td>
+      <td>10.572605</td>
+    </tr>
+    <tr>
+      <th>modesty</th>
+      <td>changed</td>
+      <td>10.572605</td>
+    </tr>
+    <tr>
+      <th>tenderest</th>
+      <td>compassion</td>
+      <td>10.435102</td>
+    </tr>
+    <tr>
+      <th>descends</th>
+      <td>rapidly</td>
       <td>10.435102</td>
     </tr>
   </tbody>
