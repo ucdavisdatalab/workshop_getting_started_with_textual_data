@@ -230,8 +230,8 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#defining-our-text-cleaning-functions">
-     4.2.2. Defining our text cleaning functions
+    <a class="reference internal nav-link" href="#text-cleaning-functions">
+     4.2.2. Text cleaning functions
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -308,25 +308,26 @@ We’ll also use this manifest to sequentially load each file, clean it, and add
 
 <span class="n">indir</span> <span class="o">=</span>  <span class="s2">&quot;data/session_two/&quot;</span>
 <span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span> <span class="o">+</span> <span class="s2">&quot;manifest.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;TITLE&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Number of stories:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">),</span>
     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of authors:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Columns in the manifest:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
-<span class="n">manifest</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;YEAR&#39;</span><span class="p">)[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
-                                                   <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Number of Stories per Year&quot;</span><span class="p">,</span>
-                                                   <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Year&quot;</span><span class="p">,</span>
-                                                   <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Count&quot;</span><span class="p">,</span>
-                                                   <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-                                                  <span class="p">);</span>
+<span class="n">manifest</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;YEAR&#39;</span><span class="p">)[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                                                  <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Number of Stories per Year&quot;</span><span class="p">,</span>
+                                                  <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Year&quot;</span><span class="p">,</span>
+                                                  <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Count&quot;</span><span class="p">,</span>
+                                                  <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+                                                 <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of stories: 50 
 Number of authors: 50 
-Columns in the manifest: [&#39;NAME&#39; &#39;TITLE&#39; &#39;YEAR&#39; &#39;FILE_NAME&#39;]
+Columns in the manifest: [&#39;NAME&#39; &#39;YEAR&#39; &#39;FILE_NAME&#39;]
 </pre></div>
 </div>
 <img alt="_images/04_corpus-analytics_2_1.png" src="_images/04_corpus-analytics_2_1.png" />
@@ -335,17 +336,17 @@ Columns in the manifest: [&#39;NAME&#39; &#39;TITLE&#39; &#39;YEAR&#39; &#39;FIL
 <p>Here are a few story titles, selected at random:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;TITLE&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NELSON, Antonya: FemaleTrouble
-JOHNSON, Denis: CarCrashWhileHitchhiking
-O’BRIEN, Tim: TheThingsTheyCarried
-GILB, DAGOBERTO: WinnersonthePassLine
-WALKER, Alice: NineteenFifty-five
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BAUSCH, Richard: TheFireman’sWife
+SILBER, Joan: MyShape
+BANKS, Russell: SarahColeATypeofLoveStory
+NELSON, Antonya: FemaleTrouble
+GAITSKILL, Mary: Tiny, Smiling Daddy
 </pre></div>
 </div>
 </div>
@@ -367,20 +368,18 @@ see the DataLab’s <a class="reference external" href="https://ucdavisdatalab.g
 <li><p>Remove punctuation, numbers, and any extra formatting</p></li>
 <li><p>Remove stop words</p></li>
 </ol>
-<div class="margin sidebar">
-<p class="sidebar-title">Note:</p>
-<p>Because lemmatization can be labor-intensive, these texts have already been processed with <code class="docutils literal notranslate"><span class="pre">nltk</span></code>’s lemmatizer.</p>
-</div>
 <p>This should feel familiar, though our workflow here will differ slightly from the one in the last chapter because
 we’ll be cleaning multiple texts, not only one. All the principles remain the same, we just want to implement our
 cleaning steps in a way that successively works through every text in our data directory without much intervention
 on our part. This is where functions are helpful; we’ll define a series of them, with each performing a separate
 step in the cleaning process. We’ll also define a main function, <code class="docutils literal notranslate"><span class="pre">clean()</span></code>, which we’ll use to control the various
-cleaning steps. That way, we can simply load in a text file and pass it to <code class="docutils literal notranslate"><span class="pre">clean()</span></code> and <code class="docutils literal notranslate"><span class="pre">clean()</span></code> will handle the
+cleaning steps. That way we can simply load in a text file and pass it to <code class="docutils literal notranslate"><span class="pre">clean()</span></code> and <code class="docutils literal notranslate"><span class="pre">clean()</span></code> will handle the
 rest.</p>
+<p>Note that our steps do not include lemmatizing the texts. Because lemmatization can be labor- and time-intensive,
+<strong>these texts have already been processed with <code class="docutils literal notranslate"><span class="pre">nltk</span></code>’s lemmatizer</strong>.</p>
 </div>
-<div class="section" id="defining-our-text-cleaning-functions">
-<h3><span class="section-number">4.2.2. </span>Defining our text cleaning functions<a class="headerlink" href="#defining-our-text-cleaning-functions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="text-cleaning-functions">
+<h3><span class="section-number">4.2.2. </span>Text cleaning functions<a class="headerlink" href="#text-cleaning-functions" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">clean()</span></code> will call the following five functions:</p>
 <ol class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">to_lower()</span></code>: returns a lowercase version of all tokens in a text</p></li>
@@ -465,8 +464,8 @@ the second, and so on.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="n">filepath</span> <span class="o">=</span> <span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;FILE_NAME&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;FILE_NAME&#39;</span><span class="p">]</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">story</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="n">cleaned_story</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">story</span><span class="p">)</span>
@@ -477,9 +476,14 @@ the second, and so on.</p>
 </div>
 <p>As a sanity check, we can run an assertion statement, which checks that <code class="docutils literal notranslate"><span class="pre">corpus</span></code> has as many stories in it as
 <code class="docutils literal notranslate"><span class="pre">manifest</span></code> does…</p>
+<div class="margin sidebar">
+<p class="sidebar-title">On assertions…</p>
+<p>If the lengths of <code class="docutils literal notranslate"><span class="pre">corpus</span></code> and <code class="docutils literal notranslate"><span class="pre">manifest</span></code> didn’t match, <code class="docutils literal notranslate"><span class="pre">assert</span></code> would throw an <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> with the message
+after the comma.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">),</span> <span class="s2">&quot;Lengths don&#39;t match!&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -506,33 +510,151 @@ silver cloud float horizon robin sparrow trees son joshuas seventh
 </div>
 <div class="section" id="the-document-term-matrix">
 <h2><span class="section-number">4.3. </span>The Document-Term Matrix<a class="headerlink" href="#the-document-term-matrix" title="Permalink to this headline">¶</a></h2>
+<p>Before we switch into full data exploration mode, we’re going to perform one last process on our corpus. Remember
+from the last chapter that much of text analytics relies on <strong>counts</strong> and <strong>context</strong>: tracking the former in
+tandem with the latter is how we identify relationships between words (the final section on bigram PMI scores
+demonstrated this, for example). As with <em>Frankenstein</em>, here we’ll want to tally up all the words in each story.
+That produces one kind of text—or rather, fifty different contexts: one for every story. But we have at our hands
+a <em>corpus</em>, the analysis of which requires a different kind of context: a single one for all the stories. That is,
+we need a way to relate stories <em>to each other</em>, instead of only tracking word values across single texts.</p>
+<p>To do so, we’ll build a <strong>document-term matrix</strong>, or <strong>DTM</strong>. A DTM is a matrix that contains the frequencies of
+terms in a corpus. Every row in this matrix corresponds to a document, while every column corresponds to a term.
+For a given document, we count the number of times that term appears and enter that number in the column in
+question. We do this <em>even if</em> the count is 0; key to the way a DTM works is that it represents corpus-wide
+relationships between texts, so it matters if a text does or doesn’t contain a term.</p>
+<p>Here’s a toy example. Imagine three documents:</p>
+<ol class="simple">
+<li><p>“I like cats. Do you?”</p></li>
+<li><p>“I only like dogs. And you?”</p></li>
+<li><p>“I like cats and dogs.”</p></li>
+</ol>
+<p>Transforming these into a document-term matrix would yield:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_corpus</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+
+<span class="n">example_dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">example_corpus</span><span class="p">,</span> 
+                           <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D1&#39;</span><span class="p">,</span> <span class="s1">&#39;D2&#39;</span><span class="p">,</span> <span class="s1">&#39;D3&#39;</span><span class="p">],</span> 
+                           <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;only&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;cats&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;dogs&#39;</span><span class="p">,</span> <span class="s1">&#39;do&#39;</span><span class="p">,</span> <span class="s1">&#39;you&#39;</span><span class="p">]</span>
+                          <span class="p">)</span>
+
+<span class="n">example_dtm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>i</th>
+      <th>only</th>
+      <th>like</th>
+      <th>cats</th>
+      <th>and</th>
+      <th>dogs</th>
+      <th>do</th>
+      <th>you</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>D1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>D2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>D3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Representing texts in this way is incredibly useful because it enables us to easily (and programmatically) discern
+similarities and differences in our corpus. For example, we can see that each of the above documents contains the
+words “I” and “like.” Given that, if we wanted to know what makes each document unique, we could ignore those two
+words and focus on the rest of the values.</p>
+<p>Now, imagine doing this for thousands of words. What patterns might emerge?</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library makes generating a DTM very easy. All we need to do is import a <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code>
+object, initialize it by assigning it to a variable, and fit it to our corpus. This will result in two things: 1) a
+fitted <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code>, which will contain a series of different attributes that are useful for corpus
+exploration; 2) a vectorized representation of our corpus, the document-term matrix.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">More on this</p>
+<p><code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> accepts several different arguments that will modify its base functionality, including
+arguments for applying some text cleaning steps. We won’t use any of these arguments because we’ve already cleaned
+our text (and indeed it’s a good idea to clean your text yourself so you always know what processes have been run
+on it), but you can learn more about them <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">here</a>.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
 
 <span class="n">count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
-<span class="n">vectorized</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">vectorized_corpus</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Shape of our document-term matrix: </span><span class="si">{</span><span class="n">vectorized</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">,&quot;</span><span class="p">,</span> 
-    <span class="sa">f</span><span class="s2">&quot;or </span><span class="si">{</span><span class="n">vectorized</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> documents and </span><span class="si">{</span><span class="n">vectorized</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> words&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Shape of our document-term matrix: </span><span class="si">{</span><span class="n">vectorized_corpus</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">,&quot;</span><span class="p">,</span> 
+    <span class="sa">f</span><span class="s2">&quot;or </span><span class="si">{</span><span class="n">vectorized_corpus</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> documents (rows)&quot;</span><span class="p">,</span> 
+    <span class="sa">f</span><span class="s2">&quot;and </span><span class="si">{</span><span class="n">vectorized_corpus</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> words (columns)&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of our document-term matrix: (50, 15962), or 50 documents and 15962 words
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of our document-term matrix: (50, 15962), or 50 documents (rows) and 15962 words (columns)
 </pre></div>
 </div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> returns a <strong>sparse matrix</strong>, or a matrix comprised mostly of zeros. This matrix has been
-formatted to be highly memory efficient (which is useful when dealing with giant datasets), but it’s not
-particularly accessible for data exploration. Since our corpus is relatively small, we’ll convert this sparse
-matrix into a <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> dataframe.</p>
+formatted to be highly memory efficient, which is useful when dealing with giant datasets, but it’s not very
+accessible for data exploration. Since our corpus is relatively small, we’ll convert this sparse matrix into a
+<code class="docutils literal notranslate"><span class="pre">Pandas</span></code> dataframe. Note all the zeros!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vectorized_corpus</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
 <span class="n">dtm</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -669,15 +791,15 @@ matrix into a <code class="docutils literal notranslate"><span class="pre">Panda
 </div></div></div>
 </div>
 <p>As it stands, this dataframe is hard to understand. But luckily, we’ve kept track of which row corresponds to which
-story: this is why we used our manifest to control our file order. Further, <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> has a special
-method, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code>, which will generate an array of all the tokens from all the files. The order of
-this array corresponds to the order of our columns. Accordingly, we can assign this array to the column names of
-<code class="docutils literal notranslate"><span class="pre">dtm</span></code> and assign the story titles in <code class="docutils literal notranslate"><span class="pre">manifest['TITLE']</span></code> to its index names, making it much easier to associate
-column values with row values.</p>
+story: this is why we used our manifest to control our file order. Further, the fitted <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> has a
+special method, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code>, which will generate an array of all the tokens from all the files (our
+vocabulary). The order of this array corresponds to the order of our columns. Accordingly, we can assign this array
+to the column names of <code class="docutils literal notranslate"><span class="pre">dtm</span></code> and assign the story titles in <code class="docutils literal notranslate"><span class="pre">manifest</span></code> to its index names, making it much easier to
+associate column values with row values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
-<span class="n">dtm</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">]</span>
+<span class="n">dtm</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span>
 <span class="n">dtm</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -834,25 +956,65 @@ column values with row values.</p>
 </div>
 <div class="section" id="term-metrics">
 <h2><span class="section-number">4.4. </span>Term Metrics<a class="headerlink" href="#term-metrics" title="Permalink to this headline">¶</a></h2>
+<p>With our DTM made, we can use it to generate some metrics about each text in our corpus. We’ll use <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> data
+manipulations in conjunction with <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> to do this.</p>
 <div class="section" id="raw-metrics">
 <h3><span class="section-number">4.4.1. </span>Raw Metrics<a class="headerlink" href="#raw-metrics" title="Permalink to this headline">¶</a></h3>
+<p>Here’s an easy one: let’s count the number of tokens in each story and assign the result to a new column in our
+manifest.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Vectorized functions</p>
+<p>If you’re unfamiliar with <code class="docutils literal notranslate"><span class="pre">apply()</span></code>, or it’s just been a while since you’ve used it, this method applies a function
+along an axis of a dataframe. Think of it like a shorthand for a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop: the default usage runs every column
+through your desired function. In this case, we’re setting the <code class="docutils literal notranslate"><span class="pre">axis</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> so <code class="docutils literal notranslate"><span class="pre">sum()</span></code> runs on every row. This
+will sum together each value in every row.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TOKENS</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TYPES</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TTR</span> <span class="o">=</span> <span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TOKENS</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                                                             <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Tokens per Story&quot;</span><span class="p">,</span>
+                                                             <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
+                                                             <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Tokens&#39;</span>
+                                                            <span class="p">);</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/04_corpus-analytics_27_0.png" src="_images/04_corpus-analytics_27_0.png" />
 </div>
+</div>
+<p>We can also count the number of unique words, or <strong>types</strong>, in each story. Types correspond to a story’s
+vocabulary, whereas tokens correspond to the amount of elements in a story.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;TTR&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
-                                                        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;TITLE&#39;</span><span class="p">,</span> 
-                                                        <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;TTR&#39;</span><span class="p">,</span>
-                                                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratios&#39;</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TYPES</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                                                              <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Types per Story&quot;</span><span class="p">,</span>
+                                                              <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
+                                                              <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Types&#39;</span>
+                                                             <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_corpus-analytics_29_0.png" src="_images/04_corpus-analytics_29_0.png" />
+</div>
+</div>
+<p>With tokens and types generated, we can generate a measure of <strong>lexical diversity</strong>. There are a few such measures.
+We’ll go with a <strong>type-token ratio</strong> (TTR), which measures how much the vocabulary of a text varies over its
+tokens. It’s a simple metric: divide the number of types (unique words) by the total number of tokens in a text and
+normalize the result. A text with a TTR of 100, for example, would never repeat a word.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TTR</span> <span class="o">=</span> <span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TTR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                                                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratios for each Story&#39;</span><span class="p">,</span>
                                                         <span class="n">legend</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                                                         <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Story Title&#39;</span><span class="p">,</span>
                                                         <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratio %&#39;</span><span class="p">,</span>
@@ -862,12 +1024,132 @@ column values with row values.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_corpus-analytics_25_0.png" src="_images/04_corpus-analytics_25_0.png" />
+<img alt="_images/04_corpus-analytics_31_0.png" src="_images/04_corpus-analytics_31_0.png" />
 </div>
 </div>
+<p>Let’s move to terms. Here are the top five most occurring terms in the corpus:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># use to pivot to tf-idf</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>say     2028
+like    1495
+know    1031
+look     953
+said     867
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the bottom five:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>aaa              1
+heartbroken      1
+heartbreaking    1
+heartbreak       1
+heartache        1
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Though there are likely to be quite a few one-count terms. Here are the bottom ten:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>aaa              1
+heartbroken      1
+heartbreaking    1
+heartbreak       1
+heartache        1
+hearse           1
+hears            1
+signature        1
+significance     1
+significant      1
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each of these terms is called a <strong>hapax legomenon</strong> (Greek for “only said once”). How many are in our corpus
+altogether?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hapaxes</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number of hapax legomenons: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span><span class="si">}</span><span class="s2">,&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;or </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">:</span><span class="s2">.02f</span><span class="si">}</span><span class="s2">% of the words in our corpus&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of hapax legomenons: 7463, or 0.47% of the words in our corpus
+</pre></div>
+</div>
+</div>
+</div>
+<p>How many terms are in the top five quantiles of the term counts?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count_quantile</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="n">count_quantile_words</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">count_quantile</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Word counts for the ninety-fifth quantile: </span><span class="si">{</span><span class="n">count_quantile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of words with counts at or above this quantile: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">count_quantile_words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> 
+    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">count_quantile_words</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">:</span><span class="s2">.02f</span><span class="si">}</span><span class="s2">% of words)&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word counts for the ninety-fifth quantile: 31.0 
+Number of words with counts at or above this quantile: 801 (0.05% of words)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The discrepancies between the above two values should feel familiar: our term distribution is Zipfian.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                                            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Term Counts&#39;</span><span class="p">,</span>
+                                            <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Term&#39;</span><span class="p">,</span> 
+                                            <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span>
+                                            <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="mi">750</span><span class="p">),</span>
+                                            <span class="n">rot</span> <span class="o">=</span> <span class="mi">45</span>
+                                           <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/04_corpus-analytics_43_0.png" src="_images/04_corpus-analytics_43_0.png" />
+</div>
+</div>
+<p>This distribution has a few consequences for us. On the one hand, it suggests that we might have some more cleaning
+to do in terms of stop word removal: “say” and “like” could be candidates for removal. If we don’t remove these
+terms, we might have trouble identifying unique aspects of each story in our corpus. Highly frequent terms will
+choke out differences across the corpus, as we can see here with the top terms for each story:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -930,27 +1212,33 @@ dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_words</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_terms</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;say&#39;</span><span class="p">,</span> <span class="s1">&#39;says&#39;</span><span class="p">,</span> <span class="s1">&#39;said&#39;</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Number of stories where &#39;say&#39; is the top word: </span><span class="si">{</span><span class="n">top_words</span><span class="p">[</span><span class="n">top_words</span> <span class="o">==</span> <span class="s1">&#39;say&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of stories where &#39;said&#39; is the top word: </span><span class="si">{</span><span class="n">top_words</span><span class="p">[</span><span class="n">top_words</span> <span class="o">==</span> <span class="s1">&#39;said&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Stories where </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> is the top word: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">top_terms</span><span class="p">[</span><span class="n">top_terms</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">target</span><span class="p">)])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-
-<span class="c1"># nearly a third of our stories!</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of stories where &#39;say&#39; is the top word: 14 
-Number of stories where &#39;said&#39; is the top word: 2
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Stories where [&#39;say&#39;, &#39;says&#39;, &#39;said&#39;] is the top word: 17
 </pre></div>
 </div>
 </div>
 </div>
+<p>That’s a third of our stories!</p>
+<p>But there’s also an argument to be made for keeping “said” and “say” in our corpus. We are, after all, looking at
+narrative stories, and it matters that there’s dialogue. Removing these words would prevent us from studying this
+later on.</p>
+<p>How, then, can we have it both ways? How can we reduce the influence of highly frequent terms without removing them
+altogether?</p>
 </div>
 <div class="section" id="weighted-metrics">
 <h3><span class="section-number">4.4.2. </span>Weighted Metrics<a class="headerlink" href="#weighted-metrics" title="Permalink to this headline">¶</a></h3>
+<p>The answer is to <strong>weight</strong> our terms, doing so in a way that lessens the impact of terms we know to be highly
+general for our corpus and increases the impact of terms that are unique to each story. The most popular way to do
+this is to implement <strong>tf-idf, or term frequency–inverse document frequency, scoring</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
@@ -958,7 +1246,7 @@ Number of stories where &#39;said&#39; is the top word: 2
 <span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_df</span><span class="o">=</span><span class="mf">0.98</span><span class="p">)</span>
 <span class="n">tfidf_vectorized</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
 
-<span class="n">tfidf_dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">])</span>
+<span class="n">tfidf_dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -968,12 +1256,12 @@ Number of stories where &#39;said&#39; is the top word: 2
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
 
 <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_dtm</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">);</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_corpus-analytics_30_0.png" src="_images/04_corpus-analytics_30_0.png" />
+<img alt="_images/04_corpus-analytics_50_0.png" src="_images/04_corpus-analytics_50_0.png" />
 </div>
 </div>
 </div>
