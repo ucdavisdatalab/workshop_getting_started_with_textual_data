@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -215,8 +217,8 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-data">
-   4.1. The Data
+  <a class="reference internal nav-link" href="#using-a-file-manifest">
+   4.1. Using a File Manifest
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -247,18 +249,28 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#term-metrics">
-   4.4. Term Metrics
+  <a class="reference internal nav-link" href="#analyzing-the-corpus">
+   4.4. Analyzing the Corpus
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#raw-metrics">
-     4.4.1. Raw Metrics
+    <a class="reference internal nav-link" href="#raw-metrics-documents">
+     4.4.1. Raw Metrics: Documents
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#weighted-metrics">
-     4.4.2. Weighted Metrics
+    <a class="reference internal nav-link" href="#raw-metrics-terms">
+     4.4.2. Raw Metrics: Terms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#weighted-metrics-tf-idf-scores">
+     4.4.3. Weighted Metrics: tf-idf Scores
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#term-correlations">
+     4.4.4. Term Correlations
     </a>
    </li>
   </ul>
@@ -289,25 +301,23 @@ stories from 1981 to 2006. <strong>UNCLEAR WHETHER WE’LL ULTIMATELY USE THIS O
 CHAPTER.</strong></p>
 <div class="admonition-learning-objectives admonition">
 <p class="admonition-title">Learning Objectives</p>
-<p>By the end of this workshop, you will be able to:</p>
+<p>By the end of this chapter, you will be able to:</p>
 <ul class="simple">
 <li><p>Develop a workflow for cleaning multiple texts and compiling them into a corpus</p></li>
 <li><p>Use a document-term matrix, to represent relationships between texts in a corpus</p></li>
 <li><p>Generate metrics about texts in a corpus, including document length, term frequency, lexical diversity, etc.</p></li>
-<li><p>Explain the difference between raw term metrics and weighted term scoring (specifically, TF-IDF scoring)</p></li>
-<li><p>Cluster texts according to their shared/similar features</p></li>
+<li><p>Explain the difference between raw term metrics and weighted term scoring (specifically, tf-idf scoring)</p></li>
 </ul>
 </div>
-<div class="section" id="the-data">
-<h2><span class="section-number">4.1. </span>The Data<a class="headerlink" href="#the-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-a-file-manifest">
+<h2><span class="section-number">4.1. </span>Using a File Manifest<a class="headerlink" href="#using-a-file-manifest" title="Permalink to this headline">¶</a></h2>
 <p>Before we begin cleaning, let’s load in a file manifest to get a quick overview of what will be in our corpus.
 We’ll also use this manifest to sequentially load each file, clean it, and add it to our corpus.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">indir</span> <span class="o">=</span>  <span class="s2">&quot;data/session_two/&quot;</span>
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span> <span class="o">+</span> <span class="s2">&quot;manifest.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/session_two/manifest.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;TITLE&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
@@ -342,11 +352,11 @@ Columns in the manifest: [&#39;NAME&#39; &#39;YEAR&#39; &#39;FILE_NAME&#39;]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BAUSCH, Richard: TheFireman’sWife
-SILBER, Joan: MyShape
-BANKS, Russell: SarahColeATypeofLoveStory
-NELSON, Antonya: FemaleTrouble
-GAITSKILL, Mary: Tiny, Smiling Daddy
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NELSON, Antonya: FemaleTrouble
+OATES, JOYCECAROL: TheTranslation
+LINK, Kelly: Stone Animals
+EISENBERG, Deborah: TwilightoftheSuperheroes
+YARBROUGH, Steve: TheRestofHerLife
 </pre></div>
 </div>
 </div>
@@ -462,7 +472,8 @@ the second, and so on.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indir</span> <span class="o">=</span>  <span class="s2">&quot;data/session_two/input/&quot;</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
     <span class="n">filepath</span> <span class="o">=</span> <span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;FILE_NAME&#39;</span><span class="p">]</span>
@@ -510,17 +521,18 @@ silver cloud float horizon robin sparrow trees son joshuas seventh
 </div>
 <div class="section" id="the-document-term-matrix">
 <h2><span class="section-number">4.3. </span>The Document-Term Matrix<a class="headerlink" href="#the-document-term-matrix" title="Permalink to this headline">¶</a></h2>
-<p>Before we switch into full data exploration mode, we’re going to perform one last process on our corpus. Remember
-from the last chapter that much of text analytics relies on <strong>counts</strong> and <strong>context</strong>: tracking the former in
-tandem with the latter is how we identify relationships between words (the final section on bigram PMI scores
-demonstrated this, for example). As with <em>Frankenstein</em>, here we’ll want to tally up all the words in each story.
-That produces one kind of text—or rather, fifty different contexts: one for every story. But we have at our hands
-a <em>corpus</em>, the analysis of which requires a different kind of context: a single one for all the stories. That is,
-we need a way to relate stories <em>to each other</em>, instead of only tracking word values across single texts.</p>
+<p>Before we switch into full data exploration mode, we’re going to perform one last formatting process on our corpus.
+Remember from the last chapter that much of text analytics relies on <strong>counts</strong> and <strong>context</strong>: tracking the
+former in tandem with the latter is how we identify relationships between words (the final section on bigram PMI
+scores demonstrated this, for example). As with <em>Frankenstein</em>, here we’ll want to tally up all the words in each
+story. That produces one kind of context – or rather, fifty different contexts: one for every story. But we have at
+our hands a corpus, the analysis of which requires a different kind of context: a single one for all the stories.
+That is, we need a way to relate stories <em>to each other</em>, instead of only tracking word values inside a single
+text.</p>
 <p>To do so, we’ll build a <strong>document-term matrix</strong>, or <strong>DTM</strong>. A DTM is a matrix that contains the frequencies of
-terms in a corpus. Every row in this matrix corresponds to a document, while every column corresponds to a term.
-For a given document, we count the number of times that term appears and enter that number in the column in
-question. We do this <em>even if</em> the count is 0; key to the way a DTM works is that it represents corpus-wide
+<em>all</em> terms in a corpus. Every row in this matrix corresponds to a document, while every column corresponds to a
+term. For a given document, we count the number of times that term appears and enter that number in the column in
+question. We do this <em>even if</em> the count is zero; key to the way a DTM works is that it represents corpus-wide
 relationships between texts, so it matters if a text does or doesn’t contain a term.</p>
 <p>Here’s a toy example. Imagine three documents:</p>
 <ol class="simple">
@@ -954,12 +966,12 @@ associate column values with row values.</p>
 </div></div></div>
 </div>
 </div>
-<div class="section" id="term-metrics">
-<h2><span class="section-number">4.4. </span>Term Metrics<a class="headerlink" href="#term-metrics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="analyzing-the-corpus">
+<h2><span class="section-number">4.4. </span>Analyzing the Corpus<a class="headerlink" href="#analyzing-the-corpus" title="Permalink to this headline">¶</a></h2>
 <p>With our DTM made, we can use it to generate some metrics about each text in our corpus. We’ll use <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> data
 manipulations in conjunction with <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> to do this.</p>
-<div class="section" id="raw-metrics">
-<h3><span class="section-number">4.4.1. </span>Raw Metrics<a class="headerlink" href="#raw-metrics" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="raw-metrics-documents">
+<h3><span class="section-number">4.4.1. </span>Raw Metrics: Documents<a class="headerlink" href="#raw-metrics-documents" title="Permalink to this headline">¶</a></h3>
 <p>Here’s an easy one: let’s count the number of tokens in each story and assign the result to a new column in our
 manifest.</p>
 <div class="margin sidebar">
@@ -975,11 +987,11 @@ will sum together each value in every row.</p>
 
 <span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TOKENS</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-                                                             <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Tokens per Story&quot;</span><span class="p">,</span>
-                                                             <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
-                                                             <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Tokens&#39;</span>
-                                                            <span class="p">);</span>
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                                                               <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Tokens per Story&quot;</span><span class="p">,</span>
+                                                               <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
+                                                               <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Tokens&#39;</span>
+                                                              <span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -988,7 +1000,7 @@ will sum together each value in every row.</p>
 </div>
 </div>
 <p>We can also count the number of unique words, or <strong>types</strong>, in each story. Types correspond to a story’s
-vocabulary, whereas tokens correspond to the amount of elements in a story.</p>
+vocabulary, whereas tokens correspond to the amount of each type in a story.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TYPES</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
@@ -1014,9 +1026,9 @@ normalize the result. A text with a TTR of 100, for example, would never repeat 
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TTR</span> <span class="o">=</span> <span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TTR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-                                                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratios for each Story&#39;</span><span class="p">,</span>
+                                                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratios per Story&#39;</span><span class="p">,</span>
                                                         <span class="n">legend</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                                        <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Story Title&#39;</span><span class="p">,</span>
+                                                        <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
                                                         <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratio %&#39;</span><span class="p">,</span>
                                                         <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
                                                        <span class="p">);</span>
@@ -1027,7 +1039,12 @@ normalize the result. A text with a TTR of 100, for example, would never repeat 
 <img alt="_images/04_corpus-analytics_31_0.png" src="_images/04_corpus-analytics_31_0.png" />
 </div>
 </div>
-<p>Let’s move to terms. Here are the top five most occurring terms in the corpus:</p>
+<p>With this, we can make some preliminary comparisons across our corpus, weighing the vocabulary of one story against
+another.</p>
+</div>
+<div class="section" id="raw-metrics-terms">
+<h3><span class="section-number">4.4.2. </span>Raw Metrics: Terms<a class="headerlink" href="#raw-metrics-terms" title="Permalink to this headline">¶</a></h3>
+<p>Let’s move to terms. Here are the top five most frequent terms in the corpus:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -1140,10 +1157,10 @@ Number of words with counts at or above this quantile: 801 (0.05% of words)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_corpus-analytics_43_0.png" src="_images/04_corpus-analytics_43_0.png" />
+<img alt="_images/04_corpus-analytics_44_0.png" src="_images/04_corpus-analytics_44_0.png" />
 </div>
 </div>
-<p>This distribution has a few consequences for us. On the one hand, it suggests that we might have some more cleaning
+<p>This distribution has a few consequences for us. It suggests, for example, that we might have some more cleaning
 to do in terms of stop word removal: “say” and “like” could be candidates for removal. If we don’t remove these
 terms, we might have trouble identifying unique aspects of each story in our corpus. Highly frequent terms will
 choke out differences across the corpus, as we can see here with the top terms for each story:</p>
@@ -1234,34 +1251,470 @@ later on.</p>
 <p>How, then, can we have it both ways? How can we reduce the influence of highly frequent terms without removing them
 altogether?</p>
 </div>
-<div class="section" id="weighted-metrics">
-<h3><span class="section-number">4.4.2. </span>Weighted Metrics<a class="headerlink" href="#weighted-metrics" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="weighted-metrics-tf-idf-scores">
+<h3><span class="section-number">4.4.3. </span>Weighted Metrics: tf-idf Scores<a class="headerlink" href="#weighted-metrics-tf-idf-scores" title="Permalink to this headline">¶</a></h3>
 <p>The answer is to <strong>weight</strong> our terms, doing so in a way that lessens the impact of terms we know to be highly
-general for our corpus and increases the impact of terms that are unique to each story. The most popular way to do
-this is to implement <strong>tf-idf, or term frequency–inverse document frequency, scoring</strong></p>
+general in our corpus and that increases the impact of unique terms for each story. The most popular way to do this
+is to implement <strong>tf-idf, or term frequency–inverse document frequency, scoring</strong>. In essence, a tf-idf score is a
+measure of term specificity in the context of a given document. It is the product of a term’s frequency in that
+document and the number of documents in which that term appears. By offsetting terms that appear across many
+documents, tf-idf pushes down the scores of common terms and boosts the scores of rarer ones.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">The idf score</p>
+<p>We calculate the inverse document frequency (idf) score with</p>
+<p><span class="math notranslate nohighlight">\(idf_i = log(\frac{n}{df_i})\)</span></p>
+<p>Where <span class="math notranslate nohighlight">\(idf_i\)</span>, the idf score for term <span class="math notranslate nohighlight">\(i\)</span>, is the log of <span class="math notranslate nohighlight">\(n\)</span>, the total number of documents, over <span class="math notranslate nohighlight">\(df_i\)</span>, the
+number of documents that contain <span class="math notranslate nohighlight">\(i\)</span>.</p>
+</div>
+<p>A tf-idf score can be expressed as</p>
+<p><span class="math notranslate nohighlight">\(w_i,_j = tf_i,_j \cdot idf_i\)</span></p>
+<p>Where, for term <span class="math notranslate nohighlight">\(i\)</span> and document <span class="math notranslate nohighlight">\(j\)</span>, the score <span class="math notranslate nohighlight">\(w\)</span> is the term frequency, or <span class="math notranslate nohighlight">\(tf_i,_j\)</span>, for <span class="math notranslate nohighlight">\(i\)</span> in <span class="math notranslate nohighlight">\(j\)</span>, multiplied
+by <span class="math notranslate nohighlight">\(idf_i\)</span>, the inverse document score. The higher the score, the more specific a term is for a given document.</p>
+<p>Conveniently, we don’t need to implement any of this math ourselves. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has a <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer()</span></code>
+object, which works just like <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code>, but instead of producing a DTM of raw term counts, it produces a
+DTM of tf-idf scores. Let’s import <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer()</span></code>, initialize it, fit it to our corpus, and generate a new DTM
+with these scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 
-<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_df</span><span class="o">=</span><span class="mf">0.98</span><span class="p">)</span>
-<span class="n">tfidf_vectorized</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">vectorized_with_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
 
-<span class="n">tfidf_dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">tfidf_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vectorized_with_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+                            <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                            <span class="n">columns</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+                           <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-
-<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf_dtm</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04_corpus-analytics_50_0.png" src="_images/04_corpus-analytics_50_0.png" />
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aaa</th>
+      <th>aaaaargh</th>
+      <th>aaaargh</th>
+      <th>aachen</th>
+      <th>aachens</th>
+      <th>aahed</th>
+      <th>aback</th>
+      <th>abandon</th>
+      <th>abandoned</th>
+      <th>abbey</th>
+      <th>abbreviate</th>
+      <th>abby</th>
+      <th>abbylucyferny</th>
+      <th>abdomen</th>
+      <th>abdominal</th>
+    </tr>
+    <tr>
+      <th>TITLE</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TheSchool</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Tony’sStory</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>NineteenFifty-five</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Girl</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Territory</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.007863</td>
+      <td>0.070767</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To see the difference tf-idf scores make, let’s look at the top terms for each story according to these scores,
+rather than raw counts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TITLE
+TheSchool                                  helen
+Tony’sStory                                 leon
+NineteenFifty-five                       traynor
+Girl                                        dont
+Territory                                   neil
+HowFarSheWent                             granny
+SarahColeATypeofLoveStory                  sarah
+Caviar                                     marie
+WinnersonthePassLine                         ray
+TheWayWeLiveNow                          quentin
+Communist                                   glen
+TheManagementofGrief                       kusum
+TheFireman’sWife                            jane
+Wickedness                                hattie
+Lust                                        like
+TwoKinds                                   piano
+TheDisappeared                            anders
+ARealDoll                                 barbie
+TheThingsTheyCarried                       carry
+NeverMarryaMexican                          like
+CarCrashWhileHitchhiking                     car
+Marie                                      marie
+TheKindofLightThatShinesonTexas           oakley
+SilverWater                                 rose
+ThePugilistatRest                       jorgeson
+TheTranslation                            oliver
+Orientation                              cubicle
+JealousHusbandReturnsinFormofParrot         bird
+Relief                                  bromhead
+AfterRosaParks                             ellie
+Tiny, Smiling Daddy                        kitty
+Xmas,JamaicaPlain                          emile
+TheRestofHerLife                         chuckie
+Nilda                                       rafa
+ATemporaryMatter                           shoba
+TheHalf-SkinnedSteer                       rollo
+SeaOak                                       min
+Boys                                        boys
+TheCavemenintheHedges                        kim
+TheHermit&#39;sStory                          joshua
+TheCeiling                                   ann
+TheCaretaker                              joseph
+Pilgrims                                    ella
+Brownies                                 arnetta
+WeDidn’t                                   drown
+TheSecretGoldfish                           fish
+MyShape                                   pierre
+Stone Animals                          catherine
+FemaleTrouble                            mcbride
+TwilightoftheSuperheroes                  lucien
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note all the names, which have fully replaced those common words from before. This makes intuitive sense: most
+stories are about specific characters, and these characters’ names tend not to occur in other stories. Given that
+tf-idf scores help us home in on term specificity, they’re going to highlight this fact.</p>
+<p>Let’s also look at a single story. We’ll compare the top ten raw counts for that story and the top ten tf-idf
+scores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Top ten term counts for The Things They Carried</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">story</span> <span class="o">=</span> <span class="s1">&#39;TheThingsTheyCarried&#39;</span>
+<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">,</span> <span class="n">term</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top ten term counts for The Things They Carried
+
+     carry: 114
+      love: 28
+lieutenant: 27
+     cross: 26
+       say: 25
+     pound: 23
+  lavender: 22
+    martha: 21
+      just: 20
+       men: 19
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Top ten tf-idf scores for The Things They Carried</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">,</span> <span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top ten tf-idf scores for The Things They Carried
+
+     carry: 0.4399
+lieutenant: 0.2567
+    martha: 0.2304
+  lavender: 0.2092
+     kiowa: 0.1820
+   sanders: 0.1456
+       ted: 0.1426
+     jimmy: 0.1421
+     pound: 0.1344
+     weigh: 0.1282
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note how, in the above, common words like “say” and “just” slip out of the tf-idf rankings, to be replaced instead
+by names and other nouns.</p>
+<p>If we wanted to get a sense of just how specific each of these terms are to our story, we can compare them with
+that term’s mean score in the corpus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_tfidf</span> <span class="o">=</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">term</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Text tf-idf: </span><span class="si">{</span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">,</span> <span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Mean tf-idf: </span><span class="si">{</span><span class="n">mean_tfidf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>carry 
++ Text tf-idf: 0.4399 
++ Mean tf-idf: 0.0159
+
+lieutenant 
++ Text tf-idf: 0.2567 
++ Mean tf-idf: 0.0083
+
+martha 
++ Text tf-idf: 0.2304 
++ Mean tf-idf: 0.0128
+
+lavender 
++ Text tf-idf: 0.2092 
++ Mean tf-idf: 0.0048
+
+kiowa 
++ Text tf-idf: 0.1820 
++ Mean tf-idf: 0.0036
+
+sanders 
++ Text tf-idf: 0.1456 
++ Mean tf-idf: 0.0029
+
+ted 
++ Text tf-idf: 0.1426 
++ Mean tf-idf: 0.0037
+
+jimmy 
++ Text tf-idf: 0.1421 
++ Mean tf-idf: 0.0032
+
+pound 
++ Text tf-idf: 0.1344 
++ Mean tf-idf: 0.0070
+
+weigh 
++ Text tf-idf: 0.1282 
++ Mean tf-idf: 0.0031
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="term-correlations">
+<h3><span class="section-number">4.4.4. </span>Term Correlations<a class="headerlink" href="#term-correlations" title="Permalink to this headline">¶</a></h3>
+<p>Looking beyond a single story, we can use our tf-idf DTM to identify correlations across the corpus. These
+correlations aren’t a perfect stand-in for semantic similarity, but they will give us a sense of how two terms are
+associated among the documents, much in the way a PMI score indicated the specificity of bigrams in the last
+chapter. Let’s grab five random terms from our corpus (the columns of <code class="docutils literal notranslate"><span class="pre">tfidf_scores</span></code>) and calculate correlations
+between them with the <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> <code class="docutils literal notranslate"><span class="pre">corr()</span></code> function.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Note:</p>
+<p>We’re stacking these numbers together for ease of reading, but the raw output of <code class="docutils literal notranslate"><span class="pre">corr()</span></code> is a correlation matrix.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_five</span> <span class="o">=</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="mi">5</span><span class="p">)]</span>
+<span class="n">tfidf_scores</span><span class="p">[</span><span class="n">random_five</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>winnie       winnie         1.000000
+             decapitated   -0.020408
+             fellowship    -0.031614
+             sew           -0.023550
+             exist         -0.069954
+decapitated  winnie        -0.020408
+             decapitated    1.000000
+             fellowship    -0.031614
+             sew           -0.023550
+             exist         -0.069954
+fellowship   winnie        -0.031614
+             decapitated   -0.031614
+             fellowship     1.000000
+             sew           -0.036480
+             exist         -0.108363
+sew          winnie        -0.023550
+             decapitated   -0.023550
+             fellowship    -0.036480
+             sew            1.000000
+             exist         -0.064974
+exist        winnie        -0.069954
+             decapitated   -0.069954
+             fellowship    -0.108363
+             sew           -0.064974
+             exist          1.000000
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also select terms ourselves and see how they correlate:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_terms</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;book&#39;</span><span class="p">:</span> <span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="s1">&#39;yell&#39;</span><span class="p">:</span> <span class="s1">&#39;whisper&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="s1">&#39;zucchini&#39;</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">selected_terms</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Correlation between </span><span class="si">{</span><span class="n">term</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">selected_terms</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tfidf_scores</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">tfidf_scores</span><span class="p">[</span><span class="n">selected_terms</span><span class="p">[</span><span class="n">term</span><span class="p">]])</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation between book and page    : 0.5978
+Correlation between yell and whisper : 0.1631
+Correlation between mean and zucchini: -0.1580
+</pre></div>
+</div>
+</div>
+</div>
+<p>With these metrics in hand, there’s much to explore in our corpus. But what we haven’t yet done so far is merge the
+two levels of our investigations. That is, we’ve explored our corpus at the level of documents, and we’ve explored
+our corpus at the level of terms, but what we haven’t yet done is use one to explore the other. The next chapter
+will take this up in full. We’ll be using our tf-idf DTM to do so, so let’s save it. We’ll also be using our fitted
+<code class="docutils literal notranslate"><span class="pre">TfidfVectorizer()</span></code>, for reasons that the next chapter will explain. For now, let’s save that too and end here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;data/session_two/output/&quot;</span>
+
+<span class="n">tfidf_scores</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">outdir</span> <span class="o">+</span> <span class="s2">&quot;tfidf_scores.csv&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outdir</span> <span class="o">+</span> <span class="s2">&quot;tfidf_vectorizer.pkl&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">tfidf_vectorizer</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
