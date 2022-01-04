@@ -53,6 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Clustering and Classification" href="05_clustering-and-classification.html" />
     <link rel="prev" title="3. Cleaning and Counting" href="03_cleaning-and-counting.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -113,6 +114,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    4. Corpus Analytics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_clustering-and-classification.html">
+   5. Clustering and Classification
   </a>
  </li>
 </ul>
@@ -352,11 +358,11 @@ Columns in the manifest: [&#39;NAME&#39; &#39;YEAR&#39; &#39;FILE_NAME&#39;]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NELSON, Antonya: FemaleTrouble
-OATES, JOYCECAROL: TheTranslation
-LINK, Kelly: Stone Animals
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DÍAZ, Junot: Nilda
+BLOOM, Amy: SilverWater
+MOODY, Rick: Boys
 EISENBERG, Deborah: TwilightoftheSuperheroes
-YARBROUGH, Steve: TheRestofHerLife
+HOMES, A.M.: ARealDoll
 </pre></div>
 </div>
 </div>
@@ -1648,31 +1654,31 @@ between them with the <code class="docutils literal notranslate"><span class="pr
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>winnie       winnie         1.000000
-             decapitated   -0.020408
-             fellowship    -0.031614
-             sew           -0.023550
-             exist         -0.069954
-decapitated  winnie        -0.020408
-             decapitated    1.000000
-             fellowship    -0.031614
-             sew           -0.023550
-             exist         -0.069954
-fellowship   winnie        -0.031614
-             decapitated   -0.031614
-             fellowship     1.000000
-             sew           -0.036480
-             exist         -0.108363
-sew          winnie        -0.023550
-             decapitated   -0.023550
-             fellowship    -0.036480
-             sew            1.000000
-             exist         -0.064974
-exist        winnie        -0.069954
-             decapitated   -0.069954
-             fellowship    -0.108363
-             sew           -0.064974
-             exist          1.000000
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numbers   numbers     1.000000
+          sketch     -0.045661
+          share       0.148480
+          supplies   -0.028505
+          vas        -0.026702
+sketch    numbers    -0.045661
+          sketch      1.000000
+          share       0.049549
+          supplies   -0.037253
+          vas        -0.034898
+share     numbers     0.148480
+          sketch      0.049549
+          share       1.000000
+          supplies   -0.107062
+          vas         0.008371
+supplies  numbers    -0.028505
+          sketch     -0.037253
+          share      -0.107062
+          supplies    1.000000
+          vas        -0.021786
+vas       numbers    -0.026702
+          sketch     -0.034898
+          share       0.008371
+          supplies   -0.021786
+          vas         1.000000
 dtype: float64
 </pre></div>
 </div>
@@ -1759,6 +1765,15 @@ will take this up in full. We’ll be using our tf-idf DTM to do so, so let’s 
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="05_clustering-and-classification.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title"><span class="section-number">5. </span>Clustering and Classification</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
