@@ -301,10 +301,10 @@ many interesting things about a single text, but looking at this text in the con
 clarify and expand any potential findings we might make. Accordingly, we’ll learn how to implement our cleaning
 steps on multiple files and then format them in a way that enables us to make connections between them. We’ll then
 generate several metrics about these texts and use them to observe similarities/differences across the corpus.</p>
-<p>We’ll also leave <em>Frankenstein</em> behind, at least for now. In place of this novel, we will use Andrew Piper’s
-<a class="reference external" href="https://doi.org/10.6084/m9.figshare.17425571.v1">collection of English short stories</a>, which gathers together 50
-stories from 1981 to 2006. <strong>UNCLEAR WHETHER WE’LL ULTIMATELY USE THIS ONE—PLUGGING IT IN TO OUTLINE THE
-CHAPTER.</strong></p>
+<p>We’ll also leave <em>Frankenstein</em> behind. In place of this novel, we will use Melanie Walsh’s <a class="reference external" href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/00-Datasets/00-Datasets.html">collection</a> of ~380
+obituaries from the <em>New York Times</em>.  “Obituary subjects,” Walsh writes, “include academics, military generals,
+artists, athletes, activists, politicians, and businesspeople — such as Ada Lovelace, Ulysses Grant, Marilyn
+Monroe, Virginia Woolf, Jackie Robinson, Marsha P. Johnson, Cesar Chavez, John F. Kennedy, Ray Kroc, and many more.”</p>
 <div class="admonition-learning-objectives admonition">
 <p class="admonition-title">Learning Objectives</p>
 <p>By the end of this chapter, you will be able to:</p>
@@ -324,45 +324,58 @@ We’ll also use this manifest to sequentially load each file, clean it, and add
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/session_two/manifest.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;TITLE&#39;</span><span class="p">)</span>
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">YEAR</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;YEAR&#39;</span><span class="p">],</span> <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Number of stories:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">),</span>
-    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of authors:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
+    <span class="s2">&quot;Number of obituaries:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">),</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Number of different people:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
     <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Columns in the manifest:&quot;</span><span class="p">,</span> <span class="n">manifest</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
-<span class="n">manifest</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;YEAR&#39;</span><span class="p">)[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-                                                  <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Number of Stories per Year&quot;</span><span class="p">,</span>
-                                                  <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Year&quot;</span><span class="p">,</span>
-                                                  <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Count&quot;</span><span class="p">,</span>
-                                                  <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-                                                 <span class="p">);</span>
+
+<span class="n">date_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;YEAR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;YEAR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">manifest</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;YEAR&#39;</span><span class="p">)[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                                              <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Number of Obituaries per Year&#39;</span><span class="p">,</span>
+                                              <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span>
+                                              <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span>
+                                              <span class="n">xticks</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">,</span>
+                                              <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+                                              <span class="n">rot</span> <span class="o">=</span> <span class="mi">45</span>
+                                             <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of stories: 50 
-Number of authors: 50 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of obituaries: 379 
+Number of different people: 378 
 Columns in the manifest: [&#39;NAME&#39; &#39;YEAR&#39; &#39;FILE_NAME&#39;]
 </pre></div>
 </div>
 <img alt="_images/04_corpus-analytics_2_1.png" src="_images/04_corpus-analytics_2_1.png" />
 </div>
 </div>
-<p>Here are a few story titles, selected at random:</p>
+<p>Here are a few people in the corpus, selected at random:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Name: </span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Year: </span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;YEAR&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DÍAZ, Junot: Nilda
-BLOOM, Amy: SilverWater
-MOODY, Rick: Boys
-EISENBERG, Deborah: TwilightoftheSuperheroes
-HOMES, A.M.: ARealDoll
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Name: Eva Peron
+Year: 1952
+
+Name: Jacques Monod
+Year: 1976
+
+Name: Susan B Anthony
+Year: 1906
+
+Name: Bobby Jones
+Year: 1971
+
+Name: The Challenger
+Year: 1986
 </pre></div>
 </div>
 </div>
@@ -378,7 +391,7 @@ see the DataLab’s <a class="reference external" href="https://ucdavisdatalab.g
 <h2><span class="section-number">4.2. </span>Text Cleaning<a class="headerlink" href="#text-cleaning" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="recap">
 <h3><span class="section-number">4.2.1. </span>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">¶</a></h3>
-<p>With our manifest loaded, we can review our cleaning steps. For each short story in our corpus, we want to:</p>
+<p>With our manifest loaded, we can review our cleaning steps. For each text in our corpus, we want to:</p>
 <ol class="simple">
 <li><p>Resolve casing</p></li>
 <li><p>Remove punctuation, numbers, and any extra formatting</p></li>
@@ -426,8 +439,7 @@ or less characters long</p></li>
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">remove_whitespace</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">doc</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">remove_stop_words</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -459,13 +471,12 @@ act as templates, which you can modify to suit your own needs.</p>
 </div>
 <div class="section" id="cleaning-our-texts">
 <h3><span class="section-number">4.2.3. </span>Cleaning our texts<a class="headerlink" href="#cleaning-our-texts" title="Permalink to this headline">¶</a></h3>
-<p>With our functions defined, we can now load each story, roll through all the cleaning steps, and append the cleaned
-story to a list. The result will be our <strong>corpus</strong>, a fifty-item list of strings, where each string contains all
-the tokens in a given story. The <em>order</em> of these entries will be important for work we want to do later on, so we
-need to make sure that each string always has the same position in the larger list of stories. This is where the
-file manifest comes in: <em>we’ll load stories in the order provided by the <code class="docutils literal notranslate"><span class="pre">FILE_NAME</span></code> column of <code class="docutils literal notranslate"><span class="pre">manifest</span></code></em>. Doing
-so ensures that the first index (<code class="docutils literal notranslate"><span class="pre">0</span></code>) of our corpus corresponds to the first short story, the second index (<code class="docutils literal notranslate"><span class="pre">1</span></code>) to
-the second, and so on.</p>
+<p>With our functions defined, we can now load each text, roll through all the cleaning steps, and append the cleaned
+text to a list. The result will be our <strong>corpus</strong>, a list of strings, where each string contains all the tokens in
+a given text. The <em>order</em> of these entries will be important for work we want to do later on, so we need to make
+sure that each string always has the same position in the larger list of texts. This is where the file manifest
+comes in: <em>we’ll load texts in the order provided by the <code class="docutils literal notranslate"><span class="pre">FILE_NAME</span></code> column of <code class="docutils literal notranslate"><span class="pre">manifest</span></code></em>. Doing so ensures that
+the first index (<code class="docutils literal notranslate"><span class="pre">0</span></code>) of our corpus corresponds to the first text, the second index (<code class="docutils literal notranslate"><span class="pre">1</span></code>) to the second, and so on.</p>
 <p>Let’s write all this out in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop and do our cleaning.</p>
 <div class="margin sidebar">
 <p class="sidebar-title">What this loop does:</p>
@@ -484,14 +495,14 @@ the second, and so on.</p>
 <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
     <span class="n">filepath</span> <span class="o">=</span> <span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;FILE_NAME&#39;</span><span class="p">]</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">story</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">cleaned_story</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">story</span><span class="p">)</span>
-        <span class="n">corpus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cleaned_story</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">cleaned</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">corpus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>As a sanity check, we can run an assertion statement, which checks that <code class="docutils literal notranslate"><span class="pre">corpus</span></code> has as many stories in it as
+<p>As a sanity check, we can run an assertion statement, which checks that <code class="docutils literal notranslate"><span class="pre">corpus</span></code> has as many texts in it as
 <code class="docutils literal notranslate"><span class="pre">manifest</span></code> does…</p>
 <div class="margin sidebar">
 <p class="sidebar-title">On assertions…</p>
@@ -505,19 +516,19 @@ after the comma.</p>
 </div>
 </div>
 </div>
-<p>…and we can inspect some tokens from a few stories to make sure all is well:</p>
+<p>…and we can inspect some tokens from a few texts to make sure all is well:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">39</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
     <span class="n">fragment</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fragment</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">20</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>behind card table outside food minute sun shift chair table
-barbie away ken practice future sit sisters room watch barbie
-silver cloud float horizon robin sparrow trees son joshuas seventh
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>james cagney cocky pugnacious film star set standard gangster role
+emperor year old ethiopian monarchy rule half century depose military
+times john dewey philosopher teaching grow school progressive education learning
 </pre></div>
 </div>
 </div>
@@ -531,15 +542,15 @@ silver cloud float horizon robin sparrow trees son joshuas seventh
 Remember from the last chapter that much of text analytics relies on <strong>counts</strong> and <strong>context</strong>: tracking the
 former in tandem with the latter is how we identify relationships between words (the final section on bigram PMI
 scores demonstrated this, for example). As with <em>Frankenstein</em>, here we’ll want to tally up all the words in each
-story. That produces one kind of context – or rather, fifty different contexts: one for every story. But we have at
-our hands a corpus, the analysis of which requires a different kind of context: a single one for all the stories.
-That is, we need a way to relate stories <em>to each other</em>, instead of only tracking word values inside a single
-text.</p>
+text. That produces one kind of context – or rather, fifty different contexts: one for every file we’ve loaded and
+cleaned. But we have at our hands a corpus, the analysis of which requires a different kind of context: a single
+one for all the texts. That is, we need a way to relate texts <em>to each other</em>, instead of only tracking word values
+inside a single text.</p>
 <p>To do so, we’ll build a <strong>document-term matrix</strong>, or <strong>DTM</strong>. A DTM is a matrix that contains the frequencies of
-<em>all</em> terms in a corpus. Every row in this matrix corresponds to a document, while every column corresponds to a
-term. For a given document, we count the number of times that term appears and enter that number in the column in
-question. We do this <em>even if</em> the count is zero; key to the way a DTM works is that it represents corpus-wide
-relationships between texts, so it matters if a text does or doesn’t contain a term.</p>
+<em>all</em> terms in a corpus. Every row in this matrix corresponds to a text, while every column corresponds to a term.
+For a given text, we count the number of times that term appears and enter that number in the column in question.
+We do this <em>even if</em> the count is zero; key to the way a DTM works is that it represents corpus-wide relationships
+between texts, so it matters if a text does or doesn’t contain a term.</p>
 <p>Here’s a toy example. Imagine three documents:</p>
 <ol class="simple">
 <li><p>“I like cats. Do you?”</p></li>
@@ -631,7 +642,7 @@ relationships between texts, so it matters if a text does or doesn’t contain a
 </div>
 <p>Representing texts in this way is incredibly useful because it enables us to easily (and programmatically) discern
 similarities and differences in our corpus. For example, we can see that each of the above documents contains the
-words “I” and “like.” Given that, if we wanted to know what makes each document unique, we could ignore those two
+words “i” and “like.” Given that, if we wanted to know what makes each document unique, we could ignore those two
 words and focus on the rest of the values.</p>
 <p>Now, imagine doing this for thousands of words. What patterns might emerge?</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library makes generating a DTM very easy. All we need to do is import a <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code>
@@ -661,7 +672,7 @@ on it), but you can learn more about them <a class="reference external" href="ht
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of our document-term matrix: (50, 15962), or 50 documents (rows) and 15962 words (columns)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of our document-term matrix: (379, 32548), or 379 documents (rows) and 32548 words (columns)
 </pre></div>
 </div>
 </div>
@@ -673,7 +684,7 @@ accessible for data exploration. Since our corpus is relatively small, we’ll c
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vectorized_corpus</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
-<span class="n">dtm</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">dtm</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">115</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -696,21 +707,21 @@ accessible for data exploration. Since our corpus is relatively small, we’ll c
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>10</th>
-      <th>11</th>
-      <th>12</th>
-      <th>13</th>
-      <th>14</th>
+      <th>100</th>
+      <th>101</th>
+      <th>102</th>
+      <th>103</th>
+      <th>104</th>
+      <th>105</th>
+      <th>106</th>
+      <th>107</th>
+      <th>108</th>
+      <th>109</th>
+      <th>110</th>
+      <th>111</th>
+      <th>112</th>
+      <th>113</th>
+      <th>114</th>
     </tr>
   </thead>
   <tbody>
@@ -725,7 +736,7 @@ accessible for data exploration. Since our corpus is relatively small, we’ll c
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -774,7 +785,7 @@ accessible for data exploration. Since our corpus is relatively small, we’ll c
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -799,8 +810,8 @@ accessible for data exploration. Since our corpus is relatively small, we’ll c
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>9</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -809,15 +820,15 @@ accessible for data exploration. Since our corpus is relatively small, we’ll c
 </div></div></div>
 </div>
 <p>As it stands, this dataframe is hard to understand. But luckily, we’ve kept track of which row corresponds to which
-story: this is why we used our manifest to control our file order. Further, the fitted <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> has a
+text: this is why we used our manifest to control our file order. Further, the fitted <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> has a
 special method, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code>, which will generate an array of all the tokens from all the files (our
 vocabulary). The order of this array corresponds to the order of our columns. Accordingly, we can assign this array
-to the column names of <code class="docutils literal notranslate"><span class="pre">dtm</span></code> and assign the story titles in <code class="docutils literal notranslate"><span class="pre">manifest</span></code> to its index names, making it much easier to
+to the column names of <code class="docutils literal notranslate"><span class="pre">dtm</span></code> and assign the people’s names in <code class="docutils literal notranslate"><span class="pre">manifest</span></code> to its index, making it much easier to
 associate column values with row values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
-<span class="n">dtm</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span>
+<span class="n">dtm</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span>
 <span class="n">dtm</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -841,24 +852,24 @@ associate column values with row values.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>aaa</th>
-      <th>aaaaargh</th>
-      <th>aaaargh</th>
       <th>aachen</th>
-      <th>aachens</th>
-      <th>aahed</th>
+      <th>aahs</th>
+      <th>aane</th>
+      <th>aarau</th>
+      <th>aaron</th>
+      <th>aau</th>
+      <th>aaugh</th>
+      <th>aayega</th>
+      <th>aba</th>
+      <th>ababa</th>
       <th>aback</th>
+      <th>abaco</th>
       <th>abandon</th>
       <th>abandoned</th>
-      <th>abbey</th>
-      <th>abbreviate</th>
-      <th>abby</th>
-      <th>abbylucyferny</th>
-      <th>abdomen</th>
-      <th>abdominal</th>
+      <th>abandoning</th>
     </tr>
     <tr>
-      <th>TITLE</th>
+      <th>NAME</th>
       <th></th>
       <th></th>
       <th></th>
@@ -878,7 +889,7 @@ associate column values with row values.</p>
   </thead>
   <tbody>
     <tr>
-      <th>TheSchool</th>
+      <th>Ada Lovelace</th>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -896,7 +907,7 @@ associate column values with row values.</p>
       <td>0</td>
     </tr>
     <tr>
-      <th>Tony’sStory</th>
+      <th>Robert E Lee</th>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -914,7 +925,7 @@ associate column values with row values.</p>
       <td>0</td>
     </tr>
     <tr>
-      <th>NineteenFifty-five</th>
+      <th>Andrew Johnson</th>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -932,7 +943,7 @@ associate column values with row values.</p>
       <td>0</td>
     </tr>
     <tr>
-      <th>Girl</th>
+      <th>Bedford Forrest</th>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -950,7 +961,7 @@ associate column values with row values.</p>
       <td>0</td>
     </tr>
     <tr>
-      <th>Territory</th>
+      <th>Lucretia Mott</th>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -962,8 +973,8 @@ associate column values with row values.</p>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>9</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -978,7 +989,7 @@ associate column values with row values.</p>
 manipulations in conjunction with <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> to do this.</p>
 <div class="section" id="raw-metrics-documents">
 <h3><span class="section-number">4.4.1. </span>Raw Metrics: Documents<a class="headerlink" href="#raw-metrics-documents" title="Permalink to this headline">¶</a></h3>
-<p>Here’s an easy one: let’s count the number of tokens in each story and assign the result to a new column in our
+<p>Here’s an easy one: let’s count the number of tokens in each text and assign the result to a new column in our
 manifest.</p>
 <div class="margin sidebar">
 <p class="sidebar-title">Vectorized functions</p>
@@ -987,17 +998,27 @@ along an axis of a dataframe. Think of it like a shorthand for a <code class="do
 through your desired function. In this case, we’re setting the <code class="docutils literal notranslate"><span class="pre">axis</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> so <code class="docutils literal notranslate"><span class="pre">sum()</span></code> runs on every row. This
 will sum together each value in every row.</p>
 </div>
+<div class="margin sidebar">
+<p class="sidebar-title">Sampling ticks</p>
+<p>Here, we’re using <code class="docutils literal notranslate"><span class="pre">[::N]</span></code> to sample every <code class="docutils literal notranslate"><span class="pre">N</span></code> rows. This only grabs the raw index numbers though, so we have to
+align those numbers with their associated names after the fact with <code class="docutils literal notranslate"><span class="pre">ax.set_xticklabels()</span></code>.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TOKENS</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-                                                               <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Tokens per Story&quot;</span><span class="p">,</span>
-                                                               <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
-                                                               <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Tokens&#39;</span>
-                                                              <span class="p">);</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">to_plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                      <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">,</span> 
+                      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Tokens per Text&#39;</span><span class="p">,</span>
+                      <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
+                      <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Tokens&#39;</span><span class="p">,</span>
+                      <span class="n">legend</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                      <span class="n">xticks</span> <span class="o">=</span> <span class="n">to_plot</span><span class="p">[::</span><span class="mi">15</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                     <span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">to_plot</span><span class="p">[::</span><span class="mi">15</span><span class="p">][</span><span class="s1">&#39;NAME&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -1005,17 +1026,22 @@ will sum together each value in every row.</p>
 <img alt="_images/04_corpus-analytics_27_0.png" src="_images/04_corpus-analytics_27_0.png" />
 </div>
 </div>
-<p>We can also count the number of unique words, or <strong>types</strong>, in each story. Types correspond to a story’s
-vocabulary, whereas tokens correspond to the amount of each type in a story.</p>
+<p>We can also count the number of unique words, or <strong>types</strong>, in each text. Types correspond to a text’s vocabulary,
+whereas tokens correspond to the amount of each of those types.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TYPES</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">NUM_TYPES</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-                                                              <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Types per Story&quot;</span><span class="p">,</span>
-                                                              <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
-                                                              <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Types&#39;</span>
-                                                             <span class="p">);</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">to_plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                      <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">,</span> 
+                      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Types per Text&#39;</span><span class="p">,</span>
+                      <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
+                      <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Number of Types&#39;</span><span class="p">,</span>
+                      <span class="n">legend</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                      <span class="n">xticks</span> <span class="o">=</span> <span class="n">to_plot</span><span class="p">[::</span><span class="mi">15</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                     <span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">to_plot</span><span class="p">[::</span><span class="mi">15</span><span class="p">][</span><span class="s1">&#39;NAME&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -1031,13 +1057,17 @@ normalize the result. A text with a TTR of 100, for example, would never repeat 
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TTR</span> <span class="o">=</span> <span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TYPES&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NUM_TOKENS&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
 
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TTR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-                                                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratios per Story&#39;</span><span class="p">,</span>
-                                                        <span class="n">legend</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                                        <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
-                                                        <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratio %&#39;</span><span class="p">,</span>
-                                                        <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-                                                       <span class="p">);</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;TTR&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">to_plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                      <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;TTR&#39;</span><span class="p">,</span> 
+                      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratios per Text&#39;</span><span class="p">,</span>
+                      <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span>
+                      <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Type–Token Ratio %&#39;</span><span class="p">,</span>
+                      <span class="n">legend</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                      <span class="n">xticks</span> <span class="o">=</span> <span class="n">to_plot</span><span class="p">[::</span><span class="mi">15</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                      <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+                     <span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">to_plot</span><span class="p">[::</span><span class="mi">15</span><span class="p">][</span><span class="s1">&#39;NAME&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
@@ -1058,11 +1088,11 @@ another.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>say     2028
-like    1495
-know    1031
-look     953
-said     867
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>year    3657
+say     2630
+new     2350
+make    2234
+time    2153
 dtype: int64
 </pre></div>
 </div>
@@ -1076,11 +1106,11 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>aaa              1
-heartbroken      1
-heartbreaking    1
-heartbreak       1
-heartache        1
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>zwilich      1
+espousal     1
+pennies      1
+penney       1
+espousing    1
 dtype: int64
 </pre></div>
 </div>
@@ -1094,16 +1124,16 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>aaa              1
-heartbroken      1
-heartbreaking    1
-heartbreak       1
-heartache        1
-hearse           1
-hears            1
-signature        1
-significance     1
-significant      1
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>zwilich      1
+espousal     1
+pennies      1
+penney       1
+espousing    1
+espresso     1
+penned       1
+pennants     1
+penitente    1
+penitence    1
 dtype: int64
 </pre></div>
 </div>
@@ -1123,7 +1153,7 @@ altogether?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of hapax legomenons: 7463, or 0.47% of the words in our corpus
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of hapax legomenons: 13004, or 0.40% of the words in our corpus
 </pre></div>
 </div>
 </div>
@@ -1132,7 +1162,7 @@ altogether?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count_quantile</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.95</span><span class="p">)</span>
-<span class="n">count_quantile_words</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">count_quantile</span><span class="p">]</span>
+<span class="n">count_quantile_words</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">count_quantile</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;Word counts for the ninety-fifth quantile: </span><span class="si">{</span><span class="n">count_quantile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -1143,8 +1173,8 @@ altogether?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word counts for the ninety-fifth quantile: 31.0 
-Number of words with counts at or above this quantile: 801 (0.05% of words)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word counts for the ninety-fifth quantile: 53.0 
+Number of words with counts at or above this quantile: 1611 (0.05% of words)
 </pre></div>
 </div>
 </div>
@@ -1156,8 +1186,8 @@ Number of words with counts at or above this quantile: 801 (0.05% of words)
                                             <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Term Counts&#39;</span><span class="p">,</span>
                                             <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Term&#39;</span><span class="p">,</span> 
                                             <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span>
-                                            <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="mi">750</span><span class="p">),</span>
-                                            <span class="n">rot</span> <span class="o">=</span> <span class="mi">45</span>
+                                            <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="mi">1000</span><span class="p">),</span>
+                                            <span class="n">rot</span> <span class="o">=</span> <span class="mi">90</span>
                                            <span class="p">);</span>
 </pre></div>
 </div>
@@ -1167,100 +1197,18 @@ Number of words with counts at or above this quantile: 801 (0.05% of words)
 </div>
 </div>
 <p>This distribution has a few consequences for us. It suggests, for example, that we might have some more cleaning
-to do in terms of stop word removal: “say” and “like” could be candidates for removal. If we don’t remove these
-terms, we might have trouble identifying unique aspects of each story in our corpus. Highly frequent terms will
-choke out differences across the corpus, as we can see here with the top terms for each story:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TITLE
-TheSchool                                   say
-Tony’sStory                                leon
-NineteenFifty-five                          say
-Girl                                       dont
-Territory                                  neil
-HowFarSheWent                              girl
-SarahColeATypeofLoveStory                   say
-Caviar                                    marie
-WinnersonthePassLine                        ray
-TheWayWeLiveNow                             say
-Communist                                  glen
-TheManagementofGrief                        say
-TheFireman’sWife                           says
-Wickedness                                  say
-Lust                                       like
-TwoKinds                                 mother
-TheDisappeared                             said
-ARealDoll                                barbie
-TheThingsTheyCarried                      carry
-NeverMarryaMexican                         like
-CarCrashWhileHitchhiking                    car
-Marie                                     marie
-TheKindofLightThatShinesonTexas             say
-SilverWater                                rose
-ThePugilistatRest                          like
-TheTranslation                           oliver
-Orientation                                 sit
-JealousHusbandReturnsinFormofParrot         say
-Relief                                 bromhead
-AfterRosaParks                            ellie
-Tiny, Smiling Daddy                       kitty
-Xmas,JamaicaPlain                           say
-TheRestofHerLife                            say
-Nilda                                       say
-ATemporaryMatter                          shoba
-TheHalf-SkinnedSteer                        say
-SeaOak                                      say
-Boys                                      house
-TheCavemenintheHedges                       kim
-TheHermit&#39;sStory                         joshua
-TheCeiling                                  dog
-TheCaretaker                             joseph
-Pilgrims                                   ella
-Brownies                                    say
-WeDidn’t                                  night
-TheSecretGoldfish                          fish
-MyShape                                    like
-Stone Animals                              said
-FemaleTrouble                           mcbride
-TwilightoftheSuperheroes                 lucien
-dtype: object
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_terms</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;say&#39;</span><span class="p">,</span> <span class="s1">&#39;says&#39;</span><span class="p">,</span> <span class="s1">&#39;said&#39;</span><span class="p">]</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Stories where </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> is the top word: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">top_terms</span><span class="p">[</span><span class="n">top_terms</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">target</span><span class="p">)])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Stories where [&#39;say&#39;, &#39;says&#39;, &#39;said&#39;] is the top word: 17
-</pre></div>
-</div>
-</div>
-</div>
-<p>That’s a third of our stories!</p>
-<p>But there’s also an argument to be made for keeping “said” and “say” in our corpus. We are, after all, looking at
-narrative stories, and it matters that there’s dialogue. Removing these words would prevent us from studying this
-later on.</p>
+to do in terms of stop word removal: “year” and “make” could be candidates for removal. If we don’t remove these
+terms, we might have trouble identifying unique aspects of each text in our corpus. But there’s also an argument to
+be made for keeping “year” and “make” in our corpus. We are, after all, looking at obituaries; temporal markers
+like “year” matter here, as do the actions associated with people, which “make” may indicate. Removing these words
+would prevent us from studying this later on.</p>
 <p>How, then, can we have it both ways? How can we reduce the influence of highly frequent terms without removing them
 altogether?</p>
 </div>
 <div class="section" id="weighted-metrics-tf-idf-scores">
 <h3><span class="section-number">4.4.3. </span>Weighted Metrics: tf-idf Scores<a class="headerlink" href="#weighted-metrics-tf-idf-scores" title="Permalink to this headline">¶</a></h3>
 <p>The answer is to <strong>weight</strong> our terms, doing so in a way that lessens the impact of terms we know to be highly
-general in our corpus and that increases the impact of unique terms for each story. The most popular way to do this
+general in our corpus and that increases the impact of unique terms for each text. The most popular way to do this
 is to implement <strong>tf-idf, or term frequency–inverse document frequency, scoring</strong>. In essence, a tf-idf score is a
 measure of term specificity in the context of a given document. It is the product of a term’s frequency in that
 document and the number of documents in which that term appears. By offsetting terms that appear across many
@@ -1273,8 +1221,8 @@ documents, tf-idf pushes down the scores of common terms and boosts the scores o
 number of documents that contain <span class="math notranslate nohighlight">\(i\)</span>.</p>
 </div>
 <p>A tf-idf score can be expressed as</p>
-<p><span class="math notranslate nohighlight">\(w_i,_j = tf_i,_j \cdot idf_i\)</span></p>
-<p>Where, for term <span class="math notranslate nohighlight">\(i\)</span> and document <span class="math notranslate nohighlight">\(j\)</span>, the score <span class="math notranslate nohighlight">\(w\)</span> is the term frequency, or <span class="math notranslate nohighlight">\(tf_i,_j\)</span>, for <span class="math notranslate nohighlight">\(i\)</span> in <span class="math notranslate nohighlight">\(j\)</span>, multiplied
+<p><span class="math notranslate nohighlight">\(score_{ij} = tf_{ij} \cdot idf_i\)</span></p>
+<p>Where, for term <span class="math notranslate nohighlight">\(i\)</span> and document <span class="math notranslate nohighlight">\(j\)</span>, the score <span class="math notranslate nohighlight">\(w\)</span> is the term frequency, or <span class="math notranslate nohighlight">\(tf_{ij}\)</span>, for <span class="math notranslate nohighlight">\(i\)</span> in <span class="math notranslate nohighlight">\(j\)</span>, multiplied
 by <span class="math notranslate nohighlight">\(idf_i\)</span>, the inverse document score. The higher the score, the more specific a term is for a given document.</p>
 <p>Conveniently, we don’t need to implement any of this math ourselves. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has a <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer()</span></code>
 object, which works just like <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code>, but instead of producing a DTM of raw term counts, it produces a
@@ -1288,7 +1236,7 @@ with these scores.</p>
 <span class="n">vectorized_with_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
 
 <span class="n">tfidf_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vectorized_with_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
-                            <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                            <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">],</span>
                             <span class="n">columns</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
                            <span class="p">)</span>
 </pre></div>
@@ -1297,7 +1245,7 @@ with these scores.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:</span><span class="mi">15</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">115</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1320,24 +1268,24 @@ with these scores.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>aaa</th>
-      <th>aaaaargh</th>
-      <th>aaaargh</th>
-      <th>aachen</th>
-      <th>aachens</th>
-      <th>aahed</th>
-      <th>aback</th>
-      <th>abandon</th>
-      <th>abandoned</th>
-      <th>abbey</th>
-      <th>abbreviate</th>
-      <th>abby</th>
-      <th>abbylucyferny</th>
-      <th>abdomen</th>
-      <th>abdominal</th>
+      <th>absorb</th>
+      <th>absorbed</th>
+      <th>absorption</th>
+      <th>abstain</th>
+      <th>abstemious</th>
+      <th>abstemiousness</th>
+      <th>abstention</th>
+      <th>abstinence</th>
+      <th>abstinent</th>
+      <th>abstract</th>
+      <th>abstraction</th>
+      <th>abstractions</th>
+      <th>abstracts</th>
+      <th>abstruse</th>
+      <th>absurd</th>
     </tr>
     <tr>
-      <th>TITLE</th>
+      <th>NAME</th>
       <th></th>
       <th></th>
       <th></th>
@@ -1357,92 +1305,92 @@ with these scores.</p>
   </thead>
   <tbody>
     <tr>
-      <th>TheSchool</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <th>Ada Lovelace</th>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.055834</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>Tony’sStory</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <th>Robert E Lee</th>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>NineteenFifty-five</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <th>Andrew Johnson</th>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>Girl</th>
+      <th>Bedford Forrest</th>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>0.023602</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>Territory</th>
+      <th>Lucretia Mott</th>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.007863</td>
-      <td>0.070767</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
@@ -1450,194 +1398,385 @@ with these scores.</p>
 </table>
 </div></div></div>
 </div>
-<p>To see the difference tf-idf scores make, let’s look at the top terms for each story according to these scores,
-rather than raw counts.</p>
+<p>To see the difference tf-idf scores make, let’s compare the raw counts and tf-idf scores for three texts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampled</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">val</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sampled</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="n">tfidf</span> <span class="o">=</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="n">name_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s1">&#39;COUNT_TERM&#39;</span><span class="p">:</span> <span class="n">count</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="s1">&#39;COUNT&#39;</span><span class="p">:</span> <span class="n">count</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="s1">&#39;TFIDF_TERM&#39;</span><span class="p">:</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="s1">&#39;TFIDF&#39;</span><span class="p">:</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">values</span>
+    <span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Person:&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">name_df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TITLE
-TheSchool                                  helen
-Tony’sStory                                 leon
-NineteenFifty-five                       traynor
-Girl                                        dont
-Territory                                   neil
-HowFarSheWent                             granny
-SarahColeATypeofLoveStory                  sarah
-Caviar                                     marie
-WinnersonthePassLine                         ray
-TheWayWeLiveNow                          quentin
-Communist                                   glen
-TheManagementofGrief                       kusum
-TheFireman’sWife                            jane
-Wickedness                                hattie
-Lust                                        like
-TwoKinds                                   piano
-TheDisappeared                            anders
-ARealDoll                                 barbie
-TheThingsTheyCarried                       carry
-NeverMarryaMexican                          like
-CarCrashWhileHitchhiking                     car
-Marie                                      marie
-TheKindofLightThatShinesonTexas           oakley
-SilverWater                                 rose
-ThePugilistatRest                       jorgeson
-TheTranslation                            oliver
-Orientation                              cubicle
-JealousHusbandReturnsinFormofParrot         bird
-Relief                                  bromhead
-AfterRosaParks                             ellie
-Tiny, Smiling Daddy                        kitty
-Xmas,JamaicaPlain                          emile
-TheRestofHerLife                         chuckie
-Nilda                                       rafa
-ATemporaryMatter                           shoba
-TheHalf-SkinnedSteer                       rollo
-SeaOak                                       min
-Boys                                        boys
-TheCavemenintheHedges                        kim
-TheHermit&#39;sStory                          joshua
-TheCeiling                                   ann
-TheCaretaker                              joseph
-Pilgrims                                    ella
-Brownies                                 arnetta
-WeDidn’t                                   drown
-TheSecretGoldfish                           fish
-MyShape                                   pierre
-Stone Animals                          catherine
-FemaleTrouble                            mcbride
-TwilightoftheSuperheroes                  lucien
-dtype: object
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Shirley Jackson
 </pre></div>
 </div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_46ebc_" ><thead>    <tr>        <th class="col_heading level0 col0" >COUNT_TERM</th>        <th class="col_heading level0 col1" >COUNT</th>        <th class="col_heading level0 col2" >TFIDF_TERM</th>        <th class="col_heading level0 col3" >TFIDF</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_46ebc_row0_col0" class="data row0 col0" >jackson</td>
+                        <td id="T_46ebc_row0_col1" class="data row0 col1" >26</td>
+                        <td id="T_46ebc_row0_col2" class="data row0 col2" >jackson</td>
+                        <td id="T_46ebc_row0_col3" class="data row0 col3" >0.666220</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row1_col0" class="data row1 col0" >miss</td>
+                        <td id="T_46ebc_row1_col1" class="data row1 col1" >21</td>
+                        <td id="T_46ebc_row1_col2" class="data row1 col2" >miss</td>
+                        <td id="T_46ebc_row1_col3" class="data row1 col3" >0.261421</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row2_col0" class="data row2 col0" >story</td>
+                        <td id="T_46ebc_row2_col1" class="data row2 col1" >12</td>
+                        <td id="T_46ebc_row2_col2" class="data row2 col2" >story</td>
+                        <td id="T_46ebc_row2_col3" class="data row2 col3" >0.142047</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row3_col0" class="data row3 col0" >say</td>
+                        <td id="T_46ebc_row3_col1" class="data row3 col1" >9</td>
+                        <td id="T_46ebc_row3_col2" class="data row3 col2" >bennington</td>
+                        <td id="T_46ebc_row3_col3" class="data row3 col3" >0.138518</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row4_col0" class="data row4 col0" >life</td>
+                        <td id="T_46ebc_row4_col1" class="data row4 col1" >8</td>
+                        <td id="T_46ebc_row4_col2" class="data row4 col2" >shirley</td>
+                        <td id="T_46ebc_row4_col3" class="data row4 col3" >0.123244</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row5_col0" class="data row5 col0" >new</td>
+                        <td id="T_46ebc_row5_col1" class="data row5 col1" >7</td>
+                        <td id="T_46ebc_row5_col2" class="data row5 col2" >lottery</td>
+                        <td id="T_46ebc_row5_col3" class="data row5 col3" >0.113844</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row6_col0" class="data row6 col0" >write</td>
+                        <td id="T_46ebc_row6_col1" class="data row6 col1" >7</td>
+                        <td id="T_46ebc_row6_col2" class="data row6 col2" >witch</td>
+                        <td id="T_46ebc_row6_col3" class="data row6 col3" >0.097331</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row7_col0" class="data row7 col0" >book</td>
+                        <td id="T_46ebc_row7_col1" class="data row7 col1" >5</td>
+                        <td id="T_46ebc_row7_col2" class="data row7 col2" >wash</td>
+                        <td id="T_46ebc_row7_col3" class="data row7 col3" >0.083823</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row8_col0" class="data row8 col0" >world</td>
+                        <td id="T_46ebc_row8_col1" class="data row8 col1" >5</td>
+                        <td id="T_46ebc_row8_col2" class="data row8 col2" >savages</td>
+                        <td id="T_46ebc_row8_col3" class="data row8 col3" >0.081164</td>
+            </tr>
+            <tr>
+                                <td id="T_46ebc_row9_col0" class="data row9 col0" >bennington</td>
+                        <td id="T_46ebc_row9_col1" class="data row9 col1" >4</td>
+                        <td id="T_46ebc_row9_col2" class="data row9 col2" >sundial</td>
+                        <td id="T_46ebc_row9_col3" class="data row9 col3" >0.081164</td>
+            </tr>
+    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Alan B Shepard Jr
+</pre></div>
 </div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_144af_" ><thead>    <tr>        <th class="col_heading level0 col0" >COUNT_TERM</th>        <th class="col_heading level0 col1" >COUNT</th>        <th class="col_heading level0 col2" >TFIDF_TERM</th>        <th class="col_heading level0 col3" >TFIDF</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_144af_row0_col0" class="data row0 col0" >shepard</td>
+                        <td id="T_144af_row0_col1" class="data row0 col1" >41</td>
+                        <td id="T_144af_row0_col2" class="data row0 col2" >shepard</td>
+                        <td id="T_144af_row0_col3" class="data row0 col3" >0.639382</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row1_col0" class="data row1 col0" >space</td>
+                        <td id="T_144af_row1_col1" class="data row1 col1" >34</td>
+                        <td id="T_144af_row1_col2" class="data row1 col2" >space</td>
+                        <td id="T_144af_row1_col3" class="data row1 col3" >0.318536</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row2_col0" class="data row2 col0" >flight</td>
+                        <td id="T_144af_row2_col1" class="data row2 col1" >27</td>
+                        <td id="T_144af_row2_col2" class="data row2 col2" >flight</td>
+                        <td id="T_144af_row2_col3" class="data row2 col3" >0.265131</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row3_col0" class="data row3 col0" >moon</td>
+                        <td id="T_144af_row3_col1" class="data row3 col1" >20</td>
+                        <td id="T_144af_row3_col2" class="data row3 col2" >astronaut</td>
+                        <td id="T_144af_row3_col3" class="data row3 col3" >0.240981</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row4_col0" class="data row4 col0" >astronaut</td>
+                        <td id="T_144af_row4_col1" class="data row4 col1" >16</td>
+                        <td id="T_144af_row4_col2" class="data row4 col2" >moon</td>
+                        <td id="T_144af_row4_col3" class="data row4 col3" >0.222606</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row5_col0" class="data row5 col0" >say</td>
+                        <td id="T_144af_row5_col1" class="data row5 col1" >16</td>
+                        <td id="T_144af_row5_col2" class="data row5 col2" >apollo</td>
+                        <td id="T_144af_row5_col3" class="data row5 col3" >0.129980</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row6_col0" class="data row6 col0" >soviet</td>
+                        <td id="T_144af_row6_col1" class="data row6 col1" >11</td>
+                        <td id="T_144af_row6_col2" class="data row6 col2" >mercury</td>
+                        <td id="T_144af_row6_col3" class="data row6 col3" >0.119593</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row7_col0" class="data row7 col0" >american</td>
+                        <td id="T_144af_row7_col1" class="data row7 col1" >10</td>
+                        <td id="T_144af_row7_col2" class="data row7 col2" >orbit</td>
+                        <td id="T_144af_row7_col3" class="data row7 col3" >0.119593</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row8_col0" class="data row8 col0" >later</td>
+                        <td id="T_144af_row8_col1" class="data row8 col1" >10</td>
+                        <td id="T_144af_row8_col2" class="data row8 col2" >launch</td>
+                        <td id="T_144af_row8_col3" class="data row8 col3" >0.100173</td>
+            </tr>
+            <tr>
+                                <td id="T_144af_row9_col0" class="data row9 col0" >become</td>
+                        <td id="T_144af_row9_col1" class="data row9 col1" >9</td>
+                        <td id="T_144af_row9_col2" class="data row9 col2" >glenn</td>
+                        <td id="T_144af_row9_col3" class="data row9 col3" >0.099538</td>
+            </tr>
+    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: John Houseman
+</pre></div>
 </div>
-<p>Note all the names, which have fully replaced those common words from before. This makes intuitive sense: most
-stories are about specific characters, and these characters’ names tend not to occur in other stories. Given that
-tf-idf scores help us home in on term specificity, they’re going to highlight this fact.</p>
-<p>Let’s also look at a single story. We’ll compare the top ten raw counts for that story and the top ten tf-idf
-scores.</p>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_bb1de_" ><thead>    <tr>        <th class="col_heading level0 col0" >COUNT_TERM</th>        <th class="col_heading level0 col1" >COUNT</th>        <th class="col_heading level0 col2" >TFIDF_TERM</th>        <th class="col_heading level0 col3" >TFIDF</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_bb1de_row0_col0" class="data row0 col0" >houseman</td>
+                        <td id="T_bb1de_row0_col1" class="data row0 col1" >35</td>
+                        <td id="T_bb1de_row0_col2" class="data row0 col2" >houseman</td>
+                        <td id="T_bb1de_row0_col3" class="data row0 col3" >0.735635</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row1_col0" class="data row1 col0" >theater</td>
+                        <td id="T_bb1de_row1_col1" class="data row1 col1" >28</td>
+                        <td id="T_bb1de_row1_col2" class="data row1 col2" >theater</td>
+                        <td id="T_bb1de_row1_col3" class="data row1 col3" >0.286703</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row2_col0" class="data row2 col0" >welles</td>
+                        <td id="T_bb1de_row2_col1" class="data row2 col1" >15</td>
+                        <td id="T_bb1de_row2_col2" class="data row2 col2" >welles</td>
+                        <td id="T_bb1de_row2_col3" class="data row2 col3" >0.262336</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row3_col0" class="data row3 col0" >become</td>
+                        <td id="T_bb1de_row3_col1" class="data row3 col1" >13</td>
+                        <td id="T_bb1de_row3_col2" class="data row3 col2" >kingsfield</td>
+                        <td id="T_bb1de_row3_col3" class="data row3 col3" >0.157339</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row4_col0" class="data row4 col0" >director</td>
+                        <td id="T_bb1de_row4_col1" class="data row4 col1" >12</td>
+                        <td id="T_bb1de_row4_col2" class="data row4 col2" >mercury</td>
+                        <td id="T_bb1de_row4_col3" class="data row4 col3" >0.098060</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row5_col0" class="data row5 col0" >role</td>
+                        <td id="T_bb1de_row5_col1" class="data row5 col1" >11</td>
+                        <td id="T_bb1de_row5_col2" class="data row5 col2" >director</td>
+                        <td id="T_bb1de_row5_col3" class="data row5 col3" >0.091529</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row6_col0" class="data row6 col0" >say</td>
+                        <td id="T_bb1de_row6_col1" class="data row6 col1" >11</td>
+                        <td id="T_bb1de_row6_col2" class="data row6 col2" >production</td>
+                        <td id="T_bb1de_row6_col3" class="data row6 col3" >0.086250</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row7_col0" class="data row7 col0" >production</td>
+                        <td id="T_bb1de_row7_col1" class="data row7 col1" >9</td>
+                        <td id="T_bb1de_row7_col2" class="data row7 col2" >chase</td>
+                        <td id="T_bb1de_row7_col3" class="data row7 col3" >0.085153</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row8_col0" class="data row8 col0" >television</td>
+                        <td id="T_bb1de_row8_col1" class="data row8 col1" >8</td>
+                        <td id="T_bb1de_row8_col2" class="data row8 col2" >opera</td>
+                        <td id="T_bb1de_row8_col3" class="data row8 col3" >0.084541</td>
+            </tr>
+            <tr>
+                                <td id="T_bb1de_row9_col0" class="data row9 col0" >kingsfield</td>
+                        <td id="T_bb1de_row9_col1" class="data row9 col1" >7</td>
+                        <td id="T_bb1de_row9_col2" class="data row9 col2" >role</td>
+                        <td id="T_bb1de_row9_col3" class="data row9 col3" >0.076633</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<p>There are a few things to note here. First, names often have the largest value, regardless of which metric we look
+at. This makes intuitive sense for our corpus: we’re examining obituaries, where the sole subject of each text
+(i.e. the person) may be referred to many times. A tf-idf score will actually reinforce this effect, since names
+are often specific to the obituary. We can see this especially from the shifts that take place in the rest of the
+rankings. Whereas raw counts will often refer to more general nouns and verbs, tf-idf scores home in on other
+people with whom the present person might’ve been associated, places that person might’ve visited, and even things
+that particular person is known for. Broadly speaking, the tf-idf scores above give us a much more situated sense
+of the person in question.</p>
+<p>To see this in a bit more detail, let’s look at a single obituary in the context of the entire corpus. We’ll
+compare the raw counts and tf-idf scores of this story to the mean counts and scores of the corpus.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Top ten term counts for The Things They Carried</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">person</span> <span class="o">=</span> <span class="s1">&#39;Frida Kahlo&#39;</span>
+<span class="n">val</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">story</span> <span class="o">=</span> <span class="s1">&#39;TheThingsTheyCarried&#39;</span>
-<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">,</span> <span class="n">term</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">person_count</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">person</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<span class="n">corpus_count</span> <span class="o">=</span> <span class="n">dtm</span><span class="p">[</span><span class="n">person_count</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">person_tfidf</span> <span class="o">=</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">person</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<span class="n">corpus_tfidf</span> <span class="o">=</span> <span class="n">tfidf_scores</span><span class="p">[</span><span class="n">person_tfidf</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;COUNT_TERM&#39;</span><span class="p">:</span> <span class="n">person_count</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="s1">&#39;NAME_COUNT&#39;</span><span class="p">:</span> <span class="n">person_count</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s1">&#39;CORPUS_COUNT&#39;</span><span class="p">:</span> <span class="n">corpus_count</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s1">&#39;TFIDF_TERM&#39;</span><span class="p">:</span> <span class="n">person_tfidf</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="s1">&#39;NAME_TFIDF&#39;</span><span class="p">:</span> <span class="n">person_tfidf</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s1">&#39;CORPUS_TFIDF&#39;</span><span class="p">:</span> <span class="n">corpus_tfidf</span><span class="o">.</span><span class="n">values</span>
+<span class="p">})</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top ten term counts for The Things They Carried
-
-     carry: 114
-      love: 28
-lieutenant: 27
-     cross: 26
-       say: 25
-     pound: 23
-  lavender: 22
-    martha: 21
-      just: 20
-       men: 19
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Top ten tf-idf scores for The Things They Carried</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">,</span> <span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top ten tf-idf scores for The Things They Carried
-
-     carry: 0.4399
-lieutenant: 0.2567
-    martha: 0.2304
-  lavender: 0.2092
-     kiowa: 0.1820
-   sanders: 0.1456
-       ted: 0.1426
-     jimmy: 0.1421
-     pound: 0.1344
-     weigh: 0.1282
-</pre></div>
-</div>
-</div>
-</div>
-<p>Note how, in the above, common words like “say” and “just” slip out of the tf-idf rankings, to be replaced instead
-by names and other nouns.</p>
-<p>If we wanted to get a sense of just how specific each of these terms are to our story, we can compare them with
-that term’s mean score in the corpus.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_tfidf</span> <span class="o">=</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="n">term</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Text tf-idf: </span><span class="si">{</span><span class="n">tfidf_scores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">story</span><span class="p">,</span> <span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Mean tf-idf: </span><span class="si">{</span><span class="n">mean_tfidf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>carry 
-+ Text tf-idf: 0.4399 
-+ Mean tf-idf: 0.0159
-
-lieutenant 
-+ Text tf-idf: 0.2567 
-+ Mean tf-idf: 0.0083
-
-martha 
-+ Text tf-idf: 0.2304 
-+ Mean tf-idf: 0.0128
-
-lavender 
-+ Text tf-idf: 0.2092 
-+ Mean tf-idf: 0.0048
-
-kiowa 
-+ Text tf-idf: 0.1820 
-+ Mean tf-idf: 0.0036
-
-sanders 
-+ Text tf-idf: 0.1456 
-+ Mean tf-idf: 0.0029
-
-ted 
-+ Text tf-idf: 0.1426 
-+ Mean tf-idf: 0.0037
-
-jimmy 
-+ Text tf-idf: 0.1421 
-+ Mean tf-idf: 0.0032
-
-pound 
-+ Text tf-idf: 0.1344 
-+ Mean tf-idf: 0.0070
-
-weigh 
-+ Text tf-idf: 0.1282 
-+ Mean tf-idf: 0.0031
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_48b47_" ><thead>    <tr>        <th class="col_heading level0 col0" >COUNT_TERM</th>        <th class="col_heading level0 col1" >NAME_COUNT</th>        <th class="col_heading level0 col2" >CORPUS_COUNT</th>        <th class="col_heading level0 col3" >TFIDF_TERM</th>        <th class="col_heading level0 col4" >NAME_TFIDF</th>        <th class="col_heading level0 col5" >CORPUS_TFIDF</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_48b47_row0_col0" class="data row0 col0" >artist</td>
+                        <td id="T_48b47_row0_col1" class="data row0 col1" >4</td>
+                        <td id="T_48b47_row0_col2" class="data row0 col2" >0.533000</td>
+                        <td id="T_48b47_row0_col3" class="data row0 col3" >frida</td>
+                        <td id="T_48b47_row0_col4" class="data row0 col4" >0.370972</td>
+                        <td id="T_48b47_row0_col5" class="data row0 col5" >0.001000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row1_col0" class="data row1 col0" >diego</td>
+                        <td id="T_48b47_row1_col1" class="data row1 col1" >3</td>
+                        <td id="T_48b47_row1_col2" class="data row1 col2" >0.047000</td>
+                        <td id="T_48b47_row1_col3" class="data row1 col3" >kahlo</td>
+                        <td id="T_48b47_row1_col4" class="data row1 col4" >0.346894</td>
+                        <td id="T_48b47_row1_col5" class="data row1 col5" >0.001000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row2_col0" class="data row2 col0" >frida</td>
+                        <td id="T_48b47_row2_col1" class="data row2 col1" >3</td>
+                        <td id="T_48b47_row2_col2" class="data row2 col2" >0.008000</td>
+                        <td id="T_48b47_row2_col3" class="data row2 col3" >rivera</td>
+                        <td id="T_48b47_row2_col4" class="data row2 col4" >0.305732</td>
+                        <td id="T_48b47_row2_col5" class="data row2 col5" >0.001000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row3_col0" class="data row3 col0" >kahlo</td>
+                        <td id="T_48b47_row3_col1" class="data row3 col1" >3</td>
+                        <td id="T_48b47_row3_col2" class="data row3 col2" >0.011000</td>
+                        <td id="T_48b47_row3_col3" class="data row3 col3" >diego</td>
+                        <td id="T_48b47_row3_col4" class="data row3 col4" >0.281654</td>
+                        <td id="T_48b47_row3_col5" class="data row3 col5" >0.001000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row4_col0" class="data row4 col0" >rivera</td>
+                        <td id="T_48b47_row4_col1" class="data row4 col1" >3</td>
+                        <td id="T_48b47_row4_col2" class="data row4 col2" >0.029000</td>
+                        <td id="T_48b47_row4_col3" class="data row4 col3" >artist</td>
+                        <td id="T_48b47_row4_col4" class="data row4 col4" >0.194109</td>
+                        <td id="T_48b47_row4_col5" class="data row4 col5" >0.006000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row5_col0" class="data row5 col0" >show</td>
+                        <td id="T_48b47_row5_col1" class="data row5 col1" >3</td>
+                        <td id="T_48b47_row5_col2" class="data row5 col2" >1.620000</td>
+                        <td id="T_48b47_row5_col3" class="data row5 col3" >painter</td>
+                        <td id="T_48b47_row5_col4" class="data row5 col4" >0.142836</td>
+                        <td id="T_48b47_row5_col5" class="data row5 col5" >0.003000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row6_col0" class="data row6 col0" >begin</td>
+                        <td id="T_48b47_row6_col1" class="data row6 col1" >2</td>
+                        <td id="T_48b47_row6_col2" class="data row6 col2" >2.216000</td>
+                        <td id="T_48b47_row6_col3" class="data row6 col3" >mexico</td>
+                        <td id="T_48b47_row6_col4" class="data row6 col4" >0.129718</td>
+                        <td id="T_48b47_row6_col5" class="data row6 col5" >0.002000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row7_col0" class="data row7 col0" >city</td>
+                        <td id="T_48b47_row7_col1" class="data row7 col1" >2</td>
+                        <td id="T_48b47_row7_col2" class="data row7 col2" >1.530000</td>
+                        <td id="T_48b47_row7_col3" class="data row7 col3" >paint</td>
+                        <td id="T_48b47_row7_col4" class="data row7 col4" >0.129718</td>
+                        <td id="T_48b47_row7_col5" class="data row7 col5" >0.003000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row8_col0" class="data row8 col0" >july</td>
+                        <td id="T_48b47_row8_col1" class="data row8 col1" >2</td>
+                        <td id="T_48b47_row8_col2" class="data row8 col2" >0.673000</td>
+                        <td id="T_48b47_row8_col3" class="data row8 col3" >arbenz</td>
+                        <td id="T_48b47_row8_col4" class="data row8 col4" >0.123657</td>
+                        <td id="T_48b47_row8_col5" class="data row8 col5" >0.000000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row9_col0" class="data row9 col0" >long</td>
+                        <td id="T_48b47_row9_col1" class="data row9 col1" >2</td>
+                        <td id="T_48b47_row9_col2" class="data row9 col2" >2.108000</td>
+                        <td id="T_48b47_row9_col3" class="data row9 col3" >arrows</td>
+                        <td id="T_48b47_row9_col4" class="data row9 col4" >0.123657</td>
+                        <td id="T_48b47_row9_col5" class="data row9 col5" >0.000000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row10_col0" class="data row10 col0" >mexico</td>
+                        <td id="T_48b47_row10_col1" class="data row10 col1" >2</td>
+                        <td id="T_48b47_row10_col2" class="data row10 col2" >0.166000</td>
+                        <td id="T_48b47_row10_col3" class="data row10 col3" >beholders</td>
+                        <td id="T_48b47_row10_col4" class="data row10 col4" >0.123657</td>
+                        <td id="T_48b47_row10_col5" class="data row10 col5" >0.000000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row11_col0" class="data row11 col0" >new</td>
+                        <td id="T_48b47_row11_col1" class="data row11 col1" >2</td>
+                        <td id="T_48b47_row11_col2" class="data row11 col2" >6.201000</td>
+                        <td id="T_48b47_row11_col3" class="data row11 col3" >guatemala</td>
+                        <td id="T_48b47_row11_col4" class="data row11 col4" >0.123657</td>
+                        <td id="T_48b47_row11_col5" class="data row11 col5" >0.000000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row12_col0" class="data row12 col0" >paint</td>
+                        <td id="T_48b47_row12_col1" class="data row12 col1" >2</td>
+                        <td id="T_48b47_row12_col2" class="data row12 col2" >0.251000</td>
+                        <td id="T_48b47_row12_col3" class="data row12 col3" >guzman</td>
+                        <td id="T_48b47_row12_col4" class="data row12 col4" >0.123657</td>
+                        <td id="T_48b47_row12_col5" class="data row12 col5" >0.000000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row13_col0" class="data row13 col0" >painter</td>
+                        <td id="T_48b47_row13_col1" class="data row13 col1" >2</td>
+                        <td id="T_48b47_row13_col2" class="data row13 col2" >0.193000</td>
+                        <td id="T_48b47_row13_col3" class="data row13 col3" >jacobo</td>
+                        <td id="T_48b47_row13_col4" class="data row13 col4" >0.123657</td>
+                        <td id="T_48b47_row13_col5" class="data row13 col5" >0.000000</td>
+            </tr>
+            <tr>
+                                <td id="T_48b47_row14_col0" class="data row14 col0" >picture</td>
+                        <td id="T_48b47_row14_col1" class="data row14 col1" >2</td>
+                        <td id="T_48b47_row14_col2" class="data row14 col2" >0.734000</td>
+                        <td id="T_48b47_row14_col3" class="data row14 col3" >shaft</td>
+                        <td id="T_48b47_row14_col4" class="data row14 col4" >0.123657</td>
+                        <td id="T_48b47_row14_col5" class="data row14 col5" >0.000000</td>
+            </tr>
+    </tbody></table></div></div>
 </div>
 </div>
 <div class="section" id="term-correlations">
 <h3><span class="section-number">4.4.4. </span>Term Correlations<a class="headerlink" href="#term-correlations" title="Permalink to this headline">¶</a></h3>
-<p>Looking beyond a single story, we can use our tf-idf DTM to identify correlations across the corpus. These
+<p>Looking beyond a single text, we can use our tf-idf DTM to identify correlations across the corpus. These
 correlations aren’t a perfect stand-in for semantic similarity, but they will give us a sense of how two terms are
 associated among the documents, much in the way a PMI score indicated the specificity of bigrams in the last
 chapter. Let’s grab five random terms from our corpus (the columns of <code class="docutils literal notranslate"><span class="pre">tfidf_scores</span></code>) and calculate correlations
@@ -1654,31 +1793,31 @@ between them with the <code class="docutils literal notranslate"><span class="pr
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numbers   numbers     1.000000
-          sketch     -0.045661
-          share       0.148480
-          supplies   -0.028505
-          vas        -0.026702
-sketch    numbers    -0.045661
-          sketch      1.000000
-          share       0.049549
-          supplies   -0.037253
-          vas        -0.034898
-share     numbers     0.148480
-          sketch      0.049549
-          share       1.000000
-          supplies   -0.107062
-          vas         0.008371
-supplies  numbers    -0.028505
-          sketch     -0.037253
-          share      -0.107062
-          supplies    1.000000
-          vas        -0.021786
-vas       numbers    -0.026702
-          sketch     -0.034898
-          share       0.008371
-          supplies   -0.021786
-          vas         1.000000
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>raging     raging       1.000000
+           rheta       -0.004168
+           herpes      -0.004168
+           proxy       -0.004168
+           poignance   -0.004168
+rheta      raging      -0.004168
+           rheta        1.000000
+           herpes      -0.002646
+           proxy       -0.002646
+           poignance   -0.002646
+herpes     raging      -0.004168
+           rheta       -0.002646
+           herpes       1.000000
+           proxy       -0.002646
+           poignance   -0.002646
+proxy      raging      -0.004168
+           rheta       -0.002646
+           herpes      -0.002646
+           proxy        1.000000
+           poignance   -0.002646
+poignance  raging      -0.004168
+           rheta       -0.002646
+           herpes      -0.002646
+           proxy       -0.002646
+           poignance    1.000000
 dtype: float64
 </pre></div>
 </div>
@@ -1687,20 +1826,19 @@ dtype: float64
 <p>We can also select terms ourselves and see how they correlate:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_terms</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;book&#39;</span><span class="p">:</span> <span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="s1">&#39;yell&#39;</span><span class="p">:</span> <span class="s1">&#39;whisper&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="s1">&#39;zucchini&#39;</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_terms</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;artist&#39;</span><span class="p">:</span> <span class="s1">&#39;paint&#39;</span><span class="p">,</span> <span class="s1">&#39;sword&#39;</span><span class="p">:</span> <span class="s1">&#39;ship&#39;</span><span class="p">}</span>
 
 <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">selected_terms</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Correlation between </span><span class="si">{</span><span class="n">term</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">selected_terms</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;Correlation between </span><span class="si">{</span><span class="n">term</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">selected_terms</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tfidf_scores</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">tfidf_scores</span><span class="p">[</span><span class="n">selected_terms</span><span class="p">[</span><span class="n">term</span><span class="p">]])</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation between book and page    : 0.5978
-Correlation between yell and whisper : 0.1631
-Correlation between mean and zucchini: -0.1580
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation between artist and paint: 0.6918
+Correlation between sword and ship: -0.0091
 </pre></div>
 </div>
 </div>
@@ -1708,17 +1846,12 @@ Correlation between mean and zucchini: -0.1580
 <p>With these metrics in hand, there’s much to explore in our corpus. But what we haven’t yet done so far is merge the
 two levels of our investigations. That is, we’ve explored our corpus at the level of documents, and we’ve explored
 our corpus at the level of terms, but what we haven’t yet done is use one to explore the other. The next chapter
-will take this up in full. We’ll be using our tf-idf DTM to do so, so let’s save it. We’ll also be using our fitted
-<code class="docutils literal notranslate"><span class="pre">TfidfVectorizer()</span></code>, for reasons that the next chapter will explain. For now, let’s save that too and end here.</p>
+will take this up in full. There, we’ll learn how to use our tf-idf scores to determine similarities between the
+obituaries. With that in mind, we’ll save our tf-idf DTM and end here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
-
-<span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;data/session_two/output/&quot;</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outdir</span> <span class="o">=</span> <span class="s2">&quot;data/session_two/output/&quot;</span>
 <span class="n">tfidf_scores</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">outdir</span> <span class="o">+</span> <span class="s2">&quot;tfidf_scores.csv&quot;</span><span class="p">)</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outdir</span> <span class="o">+</span> <span class="s2">&quot;tfidf_vectorizer.pkl&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">tfidf_vectorizer</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
