@@ -1001,7 +1001,7 @@ first introduced it.</p>
 </div>
 </div>
 </div>
-<p>Here, <code class="docutils literal notranslate"><span class="pre">reduced</span></code>, is a 2x<code class="docutils literal notranslate"><span class="pre">n</span></code> matrix, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of rows in the original matrix. We can isolate each of
+<p>Here, <code class="docutils literal notranslate"><span class="pre">reduced</span></code>, is a 2x<em>n</em> matrix, where <em>n</em> is the number of rows in the original matrix. We can isolate each of
 the dimensions in <code class="docutils literal notranslate"><span class="pre">reduced</span></code> and assign them to X and Y coordinates, respectively.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1023,16 +1023,16 @@ people from before.</p>
 <img alt="_images/05_clustering-and-classification_28_0.png" src="_images/05_clustering-and-classification_28_0.png" />
 </div>
 </div>
-<p>As with our toy example above, here, space has semantic value. Points that appear closer together in the
-visualization above have more similarities between them than those that are farther apart. We can see this clearly
-if we show a person’s point and the most similar point to that person.</p>
 <div class="margin sidebar">
-<p class="sidebar-title">A cavet</p>
+<p class="sidebar-title">A caveat</p>
 <p>It’s important to remember that the transformation between high dimensional space and this 2D plot is a lossy one.
 Distortions will result from it, and having a good sense of what kind of distortions you might expect to see with
 t-SNE will help you interpret these graphs. This <a class="reference external" href="https://distill.pub/2016/misread-tsne/">interactive dashboard</a> offers a really nice overview of these
 considerations.</p>
 </div>
+<p>As with our toy example above, here, space has semantic value. Points that appear closer together in the
+visualization above have more similarities between them than those that are farther apart. We can see this clearly
+if we show a person’s point and the most similar point to that person.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">roosevelts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FDR&#39;</span><span class="p">,</span> <span class="s1">&#39;Eleanor Roosevelt&#39;</span><span class="p">]</span>
@@ -1112,111 +1112,50 @@ Let’s grab some examples of each cluster and show them.</p>
 <p class="sidebar-title">What this loop does</p>
 <ol class="simple">
 <li><p>Group the data by <code class="docutils literal notranslate"><span class="pre">CLUSTER</span></code></p></li>
-<li><p>For each group, subset the data to select only rows in that group</p></li>
-<li><p>Sample <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> from that subset</p></li>
-<li><p>Display the results</p></li>
+<li><p>For each group, sample <code class="docutils literal notranslate"><span class="pre">n_samples</span></code></p></li>
+<li><p>Print each name in the sampled results</p></li>
 </ol>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">vis_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;CLUSTER&#39;</span><span class="p">):</span>
-    <span class="n">group</span> <span class="o">=</span> <span class="n">vis_data</span><span class="p">[</span><span class="n">vis_data</span><span class="p">[</span><span class="s1">&#39;CLUSTER&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="n">sampled</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)[[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;CLUSTER&#39;</span><span class="p">,</span> <span class="s1">&#39;COLOR&#39;</span><span class="p">]]</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">sampled</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">vis_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;CLUSTER&#39;</span><span class="p">):</span>
+    <span class="n">cluster</span> <span class="o">=</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cluster: </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="se">\n</span><span class="s2">----------&quot;</span><span class="p">)</span>
+    <span class="n">sampled</span> <span class="o">=</span> <span class="n">subset</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sampled</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style  type="text/css" >
-</style><table id="T_dbb91_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
-                <tr>
-                                <td id="T_dbb91_row0_col0" class="data row0 col0" >Benny Goodman</td>
-                        <td id="T_dbb91_row0_col1" class="data row0 col1" >1</td>
-                        <td id="T_dbb91_row0_col2" class="data row0 col2" >red</td>
-            </tr>
-            <tr>
-                                <td id="T_dbb91_row1_col0" class="data row1 col0" >Katharine Cornell</td>
-                        <td id="T_dbb91_row1_col1" class="data row1 col1" >1</td>
-                        <td id="T_dbb91_row1_col2" class="data row1 col2" >red</td>
-            </tr>
-            <tr>
-                                <td id="T_dbb91_row2_col0" class="data row2 col0" >Cole Porter</td>
-                        <td id="T_dbb91_row2_col1" class="data row2 col1" >1</td>
-                        <td id="T_dbb91_row2_col2" class="data row2 col2" >red</td>
-            </tr>
-            <tr>
-                                <td id="T_dbb91_row3_col0" class="data row3 col0" >Miles Davis</td>
-                        <td id="T_dbb91_row3_col1" class="data row3 col1" >1</td>
-                        <td id="T_dbb91_row3_col2" class="data row3 col2" >red</td>
-            </tr>
-            <tr>
-                                <td id="T_dbb91_row4_col0" class="data row4 col0" >James Stewart</td>
-                        <td id="T_dbb91_row4_col1" class="data row4 col1" >1</td>
-                        <td id="T_dbb91_row4_col2" class="data row4 col2" >red</td>
-            </tr>
-    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output text_html"><style  type="text/css" >
-</style><table id="T_85c3f_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
-                <tr>
-                                <td id="T_85c3f_row0_col0" class="data row0 col0" >Lord Keynes</td>
-                        <td id="T_85c3f_row0_col1" class="data row0 col1" >2</td>
-                        <td id="T_85c3f_row0_col2" class="data row0 col2" >blue</td>
-            </tr>
-            <tr>
-                                <td id="T_85c3f_row1_col0" class="data row1 col0" >Bella Abzug</td>
-                        <td id="T_85c3f_row1_col1" class="data row1 col1" >2</td>
-                        <td id="T_85c3f_row1_col2" class="data row1 col2" >blue</td>
-            </tr>
-            <tr>
-                                <td id="T_85c3f_row2_col0" class="data row2 col0" >Chiang Kai shek</td>
-                        <td id="T_85c3f_row2_col1" class="data row2 col1" >2</td>
-                        <td id="T_85c3f_row2_col2" class="data row2 col2" >blue</td>
-            </tr>
-            <tr>
-                                <td id="T_85c3f_row3_col0" class="data row3 col0" >Richard Daley</td>
-                        <td id="T_85c3f_row3_col1" class="data row3 col1" >2</td>
-                        <td id="T_85c3f_row3_col2" class="data row3 col2" >blue</td>
-            </tr>
-            <tr>
-                                <td id="T_85c3f_row4_col0" class="data row4 col0" >Anwar el Sadat</td>
-                        <td id="T_85c3f_row4_col1" class="data row4 col1" >2</td>
-                        <td id="T_85c3f_row4_col2" class="data row4 col2" >blue</td>
-            </tr>
-    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output text_html"><style  type="text/css" >
-</style><table id="T_c7ecb_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
-                <tr>
-                                <td id="T_c7ecb_row0_col0" class="data row0 col0" >Getulio Vargas</td>
-                        <td id="T_c7ecb_row0_col1" class="data row0 col1" >3</td>
-                        <td id="T_c7ecb_row0_col2" class="data row0 col2" >green</td>
-            </tr>
-            <tr>
-                                <td id="T_c7ecb_row1_col0" class="data row1 col0" >J J Hill</td>
-                        <td id="T_c7ecb_row1_col1" class="data row1 col1" >3</td>
-                        <td id="T_c7ecb_row1_col2" class="data row1 col2" >green</td>
-            </tr>
-            <tr>
-                                <td id="T_c7ecb_row2_col0" class="data row2 col0" >Roberto Clemente</td>
-                        <td id="T_c7ecb_row2_col1" class="data row2 col1" >3</td>
-                        <td id="T_c7ecb_row2_col2" class="data row2 col2" >green</td>
-            </tr>
-            <tr>
-                                <td id="T_c7ecb_row3_col0" class="data row3 col0" >Nellie Bly</td>
-                        <td id="T_c7ecb_row3_col1" class="data row3 col1" >3</td>
-                        <td id="T_c7ecb_row3_col2" class="data row3 col2" >green</td>
-            </tr>
-            <tr>
-                                <td id="T_c7ecb_row4_col0" class="data row4 col0" >Lou Gehrig</td>
-                        <td id="T_c7ecb_row4_col1" class="data row4 col1" >3</td>
-                        <td id="T_c7ecb_row4_col2" class="data row4 col2" >green</td>
-            </tr>
-    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster: 1
+----------
+Cole Porter
+Cecil De Mille
+Alfred Hitchcock
+David O Selznick
+Ginger Rogers
+
+
+Cluster: 2
+----------
+Hugo Black
+Cleveland
+De Gaulle Rallied
+Mao Tse Tung
+Henry L Stimson
+
+
+Cluster: 3
+----------
+Robert Moses
+Gregory Pincus
+Jeanette Rankin
+Sarah Orne Jewett
+Theodore Schultz
 </pre></div>
 </div>
 </div>
@@ -1241,16 +1180,16 @@ the throne. Should he therefore be in the second cluster or, as he is here, in t
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_0f7d2_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
+</style><table id="T_66410_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_0f7d2_row0_col0" class="data row0 col0" >Eugene O Neill</td>
-                        <td id="T_0f7d2_row0_col1" class="data row0 col1" >2</td>
-                        <td id="T_0f7d2_row0_col2" class="data row0 col2" >blue</td>
+                                <td id="T_66410_row0_col0" class="data row0 col0" >Eugene O Neill</td>
+                        <td id="T_66410_row0_col1" class="data row0 col1" >2</td>
+                        <td id="T_66410_row0_col2" class="data row0 col2" >blue</td>
             </tr>
             <tr>
-                                <td id="T_0f7d2_row1_col0" class="data row1 col0" >The Duke of Windsor</td>
-                        <td id="T_0f7d2_row1_col1" class="data row1 col1" >3</td>
-                        <td id="T_0f7d2_row1_col2" class="data row1 col2" >green</td>
+                                <td id="T_66410_row1_col0" class="data row1 col0" >The Duke of Windsor</td>
+                        <td id="T_66410_row1_col1" class="data row1 col1" >3</td>
+                        <td id="T_66410_row1_col2" class="data row1 col2" >green</td>
             </tr>
     </tbody></table></div></div>
 </div>
