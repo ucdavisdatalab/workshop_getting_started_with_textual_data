@@ -1115,105 +1115,137 @@ them.</p>
     <span class="n">group</span> <span class="o">=</span> <span class="n">vis_data</span><span class="p">[</span><span class="n">vis_data</span><span class="p">[</span><span class="s1">&#39;CLUSTER&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">sampled</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)[[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;CLUSTER&#39;</span><span class="p">,</span> <span class="s1">&#39;COLOR&#39;</span><span class="p">]]</span>
     <span class="n">display</span><span class="p">(</span><span class="n">sampled</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_be861_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
+</style><table id="T_31bf6_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_be861_row0_col0" class="data row0 col0" >Will Rogers</td>
-                        <td id="T_be861_row0_col1" class="data row0 col1" >1</td>
-                        <td id="T_be861_row0_col2" class="data row0 col2" >red</td>
+                                <td id="T_31bf6_row0_col0" class="data row0 col0" >W C Handy</td>
+                        <td id="T_31bf6_row0_col1" class="data row0 col1" >1</td>
+                        <td id="T_31bf6_row0_col2" class="data row0 col2" >red</td>
             </tr>
             <tr>
-                                <td id="T_be861_row1_col0" class="data row1 col0" >Gene Kelly</td>
-                        <td id="T_be861_row1_col1" class="data row1 col1" >1</td>
-                        <td id="T_be861_row1_col2" class="data row1 col2" >red</td>
+                                <td id="T_31bf6_row1_col0" class="data row1 col0" >Bela Bartok</td>
+                        <td id="T_31bf6_row1_col1" class="data row1 col1" >1</td>
+                        <td id="T_31bf6_row1_col2" class="data row1 col2" >red</td>
             </tr>
             <tr>
-                                <td id="T_be861_row2_col0" class="data row2 col0" >Buster Keaton</td>
-                        <td id="T_be861_row2_col1" class="data row2 col1" >1</td>
-                        <td id="T_be861_row2_col2" class="data row2 col2" >red</td>
+                                <td id="T_31bf6_row2_col0" class="data row2 col0" >Coleman Hawkins</td>
+                        <td id="T_31bf6_row2_col1" class="data row2 col1" >1</td>
+                        <td id="T_31bf6_row2_col2" class="data row2 col2" >red</td>
             </tr>
             <tr>
-                                <td id="T_be861_row3_col0" class="data row3 col0" >John Wayne</td>
-                        <td id="T_be861_row3_col1" class="data row3 col1" >1</td>
-                        <td id="T_be861_row3_col2" class="data row3 col2" >red</td>
+                                <td id="T_31bf6_row3_col0" class="data row3 col0" >John Philip Sousa</td>
+                        <td id="T_31bf6_row3_col1" class="data row3 col1" >1</td>
+                        <td id="T_31bf6_row3_col2" class="data row3 col2" >red</td>
             </tr>
             <tr>
-                                <td id="T_be861_row4_col0" class="data row4 col0" >James Cagney</td>
-                        <td id="T_be861_row4_col1" class="data row4 col1" >1</td>
-                        <td id="T_be861_row4_col2" class="data row4 col2" >red</td>
+                                <td id="T_31bf6_row4_col0" class="data row4 col0" >Peggy Ashcroft</td>
+                        <td id="T_31bf6_row4_col1" class="data row4 col1" >1</td>
+                        <td id="T_31bf6_row4_col2" class="data row4 col2" >red</td>
             </tr>
-    </tbody></table></div><div class="output text_html"><style  type="text/css" >
-</style><table id="T_97de4_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
+    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_3c358_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_97de4_row0_col0" class="data row0 col0" >Robert Francis Kennedy</td>
-                        <td id="T_97de4_row0_col1" class="data row0 col1" >2</td>
-                        <td id="T_97de4_row0_col2" class="data row0 col2" >blue</td>
+                                <td id="T_3c358_row0_col0" class="data row0 col0" >Boris Pasternak</td>
+                        <td id="T_3c358_row0_col1" class="data row0 col1" >2</td>
+                        <td id="T_3c358_row0_col2" class="data row0 col2" >blue</td>
             </tr>
             <tr>
-                                <td id="T_97de4_row1_col0" class="data row1 col0" >Tolstoy</td>
-                        <td id="T_97de4_row1_col1" class="data row1 col1" >2</td>
-                        <td id="T_97de4_row1_col2" class="data row1 col2" >blue</td>
+                                <td id="T_3c358_row1_col0" class="data row1 col0" >Bella Abzug</td>
+                        <td id="T_3c358_row1_col1" class="data row1 col1" >2</td>
+                        <td id="T_3c358_row1_col2" class="data row1 col2" >blue</td>
             </tr>
             <tr>
-                                <td id="T_97de4_row2_col0" class="data row2 col0" >Fred Vinson</td>
-                        <td id="T_97de4_row2_col1" class="data row2 col1" >2</td>
-                        <td id="T_97de4_row2_col2" class="data row2 col2" >blue</td>
+                                <td id="T_3c358_row2_col0" class="data row2 col0" >David Eisenhower</td>
+                        <td id="T_3c358_row2_col1" class="data row2 col1" >2</td>
+                        <td id="T_3c358_row2_col2" class="data row2 col2" >blue</td>
             </tr>
             <tr>
-                                <td id="T_97de4_row3_col0" class="data row3 col0" >J Edgar Hoover</td>
-                        <td id="T_97de4_row3_col1" class="data row3 col1" >2</td>
-                        <td id="T_97de4_row3_col2" class="data row3 col2" >blue</td>
+                                <td id="T_3c358_row3_col0" class="data row3 col0" >Khrushchev</td>
+                        <td id="T_3c358_row3_col1" class="data row3 col1" >2</td>
+                        <td id="T_3c358_row3_col2" class="data row3 col2" >blue</td>
             </tr>
             <tr>
-                                <td id="T_97de4_row4_col0" class="data row4 col0" >Adolf Hitler</td>
-                        <td id="T_97de4_row4_col1" class="data row4 col1" >2</td>
-                        <td id="T_97de4_row4_col2" class="data row4 col2" >blue</td>
+                                <td id="T_3c358_row4_col0" class="data row4 col0" >Calvin Coolidge</td>
+                        <td id="T_3c358_row4_col1" class="data row4 col1" >2</td>
+                        <td id="T_3c358_row4_col2" class="data row4 col2" >blue</td>
             </tr>
-    </tbody></table></div><div class="output text_html"><style  type="text/css" >
-</style><table id="T_4790b_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
+    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_77151_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_4790b_row0_col0" class="data row0 col0" >Frida Kahlo</td>
-                        <td id="T_4790b_row0_col1" class="data row0 col1" >3</td>
-                        <td id="T_4790b_row0_col2" class="data row0 col2" >green</td>
+                                <td id="T_77151_row0_col0" class="data row0 col0" >Max Ernst</td>
+                        <td id="T_77151_row0_col1" class="data row0 col1" >3</td>
+                        <td id="T_77151_row0_col2" class="data row0 col2" >green</td>
             </tr>
             <tr>
-                                <td id="T_4790b_row1_col0" class="data row1 col0" >Samuel Beckett</td>
-                        <td id="T_4790b_row1_col1" class="data row1 col1" >3</td>
-                        <td id="T_4790b_row1_col2" class="data row1 col2" >green</td>
+                                <td id="T_77151_row1_col0" class="data row1 col0" >Adolph S Ochs</td>
+                        <td id="T_77151_row1_col1" class="data row1 col1" >3</td>
+                        <td id="T_77151_row1_col2" class="data row1 col2" >green</td>
             </tr>
             <tr>
-                                <td id="T_4790b_row2_col0" class="data row2 col0" >Jim Thorpe</td>
-                        <td id="T_4790b_row2_col1" class="data row2 col1" >3</td>
-                        <td id="T_4790b_row2_col2" class="data row2 col2" >green</td>
+                                <td id="T_77151_row2_col0" class="data row2 col0" >J Paul Getty</td>
+                        <td id="T_77151_row2_col1" class="data row2 col1" >3</td>
+                        <td id="T_77151_row2_col2" class="data row2 col2" >green</td>
             </tr>
             <tr>
-                                <td id="T_4790b_row3_col0" class="data row3 col0" >Babe Ruth</td>
-                        <td id="T_4790b_row3_col1" class="data row3 col1" >3</td>
-                        <td id="T_4790b_row3_col2" class="data row3 col2" >green</td>
+                                <td id="T_77151_row3_col0" class="data row3 col0" >Fred Douglass</td>
+                        <td id="T_77151_row3_col1" class="data row3 col1" >3</td>
+                        <td id="T_77151_row3_col2" class="data row3 col2" >green</td>
             </tr>
             <tr>
-                                <td id="T_4790b_row4_col0" class="data row4 col0" >Maureen Connolly</td>
-                        <td id="T_4790b_row4_col1" class="data row4 col1" >3</td>
-                        <td id="T_4790b_row4_col2" class="data row4 col2" >green</td>
+                                <td id="T_77151_row4_col0" class="data row4 col0" >Anna Freud</td>
+                        <td id="T_77151_row4_col1" class="data row4 col1" >3</td>
+                        <td id="T_77151_row4_col2" class="data row4 col2" >green</td>
             </tr>
-    </tbody></table></div></div>
+    </tbody></table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>Here’s something intriguing: one way to interpret these clusters is by profession. The people in the first cluster
 tend to be entertainers, usually popular ones working in/with popular media forms; Billie Holiday and Marilyn
-Monore are in this cluster, for example. Those in the second one, on the other hand, tend to be politicians:
+Monroe are in this cluster, for example. Those in the second one, on the other hand, tend to be politicians:
 Ghandi, Adlai Stevenson, and so on. Finally, those in cluster three are often novelists, activists, and other kinds
 of public figures; Helen Keller is in this cluster, along with Joseph Pulitzer and Jackie Robinson. From an initial
 glance, then, our text similarity data seems to suggest that <em>a person’s profession indicates something about the
 type of obituary they have</em>.</p>
 <p>Of course, there are interesting exceptions. Calvin Coolidge, a poet, and Eugene O’Neill, a playwright, are both in
 the second cluster, whereas the division we’ve just suggested would put them in the third cluster, alongside Sylvia
-Plath and James Joyce. The question is why? What is it about these two people – or more specifically, their
-obituaries – that pushes them outside the cluster we’d expect them to be in? Is it a particular set of words?
-Lexical diversity? Something else?</p>
+Plath and James Joyce.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unexpected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Calvin Coolidge&#39;</span><span class="p">,</span> <span class="s1">&#39;Eugene O Neill&#39;</span><span class="p">]</span>
+<span class="n">vis_data</span><span class="p">[</span><span class="n">vis_data</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">unexpected</span><span class="p">)][[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;CLUSTER&#39;</span><span class="p">,</span> <span class="s1">&#39;COLOR&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_e0bef_" ><thead>    <tr>        <th class="col_heading level0 col0" >NAME</th>        <th class="col_heading level0 col1" >CLUSTER</th>        <th class="col_heading level0 col2" >COLOR</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_e0bef_row0_col0" class="data row0 col0" >Calvin Coolidge</td>
+                        <td id="T_e0bef_row0_col1" class="data row0 col1" >2</td>
+                        <td id="T_e0bef_row0_col2" class="data row0 col2" >blue</td>
+            </tr>
+            <tr>
+                                <td id="T_e0bef_row1_col0" class="data row1 col0" >Eugene O Neill</td>
+                        <td id="T_e0bef_row1_col1" class="data row1 col1" >2</td>
+                        <td id="T_e0bef_row1_col2" class="data row1 col2" >blue</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<p>The question is why? What is it about these two people – or more specifically, their obituaries – that pushes them
+outside the cluster we’d expect them to be in? Is it a particular set of words? Lexical diversity? Something else?</p>
 <p>Investigating these questions will take us beyond the scope of this chapter. For now, all we can do is form a
 preliminary hypothesis, which later work will either corroborate or challenge.</p>
 </div>
