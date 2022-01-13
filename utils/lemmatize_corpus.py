@@ -11,14 +11,6 @@ from nltk.tokenize.treebank import TreebankWordTokenizer, TreebankWordDetokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 
-print("Enter an input directory path")
-indir = input()
-
-print("\nEnter an output directory path")
-outdir = input()
-
-print(f"\nLoading files from {indir} and outputting them to {outdir}\n")
-manifest = pd.read_csv(indir + "manifest.csv", index_col=0)
 tokenizer = TreebankWordTokenizer()
 detokenizer = TreebankWordDetokenizer()
 lemmatizer = WordNetLemmatizer()
@@ -59,11 +51,18 @@ def lemmatize_text(doc):
 	lemmatized = [lemmatize_word(i[0], i[1]) for i in tagged]
 	return detokenizer.detokenize(lemmatized)
 
+print("Enter an input directory path")
+indir = input()
+
+print("\nEnter an output directory path")
+outdir = input()
+
+print(f"\nLoading files from {indir} and outputting them to {outdir}\n")
+manifest = pd.read_csv(indir + "manifest.csv", index_col=0)
 for fname in manifest['FILE_NAME']:
-	path = indir + fname
-	with open(path, 'r') as f:
+	with open(indir + fname, 'r') as f:
 		text = f.read()
 		lemmatized = lemmatize_text(text)
-		with open(outdir + fname, 'w') as ff:
-			ff.write(lemmatized)
+		with open(outdir + fname, 'w') as o:
+			o.write(lemmatized)
 	print("Finished", fname)
