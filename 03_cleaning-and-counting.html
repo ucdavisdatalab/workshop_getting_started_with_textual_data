@@ -520,7 +520,7 @@ hyphens, the en dash (-) and the em dash (—). They look very similar in plain 
 character codes, and typesetters often use the latter when printing things like dates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[-]|[—]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">cleaned</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[-—]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">cleaned</span><span class="p">)</span>
 <span class="n">cleaned</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w\s]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cleaned</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -754,11 +754,11 @@ count and plot the remaining words. We run <code class="docutils literal notrans
       <td>498</td>
     </tr>
     <tr>
-      <th>on</th>
+      <th>by</th>
       <td>460</td>
     </tr>
     <tr>
-      <th>by</th>
+      <th>on</th>
       <td>460</td>
     </tr>
     <tr>
@@ -1013,7 +1013,7 @@ We can combine the two with a set union…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/voyant_stoplist.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">voyant_stopwords</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">voyant_stopwords</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     
 <span class="n">custom_stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nltk_stopwords</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">voyant_stopwords</span><span class="p">))</span>
 </pre></div>
@@ -2267,129 +2267,129 @@ respectively. This will return a list of nested tuples, which will take a little
   </thead>
   <tbody>
     <tr>
-      <th>culled</th>
-      <td>choicest</td>
+      <th>humane</th>
+      <td>thoughtful</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>companionship</th>
-      <td>diversity</td>
+      <th>wrought</th>
+      <td>beaming</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>overlook</th>
-      <td>personal</td>
+      <th>spectacle</th>
+      <td>wrecked</td>
+      <td>13.894534</td>
+    </tr>
+    <tr>
+      <th>accuse</th>
+      <td>seizure</td>
+      <td>13.894534</td>
+    </tr>
+    <tr>
+      <th>rankle</th>
+      <td>wounds</td>
+      <td>13.309571</td>
+    </tr>
+    <tr>
+      <th>grey</th>
+      <td>hairs</td>
+      <td>13.309571</td>
+    </tr>
+    <tr>
+      <th>pedestrian</th>
+      <td>tour</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>vineyards</th>
-      <td>green</td>
-      <td>12.572605</td>
+      <th>ruined</th>
+      <td>castles</td>
+      <td>12.894534</td>
     </tr>
     <tr>
-      <th>gladly</th>
-      <td>sacrifice</td>
-      <td>12.572605</td>
-    </tr>
-    <tr>
-      <th>struggled</th>
-      <td>furiously</td>
-      <td>12.572605</td>
-    </tr>
-    <tr>
-      <th>bonds</th>
-      <td>closest</td>
+      <th>east</th>
+      <td>affording</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>valuable</th>
-      <td>miniature</td>
+      <th>mariner</th>
+      <td>continuing</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>smooth</th>
-      <td>placid</td>
+      <th>injuries</th>
+      <td>inflict</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>strong</th>
-      <td>northerly</td>
+      <th>extinguish</th>
+      <td>throbbings</td>
       <td>12.087179</td>
     </tr>
     <tr>
-      <th>integrity</th>
-      <td>indefatigable</td>
-      <td>11.724609</td>
+      <th>flowing</th>
+      <td>teeth</td>
+      <td>11.894534</td>
     </tr>
     <tr>
-      <th>scared</th>
-      <td>horrid</td>
-      <td>11.572605</td>
+      <th>lively</th>
+      <td>sallies</td>
+      <td>11.894534</td>
     </tr>
     <tr>
-      <th>charles</th>
-      <td>collected</td>
-      <td>11.572605</td>
+      <th>extinguish</th>
+      <td>spark</td>
+      <td>11.502216</td>
     </tr>
     <tr>
-      <th>horrid</th>
-      <td>resemblance</td>
-      <td>11.572605</td>
-    </tr>
-    <tr>
-      <th>defiance</th>
-      <td>follow</td>
-      <td>11.572605</td>
-    </tr>
-    <tr>
-      <th>duty</th>
-      <td>obeying</td>
-      <td>11.435102</td>
-    </tr>
-    <tr>
-      <th>accept</th>
-      <td>offer</td>
+      <th>punishment</th>
+      <td>exert</td>
       <td>11.309571</td>
     </tr>
     <tr>
-      <th>merchant</th>
-      <td>commanded</td>
+      <th>becoming</th>
+      <td>fellows</td>
       <td>11.309571</td>
     </tr>
     <tr>
-      <th>awoke</th>
-      <td>yesternights</td>
+      <th>rocks</th>
+      <td>dashing</td>
+      <td>11.309571</td>
+    </tr>
+    <tr>
+      <th>bare</th>
+      <td>furniture</td>
+      <td>11.087179</td>
+    </tr>
+    <tr>
+      <th>provisions</th>
+      <td>departed</td>
       <td>10.987643</td>
     </tr>
     <tr>
-      <th>publicly</th>
-      <td>criminal</td>
-      <td>10.894534</td>
-    </tr>
-    <tr>
-      <th>supreme</th>
-      <td>magnificent</td>
-      <td>10.894534</td>
-    </tr>
-    <tr>
-      <th>ugliness</th>
-      <td>attempted</td>
+      <th>trembling</th>
+      <td>hopeless</td>
       <td>10.724609</td>
     </tr>
     <tr>
-      <th>endure</th>
-      <td>mutability</td>
+      <th>valleys</th>
+      <td>sought</td>
       <td>10.724609</td>
     </tr>
     <tr>
-      <th>lakes</th>
-      <td>dashing</td>
+      <th>happier</th>
+      <td>childhood</td>
       <td>10.572605</td>
     </tr>
     <tr>
-      <th>assured</th>
-      <td>shout</td>
-      <td>10.435102</td>
+      <th>branch</th>
+      <td>tree</td>
+      <td>10.572605</td>
+    </tr>
+    <tr>
+      <th>tardily</th>
+      <td>dead</td>
+      <td>10.370972</td>
     </tr>
   </tbody>
 </table>
