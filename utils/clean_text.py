@@ -1,14 +1,11 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 """
 helper script to quickly clean files
 """
 
-import pandas as pd
-import re
-
-with open("../data/voyant_stoplist.txt", 'r') as f:
-    stopwords = f.read().split()
+from argparse import ArgumentParser
+import os, re
 
 def remove_extra_chars(doc):
     """
@@ -16,39 +13,40 @@ def remove_extra_chars(doc):
     """
     doc = re.sub(r"[-—_\.]", " ", doc)
     doc = re.sub(r"[^\w\s]", "", doc)
-    doc = re.sub(f"[0-9]", " ", doc) 
+    doc = re.sub(f"[0-9]", " ", doc)
     doc = re.sub(r"\s+", " ", doc)
-    return doc
+    return doc.lower()
 
-def apply_stopwords(doc):
+def stop_text(doc, stopwords):
     """
     stop out a string
     """
     doc = doc.split()
     doc = [token for token in doc if token not in stopwords and len(token) > 2]
-    return ' '.join(doc)
-
-def clean(doc):
-    """
-    clean a string; returns full strings (not bags-of-words)
-    """
-    doc = remove_extra_chars(doc.lower())
-    doc = apply_stopwords(doc)
+    doc = ' '.join(doc)
     return doc
 
-print("Enter an input directory path")
-indir = input()
+if __name__ == '__main__':
+    parser = ArgumentParser()
+    parser.add_argument('--in_dir')
+    parser.add_argument('--out_dir')
+    parser.add_argument('--stopwords_file')
+    args = parser.parse_args()
 
-print("\nEnter an output directory path")
-outdir = input()
+    stopwords = []
+    with open(args.stopwords_file, 'r') as f:
+        for word in f:
+            stopwords.extend(word.split())
 
-print(f"\nLoading files from {indir} and outputting them to {outdir}\n")
-manifest = pd.read_csv(indir + "manifest.csv", index_col=0)
+    fnames = os.listdir(args.in_dir)
+    fnames = [fname for fname in fnames if fname.startswith(".") == False]
 
-for fname in manifest['FILE_NAME']:
-    with open(indir + fname, 'r') as f:
-        text = f.read()
-        cleaned = clean(text)
-        with open(outdir + fname, 'w') as o:
-            o.write(cleaned)
-        print("Finished", fname)
+    for fname in fnames:
+        with open(args.in_dir + fname, 'r') as f:
+            text = f.read()
+            text = remove_extra_chars(text)
+            text = stop_text(text, stopwords)
+            with open(args.out_dir + fname, 'w') as o:
+                o.write(text)
+            print("Finished", fname)
+
