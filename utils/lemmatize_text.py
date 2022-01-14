@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
 lemmatize a directory of texts. note: for the purposes of teaching 
