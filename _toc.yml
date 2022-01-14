@@ -8,3 +8,4 @@ chapters:
 - file: 03_cleaning-and-counting.ipynb
 - file: 04_corpus-analytics.ipynb
 - file: 05_clustering-and-classification.ipynb
+- file: 06_topic-modeling.ipynb
