@@ -17,6 +17,7 @@ parse:
 
 execute:
   execute_notebooks: force
+  timeout: 120
 
 html:
   use_repository_button: true
