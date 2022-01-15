@@ -225,25 +225,57 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-setup">
-   6.1. Data Setup
+  <a class="reference internal nav-link" href="#preliminiaries">
+   6.1. Preliminiaries
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-a-topic-model">
+   6.2. Building a Topic Model
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#file-manifest">
-     6.1.1. File manifest
+    <a class="reference internal nav-link" href="#initializing-a-model">
+     6.2.1. Initializing a model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#document-term-matrix">
-     6.1.2. Document-term matrix
+    <a class="reference internal nav-link" href="#training-a-model">
+     6.2.2. Training a model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inspecting-the-results">
+     6.2.3. Inspecting the Results
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#building-a-topic-model">
-   6.2. Building a Topic Model
+  <a class="reference internal nav-link" href="#fine-tuning-the-basics">
+   6.3. Fine Tuning: The Basics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setting-the-number-of-topics">
+     6.3.1. Setting the number of topics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#perplexity">
+     6.3.2. Perplexity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#coherence">
+     6.3.3. Coherence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fine-tuning-advanced">
+   6.4. Fine Tuning: Advanced
   </a>
  </li>
 </ul>
@@ -268,10 +300,8 @@
 <li><p>Appraise the validity of a topic model and fine tune it accordingly</p></li>
 </ul>
 </div>
-<div class="section" id="data-setup">
-<h2><span class="section-number">6.1. </span>Data Setup<a class="headerlink" href="#data-setup" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="file-manifest">
-<h3><span class="section-number">6.1.1. </span>File manifest<a class="headerlink" href="#file-manifest" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="preliminiaries">
+<h2><span class="section-number">6.1. </span>Preliminiaries<a class="headerlink" href="#preliminiaries" title="Permalink to this headline">¶</a></h2>
 <p>As before, we’ll use a file manifest to keep things orderly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -324,49 +354,49 @@ Genres: Fiction, Classics, Nonfiction, Children’s Books, Teen &amp; Young Adul
   </thead>
   <tbody>
     <tr>
-      <th>1123</th>
-      <td>Mary Pope Osborne</td>
-      <td>The Mysteries of Spider Kane</td>
-      <td>Children’s Books</td>
-      <td>2006-03-14</td>
-      <td>9780440420972</td>
-      <td>1123.txt</td>
-    </tr>
-    <tr>
-      <th>261</th>
-      <td>Jacky Davis</td>
-      <td>Ladybug Girl Plays</td>
-      <td>Children’s Books</td>
-      <td>2013-03-07</td>
-      <td>9780698188792</td>
-      <td>0261.txt</td>
-    </tr>
-    <tr>
-      <th>451</th>
-      <td>Holly Morris</td>
-      <td>Adventure Divas</td>
-      <td>Humor</td>
-      <td>2006-10-31</td>
-      <td>9780375760631</td>
-      <td>0451.txt</td>
-    </tr>
-    <tr>
-      <th>1291</th>
-      <td>Daniel Cozort, Craig Preston</td>
-      <td>Buddhist Philosophy</td>
+      <th>1012</th>
+      <td>Kingsley Browne</td>
+      <td>Co-ed Combat</td>
       <td>Nonfiction</td>
-      <td>2003-08-26</td>
-      <td>9781559391986</td>
-      <td>1291.txt</td>
+      <td>2007-11-08</td>
+      <td>9781101217849</td>
+      <td>1012.txt</td>
     </tr>
     <tr>
-      <th>1042</th>
-      <td>Joshua Palmatier</td>
-      <td>The Throne of Amenkor</td>
+      <th>1106</th>
+      <td>Louis Begley</td>
+      <td>Schmidt Steps Back</td>
       <td>Fiction</td>
-      <td>2017-11-14</td>
-      <td>9780756413354</td>
-      <td>1042.txt</td>
+      <td>2013-05-21</td>
+      <td>9780345530530</td>
+      <td>1106.txt</td>
+    </tr>
+    <tr>
+      <th>1399</th>
+      <td>Plutarch</td>
+      <td>Plutarch's Lives, Volume 2</td>
+      <td>Classics</td>
+      <td>2001-04-10</td>
+      <td>9780375756771</td>
+      <td>1399.txt</td>
+    </tr>
+    <tr>
+      <th>797</th>
+      <td>Myrl A. Schreibman</td>
+      <td>The Indie Producers Handbook</td>
+      <td>Nonfiction</td>
+      <td>2012-02-08</td>
+      <td>9780770433512</td>
+      <td>0797.txt</td>
+    </tr>
+    <tr>
+      <th>466</th>
+      <td>Michael Ondaatje</td>
+      <td>Divisadero</td>
+      <td>Fiction</td>
+      <td>2008-04-22</td>
+      <td>9780307279323</td>
+      <td>0466.txt</td>
     </tr>
   </tbody>
 </table>
@@ -387,36 +417,228 @@ Genres: Fiction, Classics, Nonfiction, Children’s Books, Teen &amp; Young Adul
 <img alt="_images/06_topic-modeling_3_0.png" src="_images/06_topic-modeling_3_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="document-term-matrix">
-<h3><span class="section-number">6.1.2. </span>Document-term matrix<a class="headerlink" href="#document-term-matrix" title="Permalink to this headline">¶</a></h3>
-<p>We’ll also quickly make a document-term matrix with <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>’s <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code>. But since we don’t need
-to do any preprocessing on our files, we’ll just have <code class="docutils literal notranslate"><span class="pre">CountVectorizer()</span></code> stream in the files itself using its
-<code class="docutils literal notranslate"><span class="pre">input</span></code> argument. All we need to do is give it the list of filenames from our manifest and it will take care of the
-rest.</p>
+<p>To make file loading easier, we’ll isolate the file names from <code class="docutils literal notranslate"><span class="pre">manifest</span></code> and create a list of paths.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
-
-<span class="n">indir</span> <span class="o">=</span> <span class="s2">&quot;data/session_three/input/&quot;</span>
-<span class="n">file_names</span> <span class="o">=</span> <span class="p">(</span><span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;FILE_NAME&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-
-<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="s1">&#39;filename&#39;</span><span class="p">)</span>
-<span class="n">vectorized</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span>
-
-<span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">],</span>
-    <span class="n">columns</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indir</span> <span class="o">=</span> <span class="s2">&quot;data/session_three/input/&quot;</span>
+<span class="n">paths</span> <span class="o">=</span> <span class="n">indir</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;FILE_NAME&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s take a quick look to ensure this process has worked the way we expected it to work.</p>
+</div>
+<div class="section" id="building-a-topic-model">
+<h2><span class="section-number">6.2. </span>Building a Topic Model<a class="headerlink" href="#building-a-topic-model" title="Permalink to this headline">¶</a></h2>
+<p>With this bit of preliminary work done, we’re ready to build a topic model. There are numerous implementations of
+LDA modeling available, ranging from the command line utility, <a class="reference external" href="https://mimno.github.io/Mallet/">MALLET</a> (which many of us in the DataLab use in our
+own work), to built-in APIs offered by both <code class="docutils literal notranslate"><span class="pre">gensim</span></code> and <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. It’s tempting to use the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>
+API: we should be familiar with this package’s conventions by now, and indeed it’s quite easy to spin up a topic
+model using its API. But there’s a <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/issues/6777">reported bug</a> in a key metric for validating LDA models in <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>, and,
+as far as we know, this bug hasn’t been fixed. Depending on your use case, this may not be a big deal. The bug has
+to do with generating a <strong>perplexity score</strong> from the model, which is useful for fine tuning. You, however, may not
+want to go through this process, especially if you’re working in an exploratory model. In this case, it’s probably
+fine to use <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>.</p>
+<p>As for us: we’ll be demonstrating how to fine tune models and will thus avoid <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> for the workshop.
+Instead, we’ll be using <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code>, a Python wrapper built around Tomato, a topic modeling tool built in C++. Its
+API is fairly intuitive and comes with lots of options, which we’ll leverage to build the best model possible for
+our data.</p>
+<div class="section" id="initializing-a-model">
+<h3><span class="section-number">6.2.1. </span>Initializing a model<a class="headerlink" href="#initializing-a-model" title="Permalink to this headline">¶</a></h3>
+<p>Initializing a topic model with <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> is simple: just assign <code class="docutils literal notranslate"><span class="pre">LDAModel()</span></code> to a variable and declare the number
+of topics the model will generate. As we’ll discuss below, determining how many topics to use is a matter of some
+debate and complexity, but for now, we’ll just pick a number and move ahead.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dtm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tomotopy</span> <span class="k">as</span> <span class="nn">tp</span>
+
+<span class="n">n_topics</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">n_topics</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to add our blurbs to the model. We’ll do so by using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop in conjunction with all the paths we
+created above. The only catch here is that we need to split each blurb into a list of tokens (right now they’re
+stored as text blobs).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add_doc</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of documents:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of documents: 1500
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training-a-model">
+<h3><span class="section-number">6.2.2. </span>Training a model<a class="headerlink" href="#training-a-model" title="Permalink to this headline">¶</a></h3>
+<p>Our model is now ready to be trained. Under the hood, this happens in an iterative fashion, so we need to set the
+total number of iterations we’d like to use to do the training. With that set, it’s simply a matter of calling
+<code class="docutils literal notranslate"><span class="pre">model.train()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_iters</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="inspecting-the-results">
+<h3><span class="section-number">6.2.3. </span>Inspecting the Results<a class="headerlink" href="#inspecting-the-results" title="Permalink to this headline">¶</a></h3>
+<p>With our trained on our corpus, we can access some high-level information about the corpus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number of unique words: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">used_vocabs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total number of tokens: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">num_words</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of unique words: 19609 
+Total number of tokens: 129027
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each topic, we can get the words most associated with that topic. The accompanying score is the probability of
+that word appearing in a given topic.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic_id</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">top_words</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.04f</span><span class="si">}</span><span class="s2">%)&quot;</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">top_words</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Topic </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
++ book (0.0262%), story (0.0134%), new (0.0109%), reader (0.0101%), read (0.0078%)
+Topic 1: 
++ book (0.0110%), use (0.0067%), guide (0.0065%), include (0.0063%), work (0.0060%)
+Topic 2: 
++ novel (0.0090%), new (0.0088%), war (0.0073%), man (0.0065%), time (0.0063%)
+Topic 3: 
++ life (0.0253%), story (0.0084%), live (0.0082%), year (0.0079%), new (0.0077%)
+Topic 4: 
++ just (0.0102%), make (0.0097%), friend (0.0086%), get (0.0076%), day (0.0074%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This seems to make intuitive sense: we’re dealing here with several hundred book blurbs, so “book,” “reader,” and
+“new” are all words we’d expect to see.</p>
+<p>Since each topic has a probability score for every word, it’s also possible to look at the total word distribution
+for a topic with <code class="docutils literal notranslate"><span class="pre">get_word_dist()</span></code>. This outputs an array of probabilities, which is indexed in the same order as
+<code class="docutils literal notranslate"><span class="pre">model.used_vocabs()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">word_dist</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_topic_word_dist</span><span class="p">(</span><span class="n">topic_id</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">word_dist</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">used_vocabs</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>just      0.010161
+make      0.009699
+friend    0.008590
+get       0.007574
+day       0.007390
+like      0.006743
+school    0.006420
+new       0.006050
+girl      0.005958
+home      0.005727
+family    0.005727
+time      0.005681
+he        0.005542
+good      0.005496
+shes      0.005358
+start     0.005265
+food      0.004988
+want      0.004988
+love      0.004896
+help      0.004711
+little    0.004434
+best      0.004388
+come      0.004342
+night     0.004065
+recipe    0.004065
+dtype: float32
+</pre></div>
+</div>
+</div>
+</div>
+<p>To zoom out a bit: it’s also often helpful to know how large each topic is.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_sizes</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_topics</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Topic </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">topic_sizes</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s2"> words&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 23727 words
+Topic 1: 23950 words
+Topic 2: 30303 words
+Topic 3: 29590 words
+Topic 4: 21457 words
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can get the topic distribution for a given document. We do so with the <code class="docutils literal notranslate"><span class="pre">docs</span></code> attribute of <code class="docutils literal notranslate"><span class="pre">model</span></code>,
+which is indexed in the same order as our documents. Here, we’ll sample from <code class="docutils literal notranslate"><span class="pre">manifest</span></code>, get the associated index,
+pipe it into our model object, and return the top topic for a blurb. As with <code class="docutils literal notranslate"><span class="pre">get_topic_words()</span></code> above, the top
+topic will also return a probability score for a given document.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampled_titles</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Top topics for:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">sampled_titles</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">get_topics</span><span class="p">(</span><span class="n">top_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">topic</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ </span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;TITLE&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top topics for:
++ Battle Angel Alita: Last Order Omnibus 2: 2 (0.465%)
++ Hippocratic Writings: 1 (0.598%)
++ Power: 1 (0.640%)
++ Big Chickens Go to Town: 0 (0.413%)
++ The Prisoner: 2 (0.643%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can get even more granular. Every word in a document has its own associated topic, which will change depending
+on the document. This is about as close to context-sensitive semantics as we can get with this method. We’ll grab
+just one title from our sampled set to show this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">sampled_titles</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">doc_word_to_topic_dist</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">topics</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">doc_word_to_topic_dist</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">,</span> <span class="s1">&#39;TOPIC&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -439,162 +661,767 @@ rest.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sexesfamily</th>
-      <th>infuse</th>
-      <th>genitals</th>
-      <th>siena</th>
-      <th>pairing</th>
-      <th>xxiii</th>
-      <th>charlie</th>
-      <th>inquirersince</th>
-      <th>state</th>
-      <th>irradiation</th>
-      <th>deputy</th>
-      <th>deathless</th>
-      <th>cork</th>
-      <th>donts</th>
-      <th>milarepa</th>
-    </tr>
-    <tr>
-      <th>TITLE</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>WORD</th>
+      <th>TOPIC</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>WWIII:  Force Of Arms</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>0</th>
+      <td>firefight</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>The Candle of Distant Earth</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>1</th>
+      <td>generation</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>The Haitian Revolution</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>2</th>
+      <td>gap</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>Old Racers, New Racers (Disney/Pixar Cars 3)</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>3</th>
+      <td>nanotechnology</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>The Hand of Chaos</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>4</th>
+      <td>humanity</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>immortal</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>result</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>population</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>explosion</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>push</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Quite sparse, but that’s to be expected.</p>
-<p>We’ll also assign the corpus vocabulary and individual blurbs’ token counts to variables, which will be useful
-later on.</p>
+</div>
+</div>
+<div class="section" id="fine-tuning-the-basics">
+<h2><span class="section-number">6.3. </span>Fine Tuning: The Basics<a class="headerlink" href="#fine-tuning-the-basics" title="Permalink to this headline">¶</a></h2>
+<p>All this looks good so far, but our topics are fairly general – and quite large. More, the same top words appear
+across different topics in the model, which makes it difficult to interpret the specifcity of each topic. All this
+suggests that we need to make some adjustments to the way we initialize our model. But there are several different
+parameters to adjust when intializing the model, so what, then, should we change?</p>
+<div class="section" id="setting-the-number-of-topics">
+<h3><span class="section-number">6.3.1. </span>Setting the number of topics<a class="headerlink" href="#setting-the-number-of-topics" title="Permalink to this headline">¶</a></h3>
+<p>An easy answer would be the number of topics. If, as above, your topics seem too general, it may be because you’ve
+too small a number of topics for the model. Increasing the number of topics you use may make the model more
+interpretable.</p>
+<p>We’ll show an example. But before doing so, we’ll load our files into a <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> <code class="docutils literal notranslate"><span class="pre">Corpus()</span></code> object, which will
+streamline the model initialization process.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
-<span class="n">doc_lengths</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tomotopy.utils</span> <span class="kn">import</span> <span class="n">Corpus</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Vocabulary size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span><span class="si">}</span><span class="s2"> tokens&quot;</span><span class="p">,</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Average blurb length: </span><span class="si">{</span><span class="n">doc_lengths</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> tokens&quot;</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="n">Corpus</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">corpus</span><span class="o">.</span><span class="n">add_doc</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s set a higher number of topics for our model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_topics</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">n_topics</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of documents:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of documents: 1500
+</pre></div>
+</div>
+</div>
+</div>
+<p>And let’s also define a quick function to help us inspect the top words for each topic. This is the same <code class="docutils literal notranslate"><span class="pre">for</span></code> loop
+we used earlier wrapped up in a callable function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_topic_words</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">top_words</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic_id</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="n">top_n</span><span class="p">)</span>
+        <span class="n">top_words</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.04f</span><span class="si">}</span><span class="s2">%)&quot;</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">top_words</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Topic </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With that done, let’s train a model with our new number of topics and see what the results look like. We’ll use the
+same number of iterations as above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+
+<span class="n">print_topic_words</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
++ new (0.0369%), time (0.0228%), author (0.0188%), york (0.0185%), novel (0.0172%)
+Topic 1: 
++ book (0.0372%), story (0.0193%), reader (0.0151%), new (0.0134%), read (0.0108%)
+Topic 2: 
++ book (0.0128%), use (0.0086%), offer (0.0083%), life (0.0080%), learn (0.0071%)
+Topic 3: 
++ murder (0.0172%), mystery (0.0168%), crime (0.0090%), kill (0.0088%), killer (0.0088%)
+Topic 4: 
++ food (0.0199%), recipe (0.0172%), italian (0.0080%), eat (0.0074%), cook (0.0074%)
+Topic 5: 
++ life (0.0299%), woman (0.0165%), story (0.0154%), love (0.0151%), family (0.0126%)
+Topic 6: 
++ history (0.0129%), work (0.0127%), american (0.0125%), world (0.0088%), year (0.0085%)
+Topic 7: 
++ just (0.0120%), know (0.0100%), like (0.0089%), time (0.0088%), make (0.0085%)
+Topic 8: 
++ war (0.0159%), world (0.0111%), power (0.0081%), battle (0.0081%), king (0.0069%)
+Topic 9: 
++ child (0.0132%), little (0.0124%), animal (0.0109%), day (0.0107%), make (0.0094%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>That looks better! Adding more topics spreads out the word distributions.</p>
+<p>Given that, what if we increased our number of topics even higher?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_topics</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="n">more_topics</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">n_topics</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+
+<span class="n">more_topics</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+
+<span class="n">print_topic_words</span><span class="p">(</span><span class="n">more_topics</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
++ life (0.0439%), story (0.0182%), character (0.0175%), century (0.0167%), become (0.0123%)
+Topic 1: 
++ business (0.0339%), company (0.0163%), success (0.0158%), idea (0.0122%), career (0.0104%)
+Topic 2: 
++ vampire (0.0247%), magic (0.0195%), max (0.0182%), witch (0.0169%), magical (0.0143%)
+Topic 3: 
++ american (0.0273%), story (0.0245%), history (0.0200%), tell (0.0147%), great (0.0143%)
+Topic 4: 
++ music (0.0298%), film (0.0160%), black (0.0160%), universe (0.0155%), take (0.0151%)
+Topic 5: 
++ love (0.0264%), father (0.0201%), london (0.0201%), tale (0.0193%), elizabeth (0.0134%)
+Topic 6: 
++ secret (0.0143%), face (0.0139%), dark (0.0131%), world (0.0117%), power (0.0113%)
+Topic 7: 
++ sister (0.0217%), woman (0.0199%), fear (0.0181%), relationship (0.0145%), brother (0.0133%)
+Topic 8: 
++ adventure (0.0321%), book (0.0287%), friend (0.0181%), story (0.0158%), new (0.0156%)
+Topic 9: 
++ animal (0.0356%), little (0.0277%), baby (0.0209%), christmas (0.0202%), cat (0.0195%)
+Topic 10: 
++ book (0.0434%), reader (0.0287%), learn (0.0213%), read (0.0202%), child (0.0167%)
+Topic 11: 
++ big (0.0147%), box (0.0133%), set (0.0119%), machine (0.0112%), piece (0.0105%)
+Topic 12: 
++ guide (0.0296%), use (0.0160%), new (0.0157%), book (0.0149%), include (0.0136%)
+Topic 13: 
++ love (0.0356%), heart (0.0253%), author (0.0193%), romance (0.0180%), novel (0.0166%)
+Topic 14:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 
++ planet (0.0155%), military (0.0142%), lego (0.0138%), president (0.0125%), war (0.0125%)
+Topic 15: 
++ team (0.0292%), game (0.0280%), sport (0.0274%), horse (0.0268%), baseball (0.0191%)
+Topic 16: 
++ man (0.0224%), miss (0.0200%), jack (0.0176%), agent (0.0176%), tom (0.0170%)
+Topic 17: 
++ recipe (0.0307%), food (0.0289%), italian (0.0132%), family (0.0128%), cook (0.0121%)
+Topic 18: 
++ story (0.0212%), volume (0.0188%), comic (0.0183%), include (0.0180%), collection (0.0178%)
+Topic 19: 
++ murder (0.0238%), mystery (0.0229%), town (0.0229%), kill (0.0139%), death (0.0128%)
+Topic 20: 
++ classic (0.0304%), penguin (0.0241%), work (0.0231%), english (0.0188%), year (0.0183%)
+Topic 21: 
++ political (0.0175%), social (0.0145%), state (0.0138%), world (0.0137%), american (0.0119%)
+Topic 22: 
++ cole (0.0196%), financial (0.0183%), money (0.0169%), city (0.0122%), ice (0.0108%)
+Topic 23: 
++ book (0.0485%), time (0.0335%), new (0.0316%), york (0.0246%), review (0.0189%)
+Topic 24: 
++ life (0.0580%), spiritual (0.0192%), world (0.0127%), self (0.0124%), book (0.0122%)
+Topic 25: 
++ emma (0.0198%), holmes (0.0179%), russell (0.0113%), sherlock (0.0104%), alpine (0.0095%)
+Topic 26: 
++ love (0.0346%), story (0.0272%), family (0.0245%), life (0.0218%), young (0.0179%)
+Topic 27: 
++ art (0.0201%), paris (0.0139%), louis (0.0116%), ford (0.0108%), famous (0.0108%)
+Topic 28: 
++ help (0.0130%), provide (0.0117%), health (0.0114%), body (0.0107%), guide (0.0105%)
+Topic 29: 
++ war (0.0643%), men (0.0152%), soldier (0.0148%), king (0.0144%), fight (0.0129%)
+Topic 30: 
++ jones (0.0138%), foot (0.0118%), longarm (0.0112%), aunt (0.0112%), junie (0.0105%)
+Topic 31: 
++ god (0.0197%), book (0.0177%), study (0.0143%), work (0.0140%), personal (0.0135%)
+Topic 32: 
++ new (0.0364%), time (0.0245%), year (0.0228%), world (0.0222%), life (0.0153%)
+Topic 33: 
++ woman (0.0576%), husband (0.0279%), life (0.0220%), wife (0.0195%), men (0.0176%)
+Topic 34: 
++ just (0.0218%), like (0.0164%), make (0.0139%), want (0.0138%), good (0.0131%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This also looks pretty solid. Between the two models, there appear to be some similar topics, but the second model,
+which has a higher number of topics, includes a wider range of words in the top word distrubition. While all that
+seems well and good, we don’t yet have a way to determine whether an increase in the number of topics will always
+produce more interpretable results. At some point, we might start splitting hairs. In fact, we can see this
+beginning to happen in a few instances with the second model. There are a few topics above that we might prefer to
+merge into a single one. Maybe topics 23 and 32, for example, would be better off belonging together, rather than
+staying apart, as they are here.</p>
+<p>So the question is, what is an ideal number of topics?</p>
+<p>One way to approach this question would be to run through a range of different topic sizes and inspect the results.
+In some cases, it can be perfectly valid to pick the number of topics that appears to be the most interpretable for
+you and the questions you have about your corpus. But there are also a few metrics we can use to measure the
+quality of a given model in terms of the underlying data it represents. Sometimes these metrics lead to models that
+aren’t quite as interpretable, but they also help us make a more empirically grounded assessment of the resultant
+topics.</p>
+</div>
+<div class="section" id="perplexity">
+<h3><span class="section-number">6.3.2. </span>Perplexity<a class="headerlink" href="#perplexity" title="Permalink to this headline">¶</a></h3>
+<p>The first of these measures is <strong>perplexity</strong>. In text mining and natural language processing, we use perplexity
+scoring to evaluate how well a model predicts an unseen set of words. Essentially, it measures how “surprised” a
+model is by a sequence of unseen words. The lower the perplexity, the more your model is capable of mapping
+predictions against the data it’s been trained on.</p>
+<div class="margin sidebar">
+<p class="sidebar-title">More on perplexity</p>
+<p>FIND A GOOD EXPLAINER FOR PERPLEXITY</p>
+</div>
+<p>When you train a <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> model object, the model records a perplexity score for the training run. We can access
+this score as an attribute for a given model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Perplexity score for the </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="si">}</span><span class="s2">-topic model: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">perplexity</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Perplexity score for the </span><span class="si">{</span><span class="n">more_topics</span><span class="o">.</span><span class="n">k</span><span class="si">}</span><span class="s2">-topic model: </span><span class="si">{</span><span class="n">more_topics</span><span class="o">.</span><span class="n">perplexity</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vocabulary size: 19608 tokens 
-Average blurb length: 86 tokens
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perplexity score for the 10-topic model: 9767.1118 
+Perplexity score for the 35-topic model: 10134.3682
+</pre></div>
+</div>
+</div>
+</div>
+<p>Interestingly, in this instance, the model with the smaller number of topics has a better perplexity score than the
+one with more topics. This would suggest that the first model is better fitted to our data and is thus a “better”
+model.</p>
+<p>It also suggests that there may be a topic size between these two sizes that has an even better perplexity score.
+We can test to see whether this is the case by constructing a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, in which we iterate through a number of
+different topic sizes, train a model with those sizes, and record the resultant perplexity scores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_topic_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+<span class="n">perplexity_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n_topic_range</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+    <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;SCORE&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">perplexity</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s convert the results to a dataframe and, while we’re at it, train a model with the best-scoring number of
+topics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perplexity_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">perplexity_scores</span><span class="p">)</span>
+<span class="n">perplexity_scores</span> <span class="o">=</span> <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;SCORE&#39;</span><span class="p">)</span>
+
+<span class="n">best_n_topic</span> <span class="o">=</span> <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;SCORE&#39;</span><span class="p">)[</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">best_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_n_topic</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+<span class="n">best_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perplexity_scores</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>N_TOPICS</th>
+      <th>SCORE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12</th>
+      <td>22</td>
+      <td>9743.965507</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+      <td>9767.111839</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>27</td>
+      <td>9817.241300</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11</td>
+      <td>9854.947514</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>17</td>
+      <td>9901.255709</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>28</td>
+      <td>9960.354987</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>15</td>
+      <td>9980.877440</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23</td>
+      <td>9992.182970</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>18</td>
+      <td>10016.706893</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24</td>
+      <td>10072.478196</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>21</td>
+      <td>10088.561813</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>13</td>
+      <td>10096.603287</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20</td>
+      <td>10097.970560</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>16</td>
+      <td>10103.504066</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12</td>
+      <td>10141.311590</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this instance, it looks like 22 topics is the best, though the difference between the perplexity scores for that
+model and the next best-scoring model, our 10-topic model, are relatively small. Given this, if you find that a
+10-topic model is more interpretable, you may choose to make a compromise on perplexity and go with that instead.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_topic_words</span><span class="p">(</span><span class="n">best_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
++ book (0.0318%), story (0.0279%), time (0.0214%), new (0.0184%), novel (0.0166%)
+Topic 1: 
++ love (0.0391%), woman (0.0364%), life (0.0232%), mother (0.0203%), family (0.0184%)
+Topic 2: 
++ life (0.0400%), world (0.0225%), great (0.0157%), year (0.0137%), story (0.0134%)
+Topic 3: 
++ just (0.0201%), like (0.0149%), make (0.0126%), want (0.0124%), know (0.0122%)
+Topic 4: 
++ book (0.0269%), child (0.0241%), school (0.0190%), young (0.0186%), kid (0.0169%)
+Topic 5: 
++ war (0.0349%), world (0.0182%), battle (0.0152%), fight (0.0131%), force (0.0105%)
+Topic 6: 
++ new (0.0383%), york (0.0232%), art (0.0163%), music (0.0135%), street (0.0100%)
+Topic 7: 
++ god (0.0361%), spiritual (0.0212%), book (0.0164%), religious (0.0112%), religion (0.0100%)
+Topic 8: 
++ home (0.0218%), house (0.0215%), cat (0.0159%), horse (0.0148%), dog (0.0120%)
+Topic 9: 
++ adventure (0.0244%), story (0.0237%), tale (0.0155%), book (0.0153%), feature (0.0129%)
+Topic 10: 
++ work (0.0272%), classic (0.0211%), year (0.0168%), penguin (0.0154%), literature (0.0133%)
+Topic 11: 
++ book (0.0268%), include (0.0163%), help (0.0130%), new (0.0126%), provide (0.0113%)
+Topic 12: 
++ food (0.0269%), recipe (0.0257%), family (0.0111%), cook (0.0105%), italian (0.0102%)
+Topic 13: 
++ city (0.0249%), london (0.0151%), empire (0.0107%), elizabeth (0.0099%), king (0.0096%)
+Topic 14: 
++ new (0.0304%), author (0.0245%), time (0.0231%), bestselling (0.0221%), york (0.0197%)
+Topic 15: 
++ travel (0.0194%), sea (0.0168%), new (0.0130%), top (0.0121%), map (0.0119%)
+Topic 16: 
++ use (0.0326%), step (0.0179%), simple (0.0150%), book (0.0138%), create (0.0131%)
+Topic 17: 
++ team (0.0175%), baseball (0.0170%), sport (0.0164%), hockey (0.0117%), player (0.0111%)
+Topic 18: 
++ family (0.0138%), new (0.0136%), secret (0.0135%), know (0.0124%), old (0.0124%)
+Topic 19: 
++ magic (0.0159%), king (0.0141%), return (0.0138%), kingdom (0.0116%), power (0.0105%)
+Topic 20: 
++ american (0.0246%), history (0.0203%), political (0.0167%), america (0.0158%), state (0.0132%)
+Topic 21: 
++ business (0.0122%), problem (0.0105%), success (0.0101%), health (0.0099%), people (0.0097%)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="coherence">
+<h3><span class="section-number">6.3.3. </span>Coherence<a class="headerlink" href="#coherence" title="Permalink to this headline">¶</a></h3>
+<p>If you’re having trouble mapping perplexity scores onto interpretable results, you might use a <strong>coherence score</strong>
+instead. Coherence scores measure the degree of semantic similarity among the words in a topic. Some people prefer
+to use coherence scoring in place of perplexity because these scores help distinguish the difference between topics
+that fit snugly on consistent word co-occurence and those that are artifacts of statistical inference.</p>
+<p>There are a few ways to calculate coherence scores. We’ll use <code class="docutils literal notranslate"><span class="pre">c_v</span></code> coherence, which uses the two kinds of text
+similarity we’ve already seen in the workshop: pointwise mutual information (PMI) and cosine similarity. This
+method takes the co-occurence counts of top words in a given topic and calculates a PMI score for each word. Then,
+it looks to every other topic in the model and calculates a PMI score for the present topic’s words and those in
+the other topics. This results in a series of vectors, which are then measured with cosine similarity.</p>
+<p>That’s a mouthful, but <code class="docutils literal notranslate"><span class="pre">tomotoy</span></code> makes implementing it a breeze. Let’s look at the score for the best model above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tomotopy.coherence</span> <span class="kn">import</span> <span class="n">Coherence</span>
+
+<span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">best_model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coherence score: </span><span class="si">{</span><span class="n">coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coherence score: 0.6051
+</pre></div>
+</div>
+</div>
+</div>
+<p>Like with perplexity, we can construct a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop and look for the best score among a set of different topic
+sizes. Here, we’re looking for the highest score, which will be a number between 0 and 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_topic_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+<span class="n">coherence_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n_topic_range</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+    <span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+    <span class="n">coherence_scores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;SCORE&#39;</span><span class="p">:</span> <span class="n">coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s format the scores, find the best one, and train a model on that.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coherence_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coherence_scores</span><span class="p">)</span>
+<span class="n">coherence_scores</span> <span class="o">=</span> <span class="n">coherence_scores</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;SCORE&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">best_n_topic</span> <span class="o">=</span> <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;SCORE&#39;</span><span class="p">)[</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">best_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_n_topic</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+<span class="n">best_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coherence_scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>N_TOPICS</th>
+      <th>SCORE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>19</th>
+      <td>29</td>
+      <td>0.655928</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>28</td>
+      <td>0.654988</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>27</td>
+      <td>0.648859</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>30</td>
+      <td>0.645488</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23</td>
+      <td>0.624086</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>25</td>
+      <td>0.615611</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>26</td>
+      <td>0.608920</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>22</td>
+      <td>0.605131</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>21</td>
+      <td>0.599103</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24</td>
+      <td>0.595933</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>18</td>
+      <td>0.579910</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20</td>
+      <td>0.578593</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>15</td>
+      <td>0.570283</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>17</td>
+      <td>0.558606</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>19</td>
+      <td>0.558422</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>13</td>
+      <td>0.554183</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>16</td>
+      <td>0.534431</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14</td>
+      <td>0.521571</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12</td>
+      <td>0.516569</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+      <td>0.511096</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11</td>
+      <td>0.499647</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Looks like a 29-topic model wins out!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_topic_words</span><span class="p">(</span><span class="n">best_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
++ life (0.0506%), book (0.0211%), live (0.0142%), experience (0.0133%), offer (0.0124%)
+Topic 1: 
++ war (0.0329%), soldier (0.0166%), american (0.0133%), men (0.0133%), military (0.0112%)
+Topic 2: 
++ baby (0.0162%), feel (0.0140%), fly (0.0129%), touch (0.0123%), rat (0.0112%)
+Topic 3: 
++ friend (0.0323%), girl (0.0301%), love (0.0296%), old (0.0195%), brother (0.0150%)
+Topic 4: 
++ new (0.0424%), book (0.0368%), time (0.0296%), york (0.0271%), review (0.0179%)
+Topic 5: 
++ just (0.0196%), time (0.0159%), make (0.0146%), like (0.0145%), know (0.0132%)
+Topic 6: 
++ guide (0.0242%), travel (0.0233%), top (0.0170%), new (0.0166%), eyewitness (0.0161%)
+Topic 7: 
++ world (0.0338%), human (0.0310%), new (0.0224%), people (0.0152%), way (0.0142%)
+Topic 8: 
++ star (0.0243%), war (0.0211%), lego (0.0170%), universe (0.0138%), set (0.0124%)
+Topic 9: 
++ london (0.0222%), ben (0.0114%), lady (0.0107%), freud (0.0100%), lacey (0.0093%)
+Topic 10: 
++ classic (0.0288%), work (0.0252%), english (0.0194%), penguin (0.0191%), literature (0.0180%)
+Topic 11: 
++ god (0.0330%), magic (0.0210%), king (0.0191%), return (0.0158%), kingdom (0.0153%)
+Topic 12: 
++ guide (0.0227%), use (0.0226%), book (0.0213%), step (0.0180%), learn (0.0163%)
+Topic 13: 
++ people (0.0145%), show (0.0136%), business (0.0124%), think (0.0123%), study (0.0121%)
+Topic 14: 
++ music (0.0222%), sport (0.0163%), team (0.0155%), star (0.0134%), baseball (0.0130%)
+Topic 15: 
++ home (0.0270%), year (0.0245%), family (0.0219%), life (0.0193%), old (0.0177%)
+Topic 16: 
++ book (0.0458%), reader (0.0166%), read (0.0156%), child (0.0155%), feature (0.0147%)
+Topic 17: 
++ health (0.0171%), program (0.0128%), body (0.0124%), plan (0.0117%), help (0.0114%)
+Topic 18: 
++ murder (0.0317%), town (0.0270%), mystery (0.0258%), death (0.0188%), police (0.0137%)
+Topic 19: 
++ comic (0.0279%), cat (0.0228%), poem (0.0217%), animal (0.0199%), cole (0.0165%)
+Topic 20: 
++ tale (0.0337%), horse (0.0263%), ship (0.0189%), adventure (0.0164%), sea (0.0144%)
+Topic 21: 
++ christmas (0.0234%), tree (0.0168%), house (0.0156%), jack (0.0135%), night (0.0127%)
+Topic 22: 
++ political (0.0253%), state (0.0200%), american (0.0149%), america (0.0144%), power (0.0121%)
+Topic 23: 
++ story (0.0397%), year (0.0211%), world (0.0173%), life (0.0138%), become (0.0121%)
+Topic 24: 
++ art (0.0255%), work (0.0189%), history (0.0158%), artist (0.0143%), life (0.0141%)
+Topic 25: 
++ century (0.0257%), history (0.0161%), john (0.0138%), war (0.0130%), figure (0.0092%)
+Topic 26: 
++ woman (0.0427%), love (0.0375%), life (0.0276%), mother (0.0167%), heart (0.0153%)
+Topic 27: 
++ new (0.0268%), author (0.0216%), novel (0.0171%), time (0.0158%), series (0.0158%)
+Topic 28: 
++ world (0.0165%), secret (0.0137%), know (0.0133%), face (0.0098%), dark (0.0096%)
+Topic 29: 
++ recipe (0.0304%), food (0.0279%), family (0.0143%), cook (0.0133%), drink (0.0129%)
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="building-a-topic-model">
-<h2><span class="section-number">6.2. </span>Building a Topic Model<a class="headerlink" href="#building-a-topic-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fine-tuning-advanced">
+<h2><span class="section-number">6.4. </span>Fine Tuning: Advanced<a class="headerlink" href="#fine-tuning-advanced" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
