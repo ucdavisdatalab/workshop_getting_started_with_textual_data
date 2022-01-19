@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -277,6 +279,23 @@
   <a class="reference internal nav-link" href="#fine-tuning-advanced">
    6.4. Fine Tuning: Advanced
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hyperparameters-alpha-and-eta">
+     6.4.1. Hyperparameters: alpha and eta
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deciding-on-hyperparameter-values">
+     6.4.2. Deciding on hyperparameter values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grid-searching">
+     6.4.3. Grid searching
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -354,49 +373,49 @@ Genres: Fiction, Classics, Nonfiction, Children’s Books, Teen &amp; Young Adul
   </thead>
   <tbody>
     <tr>
-      <th>1342</th>
-      <td>Tabor Evans</td>
-      <td>Longarm 423</td>
-      <td>Fiction</td>
-      <td>2014-01-28</td>
-      <td>9780515154313</td>
-      <td>1342.txt</td>
-    </tr>
-    <tr>
-      <th>1478</th>
-      <td>June Gray</td>
-      <td>Capture</td>
-      <td>Fiction</td>
-      <td>2013-05-28</td>
-      <td>9780698149823</td>
-      <td>1478.txt</td>
-    </tr>
-    <tr>
-      <th>1309</th>
-      <td>Robert Goddard</td>
-      <td>Play to the End</td>
-      <td>Fiction</td>
-      <td>2006-04-25</td>
-      <td>9780440336082</td>
-      <td>1309.txt</td>
-    </tr>
-    <tr>
-      <th>263</th>
-      <td>Edward Tenner</td>
-      <td>Why Things Bite Back</td>
+      <th>751</th>
+      <td>Stephen Weil</td>
+      <td>Making Museums Matter</td>
       <td>Nonfiction</td>
-      <td>1997-09-02</td>
-      <td>9780679747567</td>
-      <td>0263.txt</td>
+      <td>2002-02-17</td>
+      <td>9781588340009</td>
+      <td>0751.txt</td>
     </tr>
     <tr>
-      <th>1135</th>
-      <td>T.C. Boyle</td>
-      <td>World's End</td>
+      <th>271</th>
+      <td>Various</td>
+      <td>American Science Fiction: Nine Classic Novels ...</td>
       <td>Fiction</td>
-      <td>1990-07-20</td>
-      <td>9780140299939</td>
-      <td>1135.txt</td>
+      <td>2012-09-27</td>
+      <td>9781598531572</td>
+      <td>0271.txt</td>
+    </tr>
+    <tr>
+      <th>821</th>
+      <td>Golden Books</td>
+      <td>Journey Beyond Sodor (Thomas &amp; Friends)</td>
+      <td>Children’s Books</td>
+      <td>2017-07-25</td>
+      <td>9781524716530</td>
+      <td>0821.txt</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>Tabor Evans</td>
+      <td>Longarm 263: Longarm on a Bloody Vendetta</td>
+      <td>Fiction</td>
+      <td>2000-10-01</td>
+      <td>9781101179031</td>
+      <td>0248.txt</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>Kathleen Duey</td>
+      <td>Hoofbeats: Margret and Flynn, 1875</td>
+      <td>Children’s Books</td>
+      <td>2008-04-17</td>
+      <td>9781440632341</td>
+      <td>0114.txt</td>
     </tr>
   </tbody>
 </table>
@@ -588,12 +607,12 @@ dtype: float32
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic distribution for &#39;Everything You Need to Know About Snakes&#39;:
-+ Topic #0: 0.53%
-+ Topic #1: 0.18%
-+ Topic #2: 0.12%
-+ Topic #3: 0.03%
-+ Topic #4: 0.14%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic distribution for &#39;Creation&#39;:
++ Topic #0: 0.10%
++ Topic #1: 0.28%
++ Topic #2: 0.18%
++ Topic #3: 0.42%
++ Topic #4: 0.03%
 </pre></div>
 </div>
 </div>
@@ -615,11 +634,11 @@ get the associated index, pipe it into our model object, and return the top topi
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top topics for:
-+ Foggy Mountain Breakdown and Other Stories: #2 (0.34%)
-+ Better Than Sex: #2 (0.30%)
-+ World War II: Visual Encyclopedia: #0 (0.49%)
-+ Story Genius: #3 (0.37%)
-+ My Dream of You: #3 (0.45%)
++ Thank You for Being Such a Pain: #3 (0.55%)
++ Fangland: #2 (0.41%)
++ The First Princess of Wales: #2 (0.54%)
++ Gone Too Far: #2 (0.67%)
++ Shopaholic on Honeymoon (Short Story): #0 (0.31%)
 </pre></div>
 </div>
 </div>
@@ -660,53 +679,53 @@ depending on the document. This is about as close to context-sensitive semantics
   <tbody>
     <tr>
       <th>0</th>
-      <td>speedy</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>slither</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>creature</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>live</td>
+      <td>charles</td>
       <td>3</td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>darwin</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>saw</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>world</td>
+      <td>1</td>
+    </tr>
+    <tr>
       <th>4</th>
-      <td>dragon</td>
-      <td>4</td>
+      <td>change</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>snake</td>
-      <td>0</td>
+      <td>forever</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>fly</td>
-      <td>0</td>
+      <td>creation</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>shed</td>
+      <td>true</td>
       <td>2</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>skin</td>
-      <td>4</td>
+      <td>story</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>need</td>
-      <td>4</td>
+      <td>charles</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -944,59 +963,69 @@ in a general sense, and those words.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>speedy</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>slither</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>creature</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>live</td>
+      <td>charles</td>
       <td>3</td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>darwin</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>saw</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>world</td>
+      <td>1</td>
+    </tr>
+    <tr>
       <th>4</th>
-      <td>dragon</td>
-      <td>4</td>
+      <td>change</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>snake</td>
-      <td>0</td>
+      <td>forever</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>fly</td>
-      <td>0</td>
+      <td>creation</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>shed</td>
+      <td>true</td>
       <td>2</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>skin</td>
-      <td>4</td>
+      <td>story</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>need</td>
-      <td>4</td>
+      <td>charles</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
 <p>…and add in the top few words for each topic assignment…</p>
+<div class="margin sidebar">
+<p class="sidebar-title">What this loop does</p>
+<p>For each word in the blurb:</p>
+<ol class="simple">
+<li><p>Get its associated topic</p></li>
+<li><p>Get the top five words for that topic</p></li>
+<li><p>Join those words into a comma-separated string</p></li>
+<li><p>Append that string to a column list, which we can add to our dataframe</p></li>
+</ol>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_words_column</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1038,63 +1067,63 @@ in a general sense, and those words.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>speedy</td>
-      <td>0</td>
-      <td>book, story, new, reader, read</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>slither</td>
-      <td>0</td>
-      <td>book, story, new, reader, read</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>creature</td>
-      <td>0</td>
-      <td>book, story, new, reader, read</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>live</td>
+      <td>charles</td>
       <td>3</td>
       <td>life, story, live, year, new</td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>darwin</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>saw</td>
+      <td>2</td>
+      <td>novel, new, war, man, time</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>world</td>
+      <td>1</td>
+      <td>book, use, guide, include, work</td>
+    </tr>
+    <tr>
       <th>4</th>
-      <td>dragon</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>change</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>snake</td>
-      <td>0</td>
-      <td>book, story, new, reader, read</td>
+      <td>forever</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>fly</td>
-      <td>0</td>
-      <td>book, story, new, reader, read</td>
+      <td>creation</td>
+      <td>1</td>
+      <td>book, use, guide, include, work</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>shed</td>
+      <td>true</td>
       <td>2</td>
       <td>novel, new, war, man, time</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>skin</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>story</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>need</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>charles</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
     </tr>
   </tbody>
 </table>
@@ -1149,7 +1178,7 @@ we used earlier wrapped up in a callable function.</p>
         <span class="n">top_words</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic_id</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="n">top_n</span><span class="p">)</span>
         <span class="n">top_words</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.04f</span><span class="si">}</span><span class="s2">%)&quot;</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">top_words</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Topic </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 </pre></div>
@@ -1167,25 +1196,25 @@ same number of iterations as above.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic #0: 
 + new (0.0369%), time (0.0228%), author (0.0188%), york (0.0185%), novel (0.0172%)
-Topic 1: 
+Topic #1: 
 + book (0.0372%), story (0.0193%), reader (0.0151%), new (0.0134%), read (0.0108%)
-Topic 2: 
+Topic #2: 
 + book (0.0128%), use (0.0086%), offer (0.0083%), life (0.0080%), learn (0.0071%)
-Topic 3: 
+Topic #3: 
 + murder (0.0172%), mystery (0.0168%), crime (0.0090%), kill (0.0088%), killer (0.0088%)
-Topic 4: 
+Topic #4: 
 + food (0.0199%), recipe (0.0172%), italian (0.0080%), eat (0.0074%), cook (0.0074%)
-Topic 5: 
+Topic #5: 
 + life (0.0299%), woman (0.0165%), story (0.0154%), love (0.0151%), family (0.0126%)
-Topic 6: 
+Topic #6: 
 + history (0.0129%), work (0.0127%), american (0.0125%), world (0.0088%), year (0.0085%)
-Topic 7: 
+Topic #7: 
 + just (0.0120%), know (0.0100%), like (0.0089%), time (0.0088%), make (0.0085%)
-Topic 8: 
+Topic #8: 
 + war (0.0159%), world (0.0111%), power (0.0081%), battle (0.0081%), king (0.0069%)
-Topic 9: 
+Topic #9: 
 + child (0.0132%), little (0.0124%), animal (0.0109%), day (0.0107%), make (0.0094%)
 </pre></div>
 </div>
@@ -1205,78 +1234,78 @@ Topic 9:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic #0: 
 + life (0.0439%), story (0.0182%), character (0.0175%), century (0.0167%), become (0.0123%)
-Topic 1: 
+Topic #1: 
 + business (0.0339%), company (0.0163%), success (0.0158%), idea (0.0122%), career (0.0104%)
-Topic 2: 
+Topic #2: 
 + vampire (0.0247%), magic (0.0195%), max (0.0182%), witch (0.0169%), magical (0.0143%)
-Topic 3: 
+Topic #3: 
 + american (0.0273%), story (0.0245%), history (0.0200%), tell (0.0147%), great (0.0143%)
-Topic 4: 
+Topic #4: 
 + music (0.0298%), film (0.0160%), black (0.0160%), universe (0.0155%), take (0.0151%)
-Topic 5:
+Topic #5: 
++ love (0.0264%), father (0.0201%), london (0.0201%), tale (0.0193%), elizabeth (0.0134%)
+Topic #6: 
++ secret (0.0143%), face (0.0139%), dark (0.0131%), world (0.0117%), power (0.0113%)
+Topic #7: 
++ sister (0.0217%), woman (0.0199%), fear (0.0181%), relationship (0.0145%), brother (0.0133%)
+Topic #8: 
++ adventure (0.0321%), book (0.0287%), friend (0.0181%), story (0.0158%), new (0.0156%)
+Topic #9: 
++ animal (0.0356%), little (0.0277%), baby (0.0209%), christmas (0.0202%), cat (0.0195%)
+Topic #10: 
++ book (0.0434%), reader (0.0287%), learn (0.0213%), read (0.0202%), child (0.0167%)
+Topic #11: 
++ big (0.0147%), box (0.0133%), set (0.0119%), machine (0.0112%), piece (0.0105%)
+Topic #12: 
++ guide (0.0296%), use (0.0160%), new (0.0157%), book (0.0149%), include (0.0136%)
+Topic #13: 
++ love (0.0356%), heart (0.0253%), author (0.0193%), romance (0.0180%), novel (0.0166%)
+Topic #14:
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 
-+ love (0.0264%), father (0.0201%), london (0.0201%), tale (0.0193%), elizabeth (0.0134%)
-Topic 6: 
-+ secret (0.0143%), face (0.0139%), dark (0.0131%), world (0.0117%), power (0.0113%)
-Topic 7: 
-+ sister (0.0217%), woman (0.0199%), fear (0.0181%), relationship (0.0145%), brother (0.0133%)
-Topic 8: 
-+ adventure (0.0321%), book (0.0287%), friend (0.0181%), story (0.0158%), new (0.0156%)
-Topic 9: 
-+ animal (0.0356%), little (0.0277%), baby (0.0209%), christmas (0.0202%), cat (0.0195%)
-Topic 10: 
-+ book (0.0434%), reader (0.0287%), learn (0.0213%), read (0.0202%), child (0.0167%)
-Topic 11: 
-+ big (0.0147%), box (0.0133%), set (0.0119%), machine (0.0112%), piece (0.0105%)
-Topic 12: 
-+ guide (0.0296%), use (0.0160%), new (0.0157%), book (0.0149%), include (0.0136%)
-Topic 13: 
-+ love (0.0356%), heart (0.0253%), author (0.0193%), romance (0.0180%), novel (0.0166%)
-Topic 14: 
 + planet (0.0155%), military (0.0142%), lego (0.0138%), president (0.0125%), war (0.0125%)
-Topic 15: 
+Topic #15: 
 + team (0.0292%), game (0.0280%), sport (0.0274%), horse (0.0268%), baseball (0.0191%)
-Topic 16: 
+Topic #16: 
 + man (0.0224%), miss (0.0200%), jack (0.0176%), agent (0.0176%), tom (0.0170%)
-Topic 17: 
+Topic #17: 
 + recipe (0.0307%), food (0.0289%), italian (0.0132%), family (0.0128%), cook (0.0121%)
-Topic 18: 
+Topic #18: 
 + story (0.0212%), volume (0.0188%), comic (0.0183%), include (0.0180%), collection (0.0178%)
-Topic 19: 
+Topic #19: 
 + murder (0.0238%), mystery (0.0229%), town (0.0229%), kill (0.0139%), death (0.0128%)
-Topic 20: 
+Topic #20: 
 + classic (0.0304%), penguin (0.0241%), work (0.0231%), english (0.0188%), year (0.0183%)
-Topic 21: 
+Topic #21: 
 + political (0.0175%), social (0.0145%), state (0.0138%), world (0.0137%), american (0.0119%)
-Topic 22: 
+Topic #22: 
 + cole (0.0196%), financial (0.0183%), money (0.0169%), city (0.0122%), ice (0.0108%)
-Topic 23: 
+Topic #23: 
 + book (0.0485%), time (0.0335%), new (0.0316%), york (0.0246%), review (0.0189%)
-Topic 24: 
+Topic #24: 
 + life (0.0580%), spiritual (0.0192%), world (0.0127%), self (0.0124%), book (0.0122%)
-Topic 25: 
+Topic #25: 
 + emma (0.0198%), holmes (0.0179%), russell (0.0113%), sherlock (0.0104%), alpine (0.0095%)
-Topic 26: 
+Topic #26: 
 + love (0.0346%), story (0.0272%), family (0.0245%), life (0.0218%), young (0.0179%)
-Topic 27: 
+Topic #27: 
 + art (0.0201%), paris (0.0139%), louis (0.0116%), ford (0.0108%), famous (0.0108%)
-Topic 28: 
+Topic #28: 
 + help (0.0130%), provide (0.0117%), health (0.0114%), body (0.0107%), guide (0.0105%)
-Topic 29: 
+Topic #29: 
 + war (0.0643%), men (0.0152%), soldier (0.0148%), king (0.0144%), fight (0.0129%)
-Topic 30: 
+Topic #30: 
 + jones (0.0138%), foot (0.0118%), longarm (0.0112%), aunt (0.0112%), junie (0.0105%)
-Topic 31: 
+Topic #31: 
 + god (0.0197%), book (0.0177%), study (0.0143%), work (0.0140%), personal (0.0135%)
-Topic 32: 
+Topic #32: 
 + new (0.0364%), time (0.0245%), year (0.0228%), world (0.0222%), life (0.0153%)
-Topic 33: 
+Topic #33: 
 + woman (0.0576%), husband (0.0279%), life (0.0220%), wife (0.0195%), men (0.0176%)
-Topic 34: 
+Topic #34: 
 + just (0.0218%), like (0.0164%), make (0.0139%), want (0.0138%), good (0.0131%)
 </pre></div>
 </div>
@@ -1478,49 +1507,49 @@ model and the next best-scoring model, our 10-topic model, is relatively small. 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic #0: 
 + book (0.0318%), story (0.0279%), time (0.0214%), new (0.0184%), novel (0.0166%)
-Topic 1: 
+Topic #1: 
 + love (0.0391%), woman (0.0364%), life (0.0232%), mother (0.0203%), family (0.0184%)
-Topic 2: 
+Topic #2: 
 + life (0.0400%), world (0.0225%), great (0.0157%), year (0.0137%), story (0.0134%)
-Topic 3: 
+Topic #3: 
 + just (0.0201%), like (0.0149%), make (0.0126%), want (0.0124%), know (0.0122%)
-Topic 4: 
+Topic #4: 
 + book (0.0269%), child (0.0241%), school (0.0190%), young (0.0186%), kid (0.0169%)
-Topic 5: 
+Topic #5: 
 + war (0.0349%), world (0.0182%), battle (0.0152%), fight (0.0131%), force (0.0105%)
-Topic 6: 
+Topic #6: 
 + new (0.0383%), york (0.0232%), art (0.0163%), music (0.0135%), street (0.0100%)
-Topic 7: 
+Topic #7: 
 + god (0.0361%), spiritual (0.0212%), book (0.0164%), religious (0.0112%), religion (0.0100%)
-Topic 8: 
+Topic #8: 
 + home (0.0218%), house (0.0215%), cat (0.0159%), horse (0.0148%), dog (0.0120%)
-Topic 9: 
+Topic #9: 
 + adventure (0.0244%), story (0.0237%), tale (0.0155%), book (0.0153%), feature (0.0129%)
-Topic 10: 
+Topic #10: 
 + work (0.0272%), classic (0.0211%), year (0.0168%), penguin (0.0154%), literature (0.0133%)
-Topic 11: 
+Topic #11: 
 + book (0.0268%), include (0.0163%), help (0.0130%), new (0.0126%), provide (0.0113%)
-Topic 12: 
+Topic #12: 
 + food (0.0269%), recipe (0.0257%), family (0.0111%), cook (0.0105%), italian (0.0102%)
-Topic 13: 
+Topic #13: 
 + city (0.0249%), london (0.0151%), empire (0.0107%), elizabeth (0.0099%), king (0.0096%)
-Topic 14: 
+Topic #14: 
 + new (0.0304%), author (0.0245%), time (0.0231%), bestselling (0.0221%), york (0.0197%)
-Topic 15: 
+Topic #15: 
 + travel (0.0194%), sea (0.0168%), new (0.0130%), top (0.0121%), map (0.0119%)
-Topic 16: 
+Topic #16: 
 + use (0.0326%), step (0.0179%), simple (0.0150%), book (0.0138%), create (0.0131%)
-Topic 17: 
+Topic #17: 
 + team (0.0175%), baseball (0.0170%), sport (0.0164%), hockey (0.0117%), player (0.0111%)
-Topic 18: 
+Topic #18: 
 + family (0.0138%), new (0.0136%), secret (0.0135%), know (0.0124%), old (0.0124%)
-Topic 19: 
+Topic #19: 
 + magic (0.0159%), king (0.0141%), return (0.0138%), kingdom (0.0116%), power (0.0105%)
-Topic 20: 
+Topic #20: 
 + american (0.0246%), history (0.0203%), political (0.0167%), america (0.0158%), state (0.0132%)
-Topic 21: 
+Topic #21: 
 + business (0.0122%), problem (0.0105%), success (0.0101%), health (0.0099%), people (0.0097%)
 </pre></div>
 </div>
@@ -1538,7 +1567,7 @@ similarity we’ve already seen in the workshop: pointwise mutual information (P
 method takes the co-occurence counts of top words in a given topic and calculates a PMI score for each word. Then,
 it looks to every other topic in the model and calculates a PMI score for the present topic’s words and those in
 the other topics. This results in a series of vectors, which are then measured with cosine similarity.</p>
-<p>That’s a mouthful, but <code class="docutils literal notranslate"><span class="pre">tomotoy</span></code> makes implementing it a breeze. Let’s look at the score for the best model above.</p>
+<p>That’s a mouthful, but <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> makes implementing it a breeze. Let’s look at the score for the best model above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tomotopy.coherence</span> <span class="kn">import</span> <span class="n">Coherence</span>
@@ -1584,7 +1613,7 @@ sizes. Here, we’re looking for the highest score, which will be a number betwe
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coherence_scores</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coherence_scores</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1687,36 +1716,6 @@ sizes. Here, we’re looking for the highest score, which will be a number betwe
       <td>19</td>
       <td>0.558422</td>
     </tr>
-    <tr>
-      <th>3</th>
-      <td>13</td>
-      <td>0.554183</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>16</td>
-      <td>0.534431</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>14</td>
-      <td>0.521571</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>12</td>
-      <td>0.516569</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>10</td>
-      <td>0.511096</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>11</td>
-      <td>0.499647</td>
-    </tr>
   </tbody>
 </table>
 </div></div></div>
@@ -1729,83 +1728,87 @@ sizes. Here, we’re looking for the highest score, which will be a number betwe
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic #0: 
 + city (0.0212%), london (0.0172%), old (0.0162%), brother (0.0158%), miss (0.0142%)
-Topic 1: 
+Topic #1: 
 + win (0.0262%), award (0.0259%), story (0.0239%), novel (0.0202%), short (0.0165%)
-Topic 2: 
+Topic #2: 
 + family (0.0300%), life (0.0283%), mother (0.0237%), father (0.0236%), love (0.0219%)
-Topic 3: 
+Topic #3: 
 + world (0.0245%), story (0.0219%), life (0.0166%), year (0.0150%), great (0.0134%)
-Topic 4: 
+Topic #4: 
 + work (0.0291%), classic (0.0234%), literature (0.0190%), penguin (0.0180%), introduction (0.0176%)
-Topic 5: 
+Topic #5: 
 + new (0.0583%), time (0.0292%), school (0.0236%), help (0.0194%), series (0.0178%)
-Topic 6: 
+Topic #6: 
 + magic (0.0227%), poem (0.0191%), dragon (0.0151%), power (0.0131%), sword (0.0131%)
-Topic 7: 
+Topic #7: 
 + use (0.0158%), learn (0.0150%), help (0.0138%), think (0.0117%), business (0.0108%)
-Topic 8: 
+Topic #8: 
 + town (0.0238%), mystery (0.0235%), murder (0.0156%), small (0.0136%), detective (0.0113%)
-Topic 9: 
+Topic #9: 
 + music (0.0322%), song (0.0185%), band (0.0127%), jones (0.0111%), buddhist (0.0105%)
-Topic 10: 
+Topic #10: 
 + cole (0.0208%), van (0.0115%), say (0.0108%), freud (0.0100%), lacey (0.0093%)
-Topic 11: 
+Topic #11: 
 + drink (0.0183%), city (0.0178%), camp (0.0126%), hockey (0.0126%), country (0.0126%)
-Topic 12: 
+Topic #12: 
 + god (0.0520%), word (0.0165%), religious (0.0156%), japanese (0.0148%), jesus (0.0131%)
-Topic 13: 
+Topic #13: 
 + guide (0.0318%), use (0.0227%), new (0.0186%), include (0.0138%), step (0.0138%)
-Topic 14: 
+Topic #14: 
 + child (0.0267%), read (0.0239%), animal (0.0222%), reader (0.0207%), book (0.0177%)
-Topic 15: 
+Topic #15: 
 + history (0.0258%), century (0.0200%), american (0.0194%), political (0.0158%), state (0.0117%)
-Topic 16: 
+Topic #16: 
 + health (0.0196%), body (0.0136%), weight (0.0128%), plan (0.0113%), eat (0.0113%)
-Topic 17: 
+Topic #17: 
 + like (0.0181%), just (0.0179%), make (0.0149%), know (0.0138%), want (0.0137%)
-Topic 18: 
+Topic #18: 
 + book (0.0437%), adventure (0.0191%), series (0.0187%), feature (0.0177%), little (0.0153%)
-Topic 19: 
+Topic #19: 
 + power (0.0149%), country (0.0130%), america (0.0122%), financial (0.0109%), american (0.0106%)
-Topic 20: 
+Topic #20: 
 + war (0.0384%), battle (0.0157%), world (0.0144%), force (0.0138%), fight (0.0127%)
-Topic 21: 
+Topic #21: 
 + recipe (0.0334%), food (0.0281%), family (0.0148%), italian (0.0144%), cook (0.0144%)
-Topic 22: 
+Topic #22: 
 + human (0.0325%), science (0.0198%), planet (0.0178%), time (0.0170%), universe (0.0147%)
-Topic 23: 
+Topic #23: 
 + life (0.0303%), book (0.0242%), world (0.0147%), experience (0.0116%), practice (0.0101%)
-Topic 24: 
+Topic #24: 
 + time (0.0401%), book (0.0370%), new (0.0347%), york (0.0255%), write (0.0181%)
-Topic 25: 
+Topic #25: 
 + sea (0.0290%), ship (0.0259%), king (0.0208%), captain (0.0112%), high (0.0097%)
-Topic 26: 
+Topic #26: 
 + woman (0.0415%), love (0.0309%), life (0.0240%), heart (0.0197%), novel (0.0145%)
-Topic 27: 
+Topic #27: 
 + art (0.0404%), artist (0.0272%), work (0.0182%), include (0.0123%), writer (0.0109%)
-Topic 28: 
+Topic #28: 
 + dark (0.0137%), kill (0.0132%), dead (0.0128%), murder (0.0118%), killer (0.0106%)
 </pre></div>
 </div>
 </div>
 </div>
-<p>And here’s a distribution plot. There’s a lot going on with all the list comprehension, but see if you can parse
-the logic – it combines all the pieces we’ve used above.</p>
+<p>And here’s a distribution plot. There’s a lot going on with all the list comprehension below, but see if you can
+parse the logic – it combines all the pieces we’ve used above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_proportions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span> <span class="o">/</span> <span class="n">best_model</span><span class="o">.</span><span class="n">num_words</span><span class="p">)</span>
 <span class="n">top_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">best_model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">k</span><span class="p">)]</span>
 <span class="n">top_words</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">topic</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">top_words</span><span class="p">)]</span>
 
-<span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;TOPIC_PROPORTIONS&#39;</span><span class="p">:</span> <span class="n">topic_proportions</span><span class="p">,</span> <span class="s1">&#39;TOP_WORDS&#39;</span><span class="p">:</span> <span class="n">top_words</span><span class="p">})</span>
-<span class="n">to_plot</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;TOP_WORDS&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;TOPIC_PROPORTIONS&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-                                                                          <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Topic Proportions&quot;</span><span class="p">,</span>
-                                                                          <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Topic&quot;</span><span class="p">,</span>
-                                                                          <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">% o</span><span class="s2">f Corpus&quot;</span><span class="p">,</span>
-                                                                          <span class="n">legend</span> <span class="o">=</span> <span class="kc">None</span>
-                                                                         <span class="p">);</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;TOPIC_PROPORTIONS&#39;</span><span class="p">:</span> <span class="n">topic_proportions</span><span class="p">,</span>
+                        <span class="s1">&#39;TOP_WORDS&#39;</span><span class="p">:</span> <span class="n">top_words</span>
+                       <span class="p">})</span>
+
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">to_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;TOPIC_PROPORTIONS&#39;</span><span class="p">)</span>
+<span class="n">to_plot</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;TOP_WORDS&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+                                         <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Topic Proportions&quot;</span><span class="p">,</span>
+                                         <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Topic&quot;</span><span class="p">,</span>
+                                         <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">% o</span><span class="s2">f Corpus&quot;</span><span class="p">,</span>
+                                         <span class="n">legend</span> <span class="o">=</span> <span class="kc">None</span>
+                                        <span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1817,6 +1820,184 @@ the logic – it combines all the pieces we’ve used above.</p>
 </div>
 <div class="section" id="fine-tuning-advanced">
 <h2><span class="section-number">6.4. </span>Fine Tuning: Advanced<a class="headerlink" href="#fine-tuning-advanced" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hyperparameters-alpha-and-eta">
+<h3><span class="section-number">6.4.1. </span>Hyperparameters: alpha and eta<a class="headerlink" href="#hyperparameters-alpha-and-eta" title="Permalink to this headline">¶</a></h3>
+<p>Clearly, there is much to consider with respect to the number of topics alone. But this number is not the only
+value we can set when initializing a model. LDA modeling has two key <strong>hyperparameters</strong>, which we can configure to
+more specifically control the nature of the topics a training run produces:</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Want more details?</p>
+<p>This Stack Exchange <a class="reference external" href="https://datascience.stackexchange.com/a/202">answer</a> is a remarkably succinct summary of these two hyperparameters.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Alpha</strong>: represents document-topic density; the higher the alpha, the more evenly distributed, or “symmetric,”
+topic proportions are in a particular document; a lower alpha means topic proportions are more “asymmetric” (that
+is, a document will have a few predominating topics, rather than several)</p></li>
+<li><p><strong>Eta</strong>: represents word-topic density; the higher the eta, the more word probabilities will be distributed
+evenly across a topic (specifically, this boosts the presence of low-probability words); a lower eta means word
+distributions are more uneven, so each topic will have less dominant words</p></li>
+</ul>
+<p>Essentially, these two hyperparameters variously control specificity in our model: one for the way our model
+handles document specificity and one for the way it handles topic specificity.</p>
+<div class="admonition-on-terminology admonition">
+<p class="admonition-title">On terminology</p>
+<p>Different LDA implementations have different names for these hyperparameters. Eta, for example, is also referred to
+as “beta.” When reading the documentation for an implementation, look for whatever term stands for the “document
+prior” (alpha) and the “word prior” (eta).</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> has actually been setting values for alpha and eta all along. If we initialize a new model, we can
+inspect their default values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">29</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Alpha value: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">alpha</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Eta value: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">eta</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Alpha value: 0.10 
+Eta value: 0.01
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can declare specific values for each using arguments in <code class="docutils literal notranslate"><span class="pre">LDAModel()</span></code>. Let’s show an example. Below, we boost
+the alpha and lessen the eta. With a high alpha, we expect to create a more even distribution in topics among the
+documents, which will in turn mean each topic has more documents associated with it; with a low eta, the
+probabilities for the top words within these topics should be higher.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ae_adjusted</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">29</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">eta</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+<span class="n">ae_adjusted</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s compare with the best coherence score model from above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_model_top_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">best_model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">k</span><span class="p">)]</span>
+<span class="n">best_model_top_words</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">topic</span><span class="p">]</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">best_model_top_words</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;For the best coherence score model:&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Median number of documents per topic:&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">())</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Mean probability for the top five words per topic:&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">best_model_top_words</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">%&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For the best coherence score model:
++ Median number of documents per topic: 3568 
++ Mean probability for the top five words per topic: 0.0194%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">low_eta_top_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">ae_adjusted</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ae_adjusted</span><span class="o">.</span><span class="n">k</span><span class="p">)]</span>
+<span class="n">low_eta_top_words</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">topic</span><span class="p">]</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">low_eta_top_words</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;For the high alpha/low eta model:&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Median number of documents per topic:&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">ae_adjusted</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">())</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+ Mean probability for the top five words per topic:&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">low_eta_top_words</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">%&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For the high alpha/low eta model:
++ Median number of documents per topic: 4431 
++ Mean probability for the top five words per topic: 0.0346%
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="deciding-on-hyperparameter-values">
+<h3><span class="section-number">6.4.2. </span>Deciding on hyperparameter values<a class="headerlink" href="#deciding-on-hyperparameter-values" title="Permalink to this headline">¶</a></h3>
+<p>As with setting our number of topics, we could spend hours going back and forth between different alpha and eta
+values to determine which combination is best. But it would be better to identify these values in a more
+programmatic fashion. For example, <a class="reference external" href="https://www.pnas.org/content/101/suppl_1/5228">some researchers</a> have suggested that the ideal values for alpha and eta are
+<span class="math notranslate nohighlight">\(\frac{50}{k}\)</span> and 0.1, respectively (where <span class="math notranslate nohighlight">\(k\)</span> is the number of topics). Were you to follow their lead and
+implement something like this in the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop above, you’d need to do something like the following:</p>
+<p>First, generate a dictionary of parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_topic_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n_topic_range</span><span class="p">:</span>
+    <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;N_TOPICS&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span>
+        <span class="s1">&#39;ALPHA&#39;</span><span class="p">:</span> <span class="mi">50</span> <span class="o">/</span> <span class="n">k</span><span class="p">,</span>
+        <span class="s1">&#39;ETA&#39;</span><span class="p">:</span> <span class="mf">0.1</span>
+    <span class="p">}</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, roll through each entry and pipe in the respective values (we won’t do this here – just showing the example).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">],</span>
+                        <span class="n">alpha</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;ALPHA&#39;</span><span class="p">],</span>
+                        <span class="n">eta</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;ETA&#39;</span><span class="p">],</span>
+                        <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span>
+                        <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span>
+                       <span class="p">)</span>
+</pre></div>
+</div>
+<p>In contrast with this, we could also define a series of different values that we’d like to test, find all possible
+combinations of those values, and roll through them. That would look something like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+
+<span class="n">n_topic_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">etas</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">n_topic_range</span><span class="p">,</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">etas</span><span class="p">))</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">:</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;ALPHA&#39;</span><span class="p">:</span> <span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ETA&#39;</span><span class="p">:</span> <span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then you’d use the same <code class="docutils literal notranslate"><span class="pre">for</span></code> loop from above. Along the way you’d collect perplexity and coherence scores for
+each iteration and record them to identify the best combination.</p>
+</div>
+<div class="section" id="grid-searching">
+<h3><span class="section-number">6.4.3. </span>Grid searching<a class="headerlink" href="#grid-searching" title="Permalink to this headline">¶</a></h3>
+<p>The process of iterating through all these combinations is called <strong>grid searching</strong>. It’s a common strategy people
+use to optimize their models – but it’s also a costly one, both in terms of time and computation, for it involves
+creating an entirely new model to test each and every combination. In our case, using even a modest number of
+different alpha and eta values produces a huge amount of combinations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of combinations: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of combinations: 1,344
+</pre></div>
+</div>
+</div>
+</div>
+<p>That’s 1,344 models! For a small dataset like our corpus, even this number will take a couple hours to run.</p>
+</div>
 </div>
 </div>
 
