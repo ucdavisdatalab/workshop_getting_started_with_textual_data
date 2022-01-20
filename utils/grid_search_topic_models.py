@@ -24,9 +24,9 @@ for path in paths:
         corpus.add_doc(doc)
 
 # set a range of hyperparameters
-k = list(range(5, 31, 5))
-alphas = [0.001, 0.1, 10]
-etas = [0.001, 0.1, 10]
+k = range(10, 31)
+alphas = [0.001, 0.01, 0.1, 0.2, 0.5, 0.75, 1]
+etas = [0.001, 0.01, 0.1, 0.2, 0.5, 0.75, 1]
 params = list(itertools.product(k, alphas, etas))
 print("Parameter combinations to search:", len(params))
 
