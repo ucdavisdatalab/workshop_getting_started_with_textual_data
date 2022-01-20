@@ -227,70 +227,80 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#topic-modeling-a-primer">
+   6.1. Topic Modeling: A Primer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#preliminiaries">
-   6.1. Preliminiaries
+   6.2. Preliminiaries
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#building-a-topic-model">
-   6.2. Building a Topic Model
+   6.3. Building a Topic Model
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#initializing-a-model">
-     6.2.1. Initializing a model
+     6.3.1. Initializing a model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#training-a-model">
-     6.2.2. Training a model
+     6.3.2. Training a model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#inspecting-the-results">
-     6.2.3. Inspecting the Results
+     6.3.3. Inspecting the Results
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#fine-tuning-the-basics">
-   6.3. Fine Tuning: The Basics
+   6.4. Fine Tuning: The Basics
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#setting-the-number-of-topics">
-     6.3.1. Setting the number of topics
+     6.4.1. Setting the number of topics
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#perplexity">
-     6.3.2. Perplexity
+     6.4.2. Perplexity
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#coherence">
-     6.3.3. Coherence
+     6.4.3. Coherence
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#fine-tuning-advanced">
-   6.4. Fine Tuning: Advanced
+   6.5. Fine Tuning: Advanced
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#hyperparameters-alpha-and-eta">
-     6.4.1. Hyperparameters: alpha and eta
+     6.5.1. Hyperparameters: alpha and eta
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#deciding-on-hyperparameter-values">
-     6.4.2. Deciding on hyperparameter values
+     6.5.2. Deciding on hyperparameter values
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploring-a-model">
+   6.6. Exploring a Model
+  </a>
  </li>
 </ul>
 
@@ -305,6 +315,7 @@
                 
   <div class="section" id="topic-modeling">
 <h1><span class="section-number">6. </span>Topic Modeling<a class="headerlink" href="#topic-modeling" title="Permalink to this headline">¶</a></h1>
+<p>TODO</p>
 <div class="admonition-learning-objectives admonition">
 <p class="admonition-title">Learning Objectives</p>
 <p>By the end of this chapter, you will be able to:</p>
@@ -314,8 +325,12 @@
 <li><p>Appraise the validity of a topic model and fine tune it accordingly</p></li>
 </ul>
 </div>
+<div class="section" id="topic-modeling-a-primer">
+<h2><span class="section-number">6.1. </span>Topic Modeling: A Primer<a class="headerlink" href="#topic-modeling-a-primer" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
 <div class="section" id="preliminiaries">
-<h2><span class="section-number">6.1. </span>Preliminiaries<a class="headerlink" href="#preliminiaries" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.2. </span>Preliminiaries<a class="headerlink" href="#preliminiaries" title="Permalink to this headline">¶</a></h2>
 <p>As before, we’ll use a file manifest to keep things orderly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -368,49 +383,49 @@ Genres: Fiction, Classics, Nonfiction, Children’s Books, Teen &amp; Young Adul
   </thead>
   <tbody>
     <tr>
-      <th>291</th>
-      <td>Joanne B. Ciulla</td>
-      <td>The Working Life</td>
-      <td>Nonfiction</td>
-      <td>2001-03-20</td>
-      <td>9780609807378</td>
-      <td>0291.txt</td>
-    </tr>
-    <tr>
-      <th>968</th>
-      <td>Suzanne Brockmann</td>
-      <td>Gone Too Far</td>
+      <th>903</th>
+      <td>Katie Ganshert</td>
+      <td>A Broken Kind of Beautiful</td>
       <td>Fiction</td>
-      <td>2004-03-02</td>
-      <td>9780345456939</td>
-      <td>0968.txt</td>
+      <td>2014-04-15</td>
+      <td>9781601425904</td>
+      <td>0903.txt</td>
     </tr>
     <tr>
-      <th>93</th>
-      <td>Kim Jones</td>
-      <td>Sinner's Revenge</td>
+      <th>222</th>
+      <td>Belva Plain</td>
+      <td>Promises</td>
       <td>Fiction</td>
-      <td>2016-07-19</td>
-      <td>9781101987728</td>
-      <td>0093.txt</td>
+      <td>1997-04-07</td>
+      <td>9780440216872</td>
+      <td>0222.txt</td>
     </tr>
     <tr>
-      <th>934</th>
-      <td>Laurence Bergreen</td>
-      <td>Marco Polo</td>
-      <td>Nonfiction</td>
-      <td>2008-10-21</td>
-      <td>9781400078806</td>
-      <td>0934.txt</td>
+      <th>394</th>
+      <td>Alyssa Sheinmel</td>
+      <td>The Lucky Kind</td>
+      <td>Teen &amp; Young Adult</td>
+      <td>2011-05-10</td>
+      <td>9780375898662</td>
+      <td>0394.txt</td>
     </tr>
     <tr>
-      <th>64</th>
-      <td>Dennis Toombs</td>
-      <td>Power</td>
+      <th>229</th>
+      <td>Gil Reavill</td>
+      <td>Aftermath, Inc.</td>
       <td>Nonfiction</td>
-      <td>2016-07-19</td>
-      <td>9781633881914</td>
-      <td>0064.txt</td>
+      <td>2007-05-17</td>
+      <td>9781101216897</td>
+      <td>0229.txt</td>
+    </tr>
+    <tr>
+      <th>737</th>
+      <td>Jean-Christophe Napias</td>
+      <td>Everything (or Almost Everything) About Paris</td>
+      <td>Nonfiction</td>
+      <td>2016-10-04</td>
+      <td>9781681371023</td>
+      <td>0737.txt</td>
     </tr>
   </tbody>
 </table>
@@ -428,7 +443,7 @@ Genres: Fiction, Classics, Nonfiction, Children’s Books, Teen &amp; Young Adul
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/06_topic-modeling_3_0.png" src="_images/06_topic-modeling_3_0.png" />
+<img alt="_images/06_topic-modeling_4_0.png" src="_images/06_topic-modeling_4_0.png" />
 </div>
 </div>
 <p>To make file loading easier, we’ll isolate the file names from <code class="docutils literal notranslate"><span class="pre">manifest</span></code> and create a list of paths.</p>
@@ -442,7 +457,7 @@ Genres: Fiction, Classics, Nonfiction, Children’s Books, Teen &amp; Young Adul
 </div>
 </div>
 <div class="section" id="building-a-topic-model">
-<h2><span class="section-number">6.2. </span>Building a Topic Model<a class="headerlink" href="#building-a-topic-model" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.3. </span>Building a Topic Model<a class="headerlink" href="#building-a-topic-model" title="Permalink to this headline">¶</a></h2>
 <p>With this bit of preliminary work done, we’re ready to build a topic model. There are numerous implementations of
 LDA modeling available, ranging from the command line utility, <a class="reference external" href="https://mimno.github.io/Mallet/">MALLET</a> (which many of us in the DataLab use in our
 own work), to built-in APIs offered by both <code class="docutils literal notranslate"><span class="pre">gensim</span></code> and <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. It’s tempting to use the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>
@@ -457,7 +472,7 @@ Instead, we’ll use <code class="docutils literal notranslate"><span class="pre
 fairly intuitive and comes with lots of options, which we’ll leverage to build the best model possible for our
 data.</p>
 <div class="section" id="initializing-a-model">
-<h3><span class="section-number">6.2.1. </span>Initializing a model<a class="headerlink" href="#initializing-a-model" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.3.1. </span>Initializing a model<a class="headerlink" href="#initializing-a-model" title="Permalink to this headline">¶</a></h3>
 <p>Initializing a topic model with <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> is simple: just assign <code class="docutils literal notranslate"><span class="pre">LDAModel()</span></code> to a variable and declare the number
 of topics the model will generate. As we’ll discuss below, determining how many topics to use is a matter of some
 debate and complexity, but for now, we’ll just pick a number and move ahead.</p>
@@ -493,7 +508,7 @@ stored as text blobs).</p>
 </div>
 </div>
 <div class="section" id="training-a-model">
-<h3><span class="section-number">6.2.2. </span>Training a model<a class="headerlink" href="#training-a-model" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.3.2. </span>Training a model<a class="headerlink" href="#training-a-model" title="Permalink to this headline">¶</a></h3>
 <p>Our model is now ready to be trained. Under the hood, this happens in an iterative fashion, so we need to set the
 total number of iterations we’d like to use to do the training. With that set, it’s simply a matter of calling
 <code class="docutils literal notranslate"><span class="pre">model.train()</span></code>.</p>
@@ -504,15 +519,14 @@ set here will allow a model to properly <a class="reference external" href="http
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_iters</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="inspecting-the-results">
-<h3><span class="section-number">6.2.3. </span>Inspecting the Results<a class="headerlink" href="#inspecting-the-results" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.3.3. </span>Inspecting the Results<a class="headerlink" href="#inspecting-the-results" title="Permalink to this headline">¶</a></h3>
 <p>With our model trained on our corpus, we can access some high-level information about the corpus.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -602,12 +616,12 @@ dtype: float32
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic distribution for &#39;The Knot at the End of Your Rope&#39;:
-+ Topic #0: 0.07%
-+ Topic #1: 0.37%
-+ Topic #2: 0.12%
-+ Topic #3: 0.14%
-+ Topic #4: 0.31%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic distribution for &#39;The Kill Box&#39;:
++ Topic #0: 0.12%
++ Topic #1: 0.00%
++ Topic #2: 0.56%
++ Topic #3: 0.16%
++ Topic #4: 0.17%
 </pre></div>
 </div>
 </div>
@@ -629,11 +643,11 @@ get the associated index, pipe it into our model object, and return the top topi
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top topics for:
-+ Movie-Made America: #1 (0.44%)
-+ A Sportsman&#39;s Notebook: #0 (0.36%)
-+ The Rub of Time: #3 (0.32%)
-+ Writing from the Senses: #1 (0.46%)
-+ Likely Story (Book 1): #4 (0.48%)
++ Monkey and Elephant: #4 (0.53%)
++ Milarepa: #3 (0.44%)
++ The New Deal: #2 (0.43%)
++ The Inferior: #2 (0.46%)
++ No Cure for Cancer: #0 (0.35%)
 </pre></div>
 </div>
 </div>
@@ -674,53 +688,53 @@ depending on the document. This is about as close to context-sensitive semantics
   <tbody>
     <tr>
       <th>0</th>
-      <td>walk</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>treadmill</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>go</td>
+      <td>name</td>
       <td>2</td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>best</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>book</td>
+      <td>0</td>
+    </tr>
+    <tr>
       <th>3</th>
-      <td>fast</td>
-      <td>4</td>
+      <td>year</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>like</td>
-      <td>4</td>
+      <td>library</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>pink</td>
-      <td>4</td>
+      <td>journal</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>bunny</td>
-      <td>4</td>
+      <td>intense</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>battery</td>
-      <td>4</td>
+      <td>thriller</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>commerical</td>
-      <td>1</td>
+      <td>thats</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>go</td>
-      <td>4</td>
+      <td>perfect</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -920,7 +934,7 @@ corpus. It then sums the results for each topic.</p>
 </div>
 </div>
 <div class="section" id="fine-tuning-the-basics">
-<h2><span class="section-number">6.3. </span>Fine Tuning: The Basics<a class="headerlink" href="#fine-tuning-the-basics" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4. </span>Fine Tuning: The Basics<a class="headerlink" href="#fine-tuning-the-basics" title="Permalink to this headline">¶</a></h2>
 <p>All this looks good so far, but our topics are fairly general. More, their total proportions across the corpus are
 relatively homogenous. Maybe this reflects what’s in our corpus – or maybe not. For example, a closer inspection of
 individual word-topic distributions for a document show some mismatches between the topic, as we might interpret it
@@ -958,53 +972,53 @@ in a general sense, and those words.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>walk</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>treadmill</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>go</td>
+      <td>name</td>
       <td>2</td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>best</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>book</td>
+      <td>0</td>
+    </tr>
+    <tr>
       <th>3</th>
-      <td>fast</td>
-      <td>4</td>
+      <td>year</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>like</td>
-      <td>4</td>
+      <td>library</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>pink</td>
-      <td>4</td>
+      <td>journal</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>bunny</td>
-      <td>4</td>
+      <td>intense</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>battery</td>
-      <td>4</td>
+      <td>thriller</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>commerical</td>
-      <td>1</td>
+      <td>thats</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>go</td>
-      <td>4</td>
+      <td>perfect</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -1062,63 +1076,63 @@ in a general sense, and those words.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>walk</td>
-      <td>0</td>
-      <td>book, story, new, reader, read</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>treadmill</td>
-      <td>1</td>
-      <td>book, use, guide, include, work</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>go</td>
+      <td>name</td>
       <td>2</td>
       <td>novel, new, war, man, time</td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>best</td>
+      <td>0</td>
+      <td>book, story, new, reader, read</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>book</td>
+      <td>0</td>
+      <td>book, story, new, reader, read</td>
+    </tr>
+    <tr>
       <th>3</th>
-      <td>fast</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>year</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>like</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>library</td>
+      <td>0</td>
+      <td>book, story, new, reader, read</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>pink</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>journal</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>bunny</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>intense</td>
+      <td>3</td>
+      <td>life, story, live, year, new</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>battery</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>thriller</td>
+      <td>2</td>
+      <td>novel, new, war, man, time</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>commerical</td>
-      <td>1</td>
-      <td>book, use, guide, include, work</td>
+      <td>thats</td>
+      <td>4</td>
+      <td>just, make, friend, get, day</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>go</td>
-      <td>4</td>
-      <td>just, make, friend, get, day</td>
+      <td>perfect</td>
+      <td>0</td>
+      <td>book, story, new, reader, read</td>
     </tr>
   </tbody>
 </table>
@@ -1129,7 +1143,7 @@ associated topic. This suggests that we need to make some adjustments to the way
 better reflects the specificis of our corpus.</p>
 <p>But there are several different parameters to adjust when intializing the model, so what, then, should we change?</p>
 <div class="section" id="setting-the-number-of-topics">
-<h3><span class="section-number">6.3.1. </span>Setting the number of topics<a class="headerlink" href="#setting-the-number-of-topics" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.4.1. </span>Setting the number of topics<a class="headerlink" href="#setting-the-number-of-topics" title="Permalink to this headline">¶</a></h3>
 <p>An easy answer would be the number of topics. If, as above, your topics seem too general, it may be because you’ve
 too small a number of topics for the model. Increasing the number of topics you use may make the model more
 interpretable.</p>
@@ -1183,7 +1197,7 @@ we used earlier wrapped up in a callable function.</p>
 <p>With that done, we’ll train a model with our new number of topics and see what the results look like.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_10</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_10</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
 
 <span class="n">print_topic_words</span><span class="p">(</span><span class="n">model_10</span><span class="p">)</span>
 </pre></div>
@@ -1221,7 +1235,7 @@ Topic #9:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_topics</span> <span class="o">=</span> <span class="mi">30</span>
 <span class="n">model_30</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">n_topics</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
 
-<span class="n">model_30</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+<span class="n">model_30</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
 
 <span class="n">print_topic_words</span><span class="p">(</span><span class="n">model_30</span><span class="p">)</span>
 </pre></div>
@@ -1257,7 +1271,9 @@ Topic #12:
 Topic #13: 
 + people (0.0145%), show (0.0136%), business (0.0124%), think (0.0123%), study (0.0121%)
 Topic #14: 
-+ music (0.0222%), sport (0.0163%), team (0.0155%), star (0.0134%), baseball (0.0130%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+ music (0.0222%), sport (0.0163%), team (0.0155%), star (0.0134%), baseball (0.0130%)
 Topic #15: 
 + home (0.0270%), year (0.0245%), family (0.0219%), life (0.0193%), old (0.0177%)
 Topic #16: 
@@ -1308,7 +1324,7 @@ aren’t quite as interpretable, but they also help us make a more empirically g
 topics.</p>
 </div>
 <div class="section" id="perplexity">
-<h3><span class="section-number">6.3.2. </span>Perplexity<a class="headerlink" href="#perplexity" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.4.2. </span>Perplexity<a class="headerlink" href="#perplexity" title="Permalink to this headline">¶</a></h3>
 <p>The first of these measures is <strong>perplexity</strong>. In text mining and natural language processing, we use perplexity
 scoring to evaluate how well a model predicts an unseen set of words. Essentially, it measures how “surprised” a
 model is by a sequence of unseen words. The lower the perplexity, the more your model is capable of mapping
@@ -1348,9 +1364,9 @@ different topic numbers, train a model on each, and record the resultant perplex
 
 <span class="n">perplexity_scores</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n_topic_range</span><span class="p">:</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
-    <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;PERPLEXITY_SCORE&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">perplexity</span><span class="p">})</span>
+    <span class="n">_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+    <span class="n">_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;PERPLEXITY_SCORE&#39;</span><span class="p">:</span> <span class="n">_model</span><span class="o">.</span><span class="n">perplexity</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
@@ -1363,8 +1379,8 @@ topics.</p>
 <span class="n">perplexity_scores</span> <span class="o">=</span> <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;PERPLEXITY_SCORE&#39;</span><span class="p">)</span>
 
 <span class="n">best_n_topic</span> <span class="o">=</span> <span class="n">perplexity_scores</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;PERPLEXITY_SCORE&#39;</span><span class="p">)[</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-<span class="n">best_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_n_topic</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
-<span class="n">best_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+<span class="n">best_p</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_n_topic</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+<span class="n">best_p</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1484,7 +1500,7 @@ model and the next best-scoring model, our 10-topic model, is relatively small. 
 10-topic model is more interpretable, you may choose to make a compromise on perplexity and go with that instead.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_topic_words</span><span class="p">(</span><span class="n">best_model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_topic_words</span><span class="p">(</span><span class="n">best_p</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1539,7 +1555,7 @@ Topic #21:
 </div>
 </div>
 <div class="section" id="coherence">
-<h3><span class="section-number">6.3.3. </span>Coherence<a class="headerlink" href="#coherence" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.4.3. </span>Coherence<a class="headerlink" href="#coherence" title="Permalink to this headline">¶</a></h3>
 <p>If you’re having trouble mapping perplexity scores onto interpretable results, you might use a <strong>coherence score</strong>
 instead. Coherence scores measure the degree of semantic similarity among the words in a topic. Some people prefer
 to use coherence scoring in place of perplexity because these scores help distinguish the difference between topics
@@ -1554,7 +1570,7 @@ the other topics. This results in a series of vectors, which are then measured w
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tomotopy.coherence</span> <span class="kn">import</span> <span class="n">Coherence</span>
 
-<span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">best_model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+<span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">best_p</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coherence score: </span><span class="si">{</span><span class="n">coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1573,9 +1589,9 @@ sizes. Here, we’re looking for the highest score, which will be a number betwe
 
 <span class="n">coherence_scores</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n_topic_range</span><span class="p">:</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
-    <span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+    <span class="n">_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+    <span class="n">_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
     <span class="n">coherence_scores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;COHERENCE_SCORE&#39;</span><span class="p">:</span> <span class="n">coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()})</span>
 </pre></div>
 </div>
@@ -1588,8 +1604,8 @@ sizes. Here, we’re looking for the highest score, which will be a number betwe
 <span class="n">coherence_scores</span> <span class="o">=</span> <span class="n">coherence_scores</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;COHERENCE_SCORE&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 
 <span class="n">best_n_topic</span> <span class="o">=</span> <span class="n">coherence_scores</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;COHERENCE_SCORE&#39;</span><span class="p">)[</span><span class="s1">&#39;N_TOPICS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-<span class="n">best_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_n_topic</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
-<span class="n">best_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">n_iters</span><span class="p">)</span>
+<span class="n">best_c</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_n_topic</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
+<span class="n">best_c</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1706,7 +1722,7 @@ sizes. Here, we’re looking for the highest score, which will be a number betwe
 <p>Looks like a 29-topic model wins out! Here are the top words for each topic:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_topic_words</span><span class="p">(</span><span class="n">best_model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_topic_words</span><span class="p">(</span><span class="n">best_c</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1773,43 +1789,49 @@ Topic #28:
 </div>
 </div>
 </div>
-<p>And here’s a distribution plot.</p>
+<p>And here’s a distribution plot of the topic proportions. We’ll wrap this code in a function for later comparison
+work.</p>
 <div class="margin sidebar">
-<p class="sidebar-title">What this loop does</p>
+<p class="sidebar-title">What this function does</p>
 <p>For each topic in the model:</p>
 <ol class="simple">
 <li><p>Get the top five words</p></li>
 <li><p>Use string formatting in concert with <code class="docutils literal notranslate"><span class="pre">join()</span></code> to label and stringify those words</p></li>
 <li><p>Append the formatted string to an empty list, which we can use as an index in a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> series</p></li>
+<li><p>Plot the resultant series</p></li>
 </ol>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_proportions</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span> <span class="o">/</span> <span class="n">best_model</span><span class="o">.</span><span class="n">num_words</span>
-<span class="n">top_words</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">: &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
-    <span class="n">top_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-
-<span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">topic_proportions</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">top_words</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
-<span class="n">to_plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
-                  <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Topic Proportions&quot;</span><span class="p">,</span>
-                  <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Topic&quot;</span><span class="p">,</span>
-                 <span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_topic_proportions</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">topic_proportions</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span> <span class="o">/</span> <span class="n">tm</span><span class="o">.</span><span class="n">num_words</span>
+    <span class="n">top_words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="n">top_n</span><span class="p">)</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">: &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
+        <span class="n">top_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+        
+    <span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">topic_proportions</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">top_words</span><span class="p">)</span>
+    <span class="n">to_plot</span> <span class="o">=</span> <span class="n">to_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+    <span class="n">to_plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span>
+                      <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Topic Proportions for </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                      <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Topic&quot;</span>
+                     <span class="p">);</span>
+    
+<span class="n">plot_topic_proportions</span><span class="p">(</span><span class="n">best_c</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s1">&#39;Best Coherence Model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/06_topic-modeling_67_0.png" src="_images/06_topic-modeling_67_0.png" />
+<img alt="_images/06_topic-modeling_68_0.png" src="_images/06_topic-modeling_68_0.png" />
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="fine-tuning-advanced">
-<h2><span class="section-number">6.4. </span>Fine Tuning: Advanced<a class="headerlink" href="#fine-tuning-advanced" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.5. </span>Fine Tuning: Advanced<a class="headerlink" href="#fine-tuning-advanced" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="hyperparameters-alpha-and-eta">
-<h3><span class="section-number">6.4.1. </span>Hyperparameters: alpha and eta<a class="headerlink" href="#hyperparameters-alpha-and-eta" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.5.1. </span>Hyperparameters: alpha and eta<a class="headerlink" href="#hyperparameters-alpha-and-eta" title="Permalink to this headline">¶</a></h3>
 <p>Clearly, there is much to consider with respect to the number of topics alone. But this number is not the only
 value we can set when initializing a model. LDA modeling has two key <strong>hyperparameters</strong>, which we can configure to
 more specifically control the nature of the topics a training run produces:</p>
@@ -1879,7 +1901,7 @@ for the top words within these topics should be higher.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;best coherence&#39;</span><span class="p">:</span> <span class="n">best_model</span><span class="p">,</span> <span class="s1">&#39;high alpha/low eta&#39;</span><span class="p">:</span> <span class="n">ae_adjusted</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;best coherence&#39;</span><span class="p">:</span> <span class="n">best_c</span><span class="p">,</span> <span class="s1">&#39;high alpha/low eta&#39;</span><span class="p">:</span> <span class="n">ae_adjusted</span><span class="p">}</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">model_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">probability_scores</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1913,7 +1935,7 @@ For the high alpha/low eta model:
 </div>
 </div>
 <div class="section" id="deciding-on-hyperparameter-values">
-<h3><span class="section-number">6.4.2. </span>Deciding on hyperparameter values<a class="headerlink" href="#deciding-on-hyperparameter-values" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.5.2. </span>Deciding on hyperparameter values<a class="headerlink" href="#deciding-on-hyperparameter-values" title="Permalink to this headline">¶</a></h3>
 <p>As with setting our number of topics, we could spend hours going back and forth between different alpha and eta
 values to determine which combination of hyperparameters is best. In the literature about LDA modeling, researchers
 have suggested various ways of setting these values programmatically. For example, the authors of <a class="reference external" href="https://www.pnas.org/content/101/suppl_1/5228">this paper</a>
@@ -1938,11 +1960,11 @@ has a very high coherence score.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hyperoptimized_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">29</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">eta</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span>
 <span class="n">hyperoptimized_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
 
-<span class="n">coherence_model</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">hyperoptimized_model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+<span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">hyperoptimized_model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;Perplexity score: </span><span class="si">{</span><span class="n">hyperoptimized_model</span><span class="o">.</span><span class="n">perplexity</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Coherence score: </span><span class="si">{</span><span class="n">coherence_model</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Coherence score: </span><span class="si">{</span><span class="n">coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2026,23 +2048,12 @@ Topic #28:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_proportions</span> <span class="o">=</span> <span class="n">hyperoptimized_model</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span> <span class="o">/</span> <span class="n">hyperoptimized_model</span><span class="o">.</span><span class="n">num_words</span>
-<span class="n">top_words</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hyperoptimized_model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="n">hyperoptimized_model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">: &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
-    <span class="n">top_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-
-<span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">topic_proportions</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">top_words</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
-<span class="n">to_plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
-                  <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Topic Proportions&quot;</span><span class="p">,</span>
-                  <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Topic&quot;</span><span class="p">,</span>
-                 <span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_topic_proportions</span><span class="p">(</span><span class="n">hyperoptimized_model</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s1">&#39;Hyperoptimized Model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/06_topic-modeling_79_0.png" src="_images/06_topic-modeling_79_0.png" />
+<img alt="_images/06_topic-modeling_80_0.png" src="_images/06_topic-modeling_80_0.png" />
 </div>
 </div>
 <p>Pretty rotten! One topic all but completely dominates the topic distribution and the others are, well, strange.
@@ -2150,25 +2161,374 @@ Topic #28:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_proportions</span> <span class="o">=</span> <span class="n">tuned</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span> <span class="o">/</span> <span class="n">tuned</span><span class="o">.</span><span class="n">num_words</span>
-<span class="n">top_words</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tuned</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="n">tuned</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">: &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
-    <span class="n">top_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-
-<span class="n">to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">topic_proportions</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">top_words</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
-<span class="n">to_plot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
-                  <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Topic Proportions&quot;</span><span class="p">,</span>
-                  <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Topic&quot;</span><span class="p">,</span>
-                 <span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_topic_proportions</span><span class="p">(</span><span class="n">tuned</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="s1">&#39;Fine-Tuned Model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/06_topic-modeling_83_0.png" src="_images/06_topic-modeling_83_0.png" />
+<img alt="_images/06_topic-modeling_84_0.png" src="_images/06_topic-modeling_84_0.png" />
 </div>
 </div>
+<p>Now, even with a fine-tuned model there are likely to be some inscrutable topics. Look at topic 12 for example:
+what in the world does that represent? Topic 0 has a few less nonsequitors, but from this vantage it’s hard to
+discern what it might be about. This, of course, is part of the point of topic modeling: it’s a way of helping us
+discover new things about a corpus. Are topics 0 and 12 nonsense topics, or do they have some inner coherence? With
+our model built, it’s on us to start exploring.</p>
+</div>
+</div>
+<div class="section" id="exploring-a-model">
+<h2><span class="section-number">6.6. </span>Exploring a Model<a class="headerlink" href="#exploring-a-model" title="Permalink to this headline">¶</a></h2>
+<p>In this final section, we’ll do just that. It’s often helpful to build a few visualizations to aid us in our
+explorations, so we’ll make those and see what we can find.</p>
+<p>Before doing so, let’s rebuild a theta from the fine-tuned model. Remember that a theta is a document-topic matrix,
+where each cell is a probability score for a document’s association with a particular topic.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_topic_distributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">doc</span><span class="o">.</span><span class="n">get_topic_dist</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">tuned</span><span class="o">.</span><span class="n">docs</span><span class="p">]</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">all_topic_distributions</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">/=</span> <span class="n">theta</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll also make a quick set of labels for our topics, which list the top five words for each one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tuned</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">tuned</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;#</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">: &quot;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
+    <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A heatmap is a natural fit for inspecting these probability distributions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">random_titles</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+<span class="n">selected_theta</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="n">theta</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">random_titles</span><span class="p">)]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">selected_theta</span><span class="p">,</span>
+                 <span class="n">xticklabels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
+                 <span class="n">linewidths</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">linecolor</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                 <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Blues&#39;</span>
+                <span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Topic&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">tick_top</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/06_topic-modeling_91_0.png" src="_images/06_topic-modeling_91_0.png" />
+</div>
+</div>
+<p>Topic 8 seems to be about the classics. What kind of titles have a particularly high association with this topic?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_8</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="n">theta</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">][</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">topic_8</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[[</span><span class="s1">&#39;AUTHOR&#39;</span><span class="p">,</span> <span class="s1">&#39;TITLE&#39;</span><span class="p">,</span> <span class="s1">&#39;GENRE&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TOPIC_8_SCORE</span> <span class="o">=</span> <span class="n">topic_8</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">selected</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_07304_" ><thead>    <tr>        <th class="col_heading level0 col0" >AUTHOR</th>        <th class="col_heading level0 col1" >TITLE</th>        <th class="col_heading level0 col2" >GENRE</th>        <th class="col_heading level0 col3" >TOPIC_8_SCORE</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_07304_row0_col0" class="data row0 col0" >Horatio Alger</td>
+                        <td id="T_07304_row0_col1" class="data row0 col1" >Ragged Dick and Struggling Upward</td>
+                        <td id="T_07304_row0_col2" class="data row0 col2" >Classics</td>
+                        <td id="T_07304_row0_col3" class="data row0 col3" >0.553598</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row1_col0" class="data row1 col0" >Stan Berenstain, Jan Berenstain</td>
+                        <td id="T_07304_row1_col1" class="data row1 col1" >The Berenstain Bears Blaze a Trail</td>
+                        <td id="T_07304_row1_col2" class="data row1 col2" >Children’s Books</td>
+                        <td id="T_07304_row1_col3" class="data row1 col3" >0.229238</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row2_col0" class="data row2 col0" >Chretien de Troyes</td>
+                        <td id="T_07304_row2_col1" class="data row2 col1" >Arthurian Romances</td>
+                        <td id="T_07304_row2_col2" class="data row2 col2" >Classics</td>
+                        <td id="T_07304_row2_col3" class="data row2 col3" >0.781303</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row3_col0" class="data row3 col0" >Nicola Sacco, Bartolomeo Vanzetti</td>
+                        <td id="T_07304_row3_col1" class="data row3 col1" >The Letters of Sacco and Vanzetti</td>
+                        <td id="T_07304_row3_col2" class="data row3 col2" >Classics</td>
+                        <td id="T_07304_row3_col3" class="data row3 col3" >0.542920</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row4_col0" class="data row4 col0" >Elizabeth Winthrop</td>
+                        <td id="T_07304_row4_col1" class="data row4 col1" >The Battle for the Castle</td>
+                        <td id="T_07304_row4_col2" class="data row4 col2" >Children’s Books</td>
+                        <td id="T_07304_row4_col3" class="data row4 col3" >0.229807</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row5_col0" class="data row5 col0" >Leslie Alcock</td>
+                        <td id="T_07304_row5_col1" class="data row5 col1" >Arthur's Britain</td>
+                        <td id="T_07304_row5_col2" class="data row5 col2" >Nonfiction</td>
+                        <td id="T_07304_row5_col3" class="data row5 col3" >0.146158</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row6_col0" class="data row6 col0" >Frances Hodgson Burnett</td>
+                        <td id="T_07304_row6_col1" class="data row6 col1" >A Little Princess</td>
+                        <td id="T_07304_row6_col2" class="data row6 col2" >Classics</td>
+                        <td id="T_07304_row6_col3" class="data row6 col3" >0.250944</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row7_col0" class="data row7 col0" >Mary Boykin Chesnut</td>
+                        <td id="T_07304_row7_col1" class="data row7 col1" >Mary Chesnut's Diary</td>
+                        <td id="T_07304_row7_col2" class="data row7 col2" >Classics</td>
+                        <td id="T_07304_row7_col3" class="data row7 col3" >0.572314</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row8_col0" class="data row8 col0" >Kenneth Grahame</td>
+                        <td id="T_07304_row8_col1" class="data row8 col1" >The Wind in the Willows</td>
+                        <td id="T_07304_row8_col2" class="data row8 col2" >Classics</td>
+                        <td id="T_07304_row8_col3" class="data row8 col3" >0.608761</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row9_col0" class="data row9 col0" >Harriet Jacobs</td>
+                        <td id="T_07304_row9_col1" class="data row9 col1" >Incidents in the Life of a Slave Girl</td>
+                        <td id="T_07304_row9_col2" class="data row9 col2" >Classics</td>
+                        <td id="T_07304_row9_col3" class="data row9 col3" >0.575178</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row10_col0" class="data row10 col0" >Richard E. Kim</td>
+                        <td id="T_07304_row10_col1" class="data row10 col1" >The Martyred</td>
+                        <td id="T_07304_row10_col2" class="data row10 col2" >Classics</td>
+                        <td id="T_07304_row10_col3" class="data row10 col3" >0.478683</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row11_col0" class="data row11 col0" >Friedrich Nietzsche</td>
+                        <td id="T_07304_row11_col1" class="data row11 col1" >The Will to Power</td>
+                        <td id="T_07304_row11_col2" class="data row11 col2" >Nonfiction</td>
+                        <td id="T_07304_row11_col3" class="data row11 col3" >0.290242</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row12_col0" class="data row12 col0" >Various</td>
+                        <td id="T_07304_row12_col1" class="data row12 col1" >The Penguin Book of Modern African Poetry</td>
+                        <td id="T_07304_row12_col2" class="data row12 col2" >Classics</td>
+                        <td id="T_07304_row12_col3" class="data row12 col3" >0.436538</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row13_col0" class="data row13 col0" >Various</td>
+                        <td id="T_07304_row13_col1" class="data row13 col1" >The Portable Twentieth-Century Russian Reader</td>
+                        <td id="T_07304_row13_col2" class="data row13 col2" >Classics</td>
+                        <td id="T_07304_row13_col3" class="data row13 col3" >0.681862</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row14_col0" class="data row14 col0" >Ron Roy</td>
+                        <td id="T_07304_row14_col1" class="data row14 col1" >A to Z Mysteries: The Lucky Lottery</td>
+                        <td id="T_07304_row14_col2" class="data row14 col2" >Children’s Books</td>
+                        <td id="T_07304_row14_col3" class="data row14 col3" >0.211067</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row15_col0" class="data row15 col0" >Anonymous</td>
+                        <td id="T_07304_row15_col1" class="data row15 col1" >The Vinland Sagas</td>
+                        <td id="T_07304_row15_col2" class="data row15 col2" >Classics</td>
+                        <td id="T_07304_row15_col3" class="data row15 col3" >0.628127</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row16_col0" class="data row16 col0" >Anonymous</td>
+                        <td id="T_07304_row16_col1" class="data row16 col1" >The Cloud of Unknowing and Other Works</td>
+                        <td id="T_07304_row16_col2" class="data row16 col2" >Classics</td>
+                        <td id="T_07304_row16_col3" class="data row16 col3" >0.496929</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row17_col0" class="data row17 col0" >Thomas Hardy</td>
+                        <td id="T_07304_row17_col1" class="data row17 col1" >The Distracted Preacher</td>
+                        <td id="T_07304_row17_col2" class="data row17 col2" >Fiction</td>
+                        <td id="T_07304_row17_col3" class="data row17 col3" >0.272698</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row18_col0" class="data row18 col0" >Arthur Miller</td>
+                        <td id="T_07304_row18_col1" class="data row18 col1" >A View from the Bridge</td>
+                        <td id="T_07304_row18_col2" class="data row18 col2" >Classics</td>
+                        <td id="T_07304_row18_col3" class="data row18 col3" >0.630500</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row19_col0" class="data row19 col0" >William Shakespeare</td>
+                        <td id="T_07304_row19_col1" class="data row19 col1" >King John</td>
+                        <td id="T_07304_row19_col2" class="data row19 col2" >Classics</td>
+                        <td id="T_07304_row19_col3" class="data row19 col3" >0.604255</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row20_col0" class="data row20 col0" >Various</td>
+                        <td id="T_07304_row20_col1" class="data row20 col1" >Hippocratic Writings</td>
+                        <td id="T_07304_row20_col2" class="data row20 col2" >Classics</td>
+                        <td id="T_07304_row20_col3" class="data row20 col3" >0.563660</td>
+            </tr>
+            <tr>
+                                <td id="T_07304_row21_col0" class="data row21 col0" >Abbe Prevost</td>
+                        <td id="T_07304_row21_col1" class="data row21 col1" >Manon Lescaut</td>
+                        <td id="T_07304_row21_col2" class="data row21 col2" >Classics</td>
+                        <td id="T_07304_row21_col3" class="data row21 col3" >0.570990</td>
+            </tr>
+    </tbody></table></div></div>
+</div>
+<p>Looks about right, though it’s interesting to see a few children’s books here. Were we to explore this a bit
+further, we’d probably want to take a look at those probability scores. The seeming outliers in this listing also
+tend to have a low score for the topic.</p>
+<p>Topic 5 has an interesting mix of top words: “vampire,” “financial,” “rule,” etc. What’s going on here?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_5</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="n">theta</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;TITLE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">topic_5</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[[</span><span class="s1">&#39;AUTHOR&#39;</span><span class="p">,</span> <span class="s1">&#39;TITLE&#39;</span><span class="p">,</span> <span class="s1">&#39;GENRE&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">TOPIC_5_SCORE</span> <span class="o">=</span> <span class="n">topic_5</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">selected</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style  type="text/css" >
+</style><table id="T_17c2e_" ><thead>    <tr>        <th class="col_heading level0 col0" >AUTHOR</th>        <th class="col_heading level0 col1" >TITLE</th>        <th class="col_heading level0 col2" >GENRE</th>        <th class="col_heading level0 col3" >TOPIC_5_SCORE</th>    </tr></thead><tbody>
+                <tr>
+                                <td id="T_17c2e_row0_col0" class="data row0 col0" >John Burningham</td>
+                        <td id="T_17c2e_row0_col1" class="data row0 col1" >Tug of War</td>
+                        <td id="T_17c2e_row0_col2" class="data row0 col2" >Children’s Books</td>
+                        <td id="T_17c2e_row0_col3" class="data row0 col3" >0.247715</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row1_col0" class="data row1 col0" >Maggie Furey</td>
+                        <td id="T_17c2e_row1_col1" class="data row1 col1" >Echo of Eternity</td>
+                        <td id="T_17c2e_row1_col2" class="data row1 col2" >Fiction</td>
+                        <td id="T_17c2e_row1_col3" class="data row1 col3" >0.199022</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row2_col0" class="data row2 col0" >Eileen Truax</td>
+                        <td id="T_17c2e_row2_col1" class="data row2 col1" >We Built the Wall</td>
+                        <td id="T_17c2e_row2_col2" class="data row2 col2" >Nonfiction</td>
+                        <td id="T_17c2e_row2_col3" class="data row2 col3" >0.255975</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row3_col0" class="data row3 col0" >Andrew Vachss</td>
+                        <td id="T_17c2e_row3_col1" class="data row3 col1" >Vachss: Underground</td>
+                        <td id="T_17c2e_row3_col2" class="data row3 col2" >Fiction</td>
+                        <td id="T_17c2e_row3_col3" class="data row3 col3" >0.210242</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row4_col0" class="data row4 col0" >Paul Grangaard</td>
+                        <td id="T_17c2e_row4_col1" class="data row4 col1" >Grangaard Strategy: Invest Right During Retirement</td>
+                        <td id="T_17c2e_row4_col2" class="data row4 col2" >Fiction</td>
+                        <td id="T_17c2e_row4_col3" class="data row4 col3" >0.458991</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row5_col0" class="data row5 col0" >John Ramsey Miller</td>
+                        <td id="T_17c2e_row5_col1" class="data row5 col1" >The Last Family</td>
+                        <td id="T_17c2e_row5_col2" class="data row5 col2" >Fiction</td>
+                        <td id="T_17c2e_row5_col3" class="data row5 col3" >0.218730</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row6_col0" class="data row6 col0" >Andy Owens</td>
+                        <td id="T_17c2e_row6_col1" class="data row6 col1" >Buffy the Vampire Slayer Season 8 Volume 6: Retreat</td>
+                        <td id="T_17c2e_row6_col2" class="data row6 col2" >Fiction</td>
+                        <td id="T_17c2e_row6_col3" class="data row6 col3" >0.354488</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row7_col0" class="data row7 col0" >James F. Thompson</td>
+                        <td id="T_17c2e_row7_col1" class="data row7 col1" >The Cubicle Survival Guide</td>
+                        <td id="T_17c2e_row7_col2" class="data row7 col2" >Humor</td>
+                        <td id="T_17c2e_row7_col3" class="data row7 col3" >0.250471</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row8_col0" class="data row8 col0" >Scott Patterson</td>
+                        <td id="T_17c2e_row8_col1" class="data row8 col1" >Dark Pools</td>
+                        <td id="T_17c2e_row8_col2" class="data row8 col2" >Nonfiction</td>
+                        <td id="T_17c2e_row8_col3" class="data row8 col3" >0.307148</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row9_col0" class="data row9 col0" >Greg Palast</td>
+                        <td id="T_17c2e_row9_col1" class="data row9 col1" >Billionaires & Ballot Bandits</td>
+                        <td id="T_17c2e_row9_col2" class="data row9 col2" >Nonfiction</td>
+                        <td id="T_17c2e_row9_col3" class="data row9 col3" >0.394973</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row10_col0" class="data row10 col0" >Chris Hardwick</td>
+                        <td id="T_17c2e_row10_col1" class="data row10 col1" >The Nerdist Way</td>
+                        <td id="T_17c2e_row10_col2" class="data row10 col2" >Humor</td>
+                        <td id="T_17c2e_row10_col3" class="data row10 col3" >0.241594</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row11_col0" class="data row11 col0" >Amy Gray</td>
+                        <td id="T_17c2e_row11_col1" class="data row11 col1" >How to Be a Vampire</td>
+                        <td id="T_17c2e_row11_col2" class="data row11 col2" >Teen & Young Adult</td>
+                        <td id="T_17c2e_row11_col3" class="data row11 col3" >0.252977</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row12_col0" class="data row12 col0" >Andrew Fox</td>
+                        <td id="T_17c2e_row12_col1" class="data row12 col1" >Bride of the Fat White Vampire</td>
+                        <td id="T_17c2e_row12_col2" class="data row12 col2" >Fiction</td>
+                        <td id="T_17c2e_row12_col3" class="data row12 col3" >0.250888</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row13_col0" class="data row13 col0" >Dawn Cusick</td>
+                        <td id="T_17c2e_row13_col1" class="data row13 col1" >Bug Butts</td>
+                        <td id="T_17c2e_row13_col2" class="data row13 col2" >Children’s Books</td>
+                        <td id="T_17c2e_row13_col3" class="data row13 col3" >0.474483</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row14_col0" class="data row14 col0" >Keri Arthur</td>
+                        <td id="T_17c2e_row14_col1" class="data row14 col1" >Darkness Rising</td>
+                        <td id="T_17c2e_row14_col2" class="data row14 col2" >Fiction</td>
+                        <td id="T_17c2e_row14_col3" class="data row14 col3" >0.359722</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row15_col0" class="data row15 col0" >Simon Johnson, James Kwak</td>
+                        <td id="T_17c2e_row15_col1" class="data row15 col1" >13 Bankers</td>
+                        <td id="T_17c2e_row15_col2" class="data row15 col2" >Nonfiction</td>
+                        <td id="T_17c2e_row15_col3" class="data row15 col3" >0.343755</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row16_col0" class="data row16 col0" >Eric Powell</td>
+                        <td id="T_17c2e_row16_col1" class="data row16 col1" >The Goon: Volume 5: Wicked Inclinations (2nd edition)</td>
+                        <td id="T_17c2e_row16_col2" class="data row16 col2" >Fiction</td>
+                        <td id="T_17c2e_row16_col3" class="data row16 col3" >0.211155</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row17_col0" class="data row17 col0" >Jerry Kaplan</td>
+                        <td id="T_17c2e_row17_col1" class="data row17 col1" >Startup</td>
+                        <td id="T_17c2e_row17_col2" class="data row17 col2" >Nonfiction</td>
+                        <td id="T_17c2e_row17_col3" class="data row17 col3" >0.227893</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row18_col0" class="data row18 col0" >Janet Tashjian</td>
+                        <td id="T_17c2e_row18_col1" class="data row18 col1" >The Gospel According to Larry</td>
+                        <td id="T_17c2e_row18_col2" class="data row18 col2" >Teen & Young Adult</td>
+                        <td id="T_17c2e_row18_col3" class="data row18 col3" >0.225252</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row19_col0" class="data row19 col0" >James Crumley</td>
+                        <td id="T_17c2e_row19_col1" class="data row19 col1" >Bordersnakes</td>
+                        <td id="T_17c2e_row19_col2" class="data row19 col2" >Fiction</td>
+                        <td id="T_17c2e_row19_col3" class="data row19 col3" >0.189728</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row20_col0" class="data row20 col0" >Hunter S. Thompson</td>
+                        <td id="T_17c2e_row20_col1" class="data row20 col1" >Better Than Sex</td>
+                        <td id="T_17c2e_row20_col2" class="data row20 col2" >Nonfiction</td>
+                        <td id="T_17c2e_row20_col3" class="data row20 col3" >0.180376</td>
+            </tr>
+            <tr>
+                                <td id="T_17c2e_row21_col0" class="data row21 col0" >Lawrence G. McDonald, Patrick Robinson</td>
+                        <td id="T_17c2e_row21_col1" class="data row21 col1" >A Colossal Failure of Common Sense</td>
+                        <td id="T_17c2e_row21_col2" class="data row21 col2" >Nonfiction</td>
+                        <td id="T_17c2e_row21_col3" class="data row21 col3" >0.212348</td>
+            </tr>
+    </tbody></table></div></div>
 </div>
 </div>
 </div>
