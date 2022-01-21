@@ -21,3 +21,7 @@ execute:
 
 html:
   use_repository_button: true
+  
+sphinx:
+  config:
+    html_extra_path: ['data/session_three/output/topic_model_plot.html']
