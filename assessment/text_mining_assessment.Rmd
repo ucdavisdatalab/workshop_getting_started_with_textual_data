@@ -37,7 +37,6 @@ If you don't want to use your own corpus, or if you don't have one ready to hand
 we've also provided one. Under `data/novels/` you'll find 150 plaintext files of 
 English-language novels. You can find a corresponding file manifest at 
 `data/manifest.csv`, which you may use as a reference when doing your own work.
-
 If you *do* want to use your own corpus, we suggest using at least 100 documents. 
 But it also depends: 100 tweets won't get you very far, whereas 100 research 
 papers likely will. Try to aim for a corpus that has **at least 100,000 total** 
@@ -61,7 +60,8 @@ text_mining_assessment.pdf      These instructions
 data/                           The data directory
 |-- manifest.csv                A file manifest
 |-- novels/                     Plaintext files of 150 novels
-`-- output/                     An empty directory for code outputs
+|-- output/                     An empty directory for code outputs
+`-- voyant_stoplist.txt         A list of stopwords
 ```
 
 Rubric
@@ -105,7 +105,7 @@ Prompts
         + What is the longest text in the corpus? The shortest?
         + What is the mean type-token ratio? Would you say this corpus is 
         lexically diverse? Why or why not?
-        + Construct graphs as appropriate to help you in your exploratory work.
+    c. Construct graphs as appropriate to help you in your exploratory work.
   
 3. Document Similarity
 
@@ -114,18 +114,13 @@ Prompts
     these scores will help us identify similarities across the texts your corpus.
     b. To see this in action, select three texts. Identify the most- and 
     least-similar texts for each one.
-    c. Term correlations often provide a helpful way to identify what, exactly, 
-    is similar across texts. Subset your tf-idf matrix for your three texts and 
-    produce a term correlation matrix from them.
-        + **Note:** since you're only working with three texts, you're likely 
-        going to have many empty columns in your matrix. If you remove these 
-        columns, it'll speed up the process of building the correlation matrix. 
-        You can do this with `df.loc[:, (df != 0).any(axis=0)]`, where `df` is 
-        your subsetted matrix.
-    d. In a few sentences, briefly reflect on these (dis)similarities. If you're 
-    familiar with the texts you've chosen, are you surprised by what you've found? 
-    Consult the term correlations matrix. Do you notice any highly- or 
-    lowly-correlated terms across these documents? What do you make of them?
+    c. In a few sentences, briefly reflect on these (dis)similarities. If you're 
+    familiar with the texts you've chosen, are you surprised by what you've found?
+    Sample a few terms novels and compare their respective tf-idf scores. Do 
+    you notice any patterns?
+    d. One thing we haven't had you do is lemmatize the texts. If you were to 
+    lemmatize the texts, how would you expect that process to affect the 
+    similarity scores?
     
 4. Topic Modeling
 
