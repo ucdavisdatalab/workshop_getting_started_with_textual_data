@@ -15,7 +15,8 @@ To earn a micro-badge for this workshop, write code for/answer the prompts on
 the next page. You should do your work in a notebook environment (like Jupyter); 
 include all code, code outputs, and short answers directly in your notebook. 
 Submit this notebook to GradPathways by exporting it to an `html` file (in 
-Jupyter Notebooks, you can do this with `File > Download as > HTML`)
+Jupyter Notebooks, you can do this by going to `File > Save Page As` in your 
+browser).
 
 **Links**
 
