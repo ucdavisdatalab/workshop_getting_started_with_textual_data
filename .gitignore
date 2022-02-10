@@ -1,3 +1,5 @@
 _build/*
 data/*
+assessment_template.ipynb
 assessment/data/*
+assessment/completed/*
