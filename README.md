@@ -18,7 +18,7 @@ ranging from health informatics to the humanities.
 
 ## Common Links
 
-* [Reader](https://ucdavisdatalab.github.io/workshop_getting_started_with_textual_data/intro.html)
+* [Reader](https://ucdavisdatalab.github.io/workshop_getting_started_with_textual_data/)
 * [Event Page](https://datalab.ucdavis.edu/eventscalendar/getting-started-with-textual-data-in-python-3-part-series/)
 
 
