@@ -1,0 +1,65 @@
+# load in the libraries
+# ---------------------
+import pandas as pd
+import numpy as np
+import re
+
+# load in a file manifest
+# -----------------------
+
+manifest = pd.read_csv("/gdrive/MyDrive/tm_workshop_data/session_two/manifest.csv", index_col = 0)
+manifest = manifest.assign(YEAR = pd.to_datetime(manifest['YEAR'], format = "%Y").dt.year)
+
+# cleaning functions
+# -------------------
+
+with open("/gdrive/MyDrive/tm_workshop_data/voyant_stoplist.txt", 'r') as f:
+    stopwords = f.read().split("\n")
+
+# make lowercase
+def to_lower(doc):
+    return doc.lower()
+
+# remove punctuation
+def remove_punctuation(doc):
+    doc = re.sub(r"[-]|[—]|[_]", " ", doc)
+    doc = re.sub(r"[^\w\s]", "", doc)
+    return doc
+
+# remove integer digits
+def remove_digits(doc):
+    return re.sub(r"[0-9]", "", doc)
+
+# remove extra whitespace characters
+def remove_whitespace(doc):
+    return re.sub(r"\s+", " ", doc)
+
+# remove stop words
+def remove_stop_words(doc):
+    doc = doc.split()
+    doc = [token for token in doc if token not in stopwords]
+    doc = [token for token in doc if len(token) > 2]
+    doc = ' '.join(doc)
+    return doc
+
+# do all of the above
+def clean(doc):
+    lowercase = to_lower(doc)
+    no_punct = remove_punctuation(lowercase)
+    no_digits = remove_digits(no_punct)
+    no_whitespace = remove_whitespace(no_digits)
+    stopped = remove_stop_words(no_whitespace)
+    return stopped
+	
+# load the files to clean
+# -----------------------
+
+indir = "/gdrive/MyDrive/tm_workshop_data/session_two/input/"
+corpus = []
+
+for title in manifest.index:
+    filepath = indir + manifest.loc[title, 'FILE_NAME']
+    with open(filepath, 'r') as f:
+        text = f.read()
+        cleaned = clean(text)
+        corpus.append(cleaned)
