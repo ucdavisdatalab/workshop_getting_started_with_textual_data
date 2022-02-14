@@ -1,8 +1,13 @@
 # load in the libraries
 # ---------------------
+
 import pandas as pd
 import numpy as np
 import re
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.manifold import TSNE
+from sklearn.cluster import AgglomerativeClustering
+import altair as alt
 
 # load in a file manifest
 # -----------------------
@@ -63,3 +68,31 @@ for title in manifest.index:
         text = f.read()
         cleaned = clean(text)
         corpus.append(cleaned)
+		
+# NOTE: don't copy/paste the following until instructed to do so
+
+# reduce the dimensionality of the similarity vectors
+# ---------------------------------------------------
+
+reduced = TSNE(
+	n_components = 2, 
+	learning_rate = 'auto', 
+	init = 'random', 
+	angle = 0.65,
+	random_state = 357).fit_transform(similarities)
+
+# build visualization data
+# ------------------------
+
+# dataframe of xy coordinates accompanied by a name label
+vis_data = pd.DataFrame({'X': reduced[:,0], 'Y': reduced[:,1], 'NAME': similarities.index})
+
+# visualize
+alt.Chart(vis_data).mark_circle(size=30).encode(
+	x='X',
+	y='Y',
+	tooltip='NAME',
+).properties(
+	width=800,
+	height=800
+).interactive()

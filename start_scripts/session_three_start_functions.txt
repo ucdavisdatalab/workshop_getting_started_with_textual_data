@@ -1,0 +1,57 @@
+# install libraries
+# -----------------
+
+%%capture
+!pip install tomotopy
+!pip install pyLDAvis
+
+# load in the libraries
+# ---------------------
+
+import pandas as pd
+import numpy as np
+import tomotopy as tp
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# load in a file manifest
+# -----------------------
+
+manifest = pd.read_csv("/gdrive/MyDrive/tm_workshop_data/session_three/manifest.csv", index_col = 0)
+manifest['PUB_DATE'] = pd.to_datetime(manifest['PUB_DATE'], format="%Y-%m-%d")
+
+# set up file paths
+# -----------------
+
+indir = "/gdrive/MyDrive/tm_workshop_data/session_three/input/"
+paths = indir + manifest['FILE_NAME']
+
+# define two functions for topic model exploration
+# ------------------------------------------------
+
+# prints the top n words of each topic in the model
+def print_topic_words(model, top_n = 5):
+    for k in range(model.k):
+        top_words = model.get_topic_words(topic_id = k, top_n = top_n)
+        top_words = [f"{tup[0]} ({tup[1]:.04f}%)" for tup in top_words]
+        print(
+            f"Topic #{k}:",
+            f"\n+ {', '.join(top_words)}"
+        )
+
+# plots the topic proportions along with top n words for each topic in the model
+def plot_topic_proportions(tm, model_name = '', top_n = 5):
+    topic_proportions = tm.get_count_by_topics() / tm.num_words
+    top_words = []
+    for topic in range(tm.k):
+        words = tm.get_topic_words(topic, top_n = top_n)
+        words = f"Topic #{topic}: " + ', '.join([w[0] for w in words])
+        top_words.append(words)
+        
+    to_plot = pd.Series(topic_proportions, index = top_words)
+    to_plot = to_plot.sort_values()
+    to_plot.plot.barh(figsize = (15,15),
+                      title = f"Topic Proportions for {model_name}",
+                      xlabel = "Topic"
+                     );
+    
