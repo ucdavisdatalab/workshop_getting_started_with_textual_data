@@ -1,0 +1,92 @@
+# import libraries
+# ----------------
+
+import pandas as pd
+import numpy as np
+import re
+import nltk
+from nltk import collocations
+import gensim
+
+# optional
+from nltk.corpus import stopwords
+from gensim.parsing.preprocessing import STOPWORDS
+from nltk.tokenize import word_tokenize
+from nltk.stem.porter import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
+nltk.download('stopwords')
+nltk.download('wordnet)
+
+# helper functions
+# ----------------
+
+# count words in a text blob
+def count_words(doc):
+    doc = doc.split()
+    word_counts = dict.fromkeys(set(doc), 0)
+    for word in doc:
+        word_counts[word] += 1
+        
+    return word_counts
+	
+# plot word counts from a Pandas series
+def plot_counts(word_counts, n_words=200, label_sample=5):    
+    xticks_sample = range(0, n_words, label_sample)
+    
+    word_counts[:n_words].plot(
+        figsize = (15, 10), 
+        ylabel = "Count", 
+        xlabel = "Word",
+        xticks = xticks_sample,
+        rot = 90
+    );
+	
+# advanced text cleaning (optional)
+# ---------------------------------
+
+# loading the stemmer and lemmatizer objects
+stemmer = PorterStemmer()
+lemmatizer = WordNetLemmatizer()
+
+# defining a tag conversion for lemmatizing
+def convert_tag(tag):
+    if tag.startswith('J'):
+        tag = wordnet.ADJ
+    elif tag.startswith('V'):
+        tag = wordnet.VERB
+    elif tag.startswith('N'):
+        tag = wordnet.NOUN
+    elif tag.startswith('R'):
+        tag = wordnet.ADV
+    else:
+        tag = ''
+    return tag
+	
+# lemmatize a word with a part-of-speech tag
+def lemmatize_word(word, new_tag):
+    if new_tag != '':
+        lemma = lemmatizer.lemmatize(word, pos = new_tag)
+    else:
+        lemma = lemmatizer.lemmatize(word)
+    return lemma
+
+# bigrams
+# -------
+
+# loading the association measure and bigram finder objects
+bigram_measures = collocations.BigramAssocMeasures()
+bigram_finder = collocations.BigramCollocationFinder.from_words(cleaned) # initialize with your cleaned text
+
+# convert bigram scores to a dataframe
+bigram_pmi = bigram_finder.score_ngrams(bigram_measures.pmi)
+
+pmi_df = pd.DataFrame(bigram_pmi, columns = ['BIGRAMS', 'PMI'])
+pmi_df = pmi_df.assign(
+    WORD = pmi_df['BIGRAMS'].apply(lambda x: x[0]),
+    PAIR = pmi_df['BIGRAMS'].apply(lambda x: x[1])
+)
+
+pmi_df = pmi_df.drop(columns = ['BIGRAMS'])
+pmi_df = pmi_df[['WORD', 'PAIR', 'PMI']]
+pmi_df = pmi_df.set_index('WORD')
