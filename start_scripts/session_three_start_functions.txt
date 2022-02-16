@@ -8,9 +8,14 @@
 # load in the libraries
 # ---------------------
 
+from google.colab import drive
+drive.mount('/gdrive')
+
 import pandas as pd
 import numpy as np
 import tomotopy as tp
+from tomotopy.utils import Corpus
+from tomotopy.coherence import Coherence
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -25,6 +30,15 @@ manifest['PUB_DATE'] = pd.to_datetime(manifest['PUB_DATE'], format="%Y-%m-%d")
 
 indir = "/gdrive/MyDrive/tm_workshop_data/session_three/input/"
 paths = indir + manifest['FILE_NAME']
+
+# initialize a TomotoPy corpus
+# ----------------------------
+
+corpus = Corpus()
+for path in paths:
+    with open(path, 'r') as p:
+        doc = p.read().split()
+        corpus.add_doc(doc)
 
 # define two functions for topic model exploration
 # ------------------------------------------------
