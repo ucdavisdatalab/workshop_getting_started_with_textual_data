@@ -1,15 +1,11 @@
 # install libraries
 # -----------------
 
-%%capture
 !pip install tomotopy
 !pip install pyLDAvis
 
 # load in the libraries
 # ---------------------
-
-from google.colab import drive
-drive.mount('/gdrive')
 
 import pandas as pd
 import numpy as np
@@ -18,42 +14,26 @@ from tomotopy.utils import Corpus
 from tomotopy.coherence import Coherence
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pyLDAvis
+import warnings
+warnings.filterwarnings('ignore')
+from google.colab import drive
+drive.mount('/gdrive')
 
-# load in a file manifest
-# -----------------------
-
-manifest = pd.read_csv("/gdrive/MyDrive/tm_workshop_data/session_three/manifest.csv", index_col = 0)
-manifest['PUB_DATE'] = pd.to_datetime(manifest['PUB_DATE'], format="%Y-%m-%d")
-
-# set up file paths
-# -----------------
-
-indir = "/gdrive/MyDrive/tm_workshop_data/session_three/input/"
-paths = indir + manifest['FILE_NAME']
-
-# initialize a TomotoPy corpus
-# ----------------------------
-
-corpus = Corpus()
-for path in paths:
-    with open(path, 'r') as p:
-        doc = p.read().split()
-        corpus.add_doc(doc)
-
-# define two functions for topic model exploration
-# ------------------------------------------------
+# functions for topic model exploration
+# -------------------------------------
 
 # prints the top n words of each topic in the model
-def print_topic_words(model, top_n = 5):
-    for k in range(model.k):
-        top_words = model.get_topic_words(topic_id = k, top_n = top_n)
+def print_topic_words(tm, top_n = 5):
+    for k in range(tm.k):
+        top_words = tm.get_topic_words(topic_id = k, top_n = top_n)
         top_words = [f"{tup[0]} ({tup[1]:.04f}%)" for tup in top_words]
         print(
             f"Topic #{k}:",
             f"\n+ {', '.join(top_words)}"
         )
 
-# plots the topic proportions along with top n words for each topic in the model
+# creates a bar graph of topic proportions
 def plot_topic_proportions(tm, model_name = '', top_n = 5):
     topic_proportions = tm.get_count_by_topics() / tm.num_words
     top_words = []
@@ -64,8 +44,78 @@ def plot_topic_proportions(tm, model_name = '', top_n = 5):
         
     to_plot = pd.Series(topic_proportions, index = top_words)
     to_plot = to_plot.sort_values()
-    to_plot.plot.barh(figsize = (15,15),
-                      title = f"Topic Proportions for {model_name}",
-                      xlabel = "Topic"
-                     );
-    
+    to_plot.plot.barh(
+        figsize = (15,15),
+        title = f"Topic Proportions for {model_name}",
+        xlabel = "Topic"
+    );
+
+# creates a heatmap from the document-topic distributions
+def plot_topic_associations(tm, manifest, theta, n_samples = 20):
+    random_titles = manifest['TITLE'].sample(n_samples)
+    selected_theta = theta[theta.index.isin(random_titles)]
+    labels = []
+    for topic in range(tm.k):
+        words = tm.get_topic_words(topic, top_n = 5)
+        words = f"#{topic}: " + ', '.join([w[0] for w in words])
+        labels.append(words)
+
+    plt.figure(figsize = (15, 8))
+    ax = sns.heatmap(
+        selected_theta,
+        xticklabels = labels,
+        linewidths = 1,
+        linecolor = 'black',
+        cmap = 'Blues'
+    )
+    ax.set(xlabel = 'Topic', ylabel = 'Title')
+    ax.xaxis.set_label_position('top')
+    ax.xaxis.tick_top()
+    plt.xticks(rotation = 30, ha = 'left')
+    plt.tight_layout();
+
+# creates an interactive topic model visualization
+def make_pyldavis_data(tm, theta):
+    topic_terms = np.stack([tm.get_topic_word_dist(k) for k in range(tm.k)])
+    doc_lengths = np.array([len(doc.words) for doc in tm.docs])
+    vocab = list(tm.used_vocabs)
+    term_frequency = tm.used_vocab_freq
+
+    vis_data = pyLDAvis.prepare(
+        topic_terms,
+        theta.values,
+        doc_lengths,
+        vocab,
+        term_frequency,
+        start_index = 0,
+        sort_topics = False
+    )
+    return vis_data
+
+# create a document-topic matrix (theta)
+def make_theta(tm, manifest):
+    topic_distributions = [doc.get_topic_dist() for doc in tm.docs]
+    theta = np.stack(topic_distributions)
+    theta /= theta.sum(axis = 1, keepdims = True)
+    return pd.DataFrame(theta, index = manifest['TITLE'])
+
+# load files
+# ----------
+
+# manifest
+manifest = pd.read_csv("/gdrive/MyDrive/tm_workshop_data/session_three/manifest.csv", index_col = 0)
+
+# file path setup
+indir = "/gdrive/MyDrive/tm_workshop_data/session_three/input/"
+paths = indir + manifest['FILE_NAME']
+
+# initialize a TomotPy corpus
+count = 0
+corpus = Corpus()
+for path in paths:
+    with open(path, 'r') as p:
+        doc = p.read().split()
+        corpus.add_doc(doc)
+        count += 1
+        if count % 50 == 0:
+            print(f"Loaded {count} texts")
