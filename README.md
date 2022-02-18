@@ -22,6 +22,12 @@ ranging from health informatics to the humanities.
 * [Event Page](https://datalab.ucdavis.edu/eventscalendar/getting-started-with-textual-data-in-python-3-part-series/)
 
 
+## Workshop Data
+
+The data used in this workshop can be downloaded from the web at [https://datalab.ucdavis.edu/tm_workshop_data.zip](https://datalab.ucdavis.edu/tm_workshop_data.zip). 
+It is also stored on the DataLab GDrive at gdrive/teaching/Workshop Series - Text Mining and NLP/workshop_getting_started_with_textual_data.zip
+
+
 ## Contributing
 
 The course reader is a live webpage, hosted through GitHub, where you can enter
