@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>5. Clustering and Classification &#8212; Getting Started with Textual Data</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,51 +20,65 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >let toggleHintShow = 'Click to show';</script>
-    <script >let toggleHintHide = 'Click to hide';</script>
-    <script >let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="6. Topic Modeling" href="06_topic-modeling.html" />
     <link rel="prev" title="4. Corpus Analytics" href="04_corpus-analytics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -71,9 +87,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -91,14 +108,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="index.html">
-   Overview
-  </a>
- </li>
-</ul>
-<ul class="current nav bd-sidenav">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_logistics.html">
    1. Before We Begin…
@@ -132,107 +150,209 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/05_clustering-and-classification.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2F05_clustering-and-classification.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/05_clustering-and-classification.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/05_clustering-and-classification.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2F05_clustering-and-classification.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/05_clustering-and-classification.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#the-vector-space-concept">
    5.1. The Vector Space Concept
@@ -274,17 +394,74 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Clustering and Classification</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-vector-space-concept">
+   5.1. The Vector Space Concept
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-an-example">
+     5.1.1. Plotting an example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cosine-similarity">
+     5.1.2. Cosine similarity
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-similarity">
+   5.2. Measuring Similarity
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generating-scores">
+     5.2.1. Generating scores
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualizing-the-results">
+     5.2.2. Visualizing the results
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#clustering-by-similarity">
+   5.3. Clustering by Similarity
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="clustering-and-classification">
-<h1><span class="section-number">5. </span>Clustering and Classification<a class="headerlink" href="#clustering-and-classification" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="clustering-and-classification">
+<h1><span class="section-number">5. </span>Clustering and Classification<a class="headerlink" href="#clustering-and-classification" title="Permalink to this headline">#</a></h1>
 <p>This chapter is a direct extension of the last. In Chapter 4, we learned how to build a corpus from a collection of
 text files and produce different metrics about them using a document-term matrix. For the most part these metrics
 hewed either toward the level of documents or the level of terms; we hadn’t yet discussed ways to more fully weave
@@ -305,14 +482,14 @@ measure.</p>
 <li><p>Cluster documents by their similarities</p></li>
 </ul>
 </div>
-<div class="section" id="the-vector-space-concept">
-<h2><span class="section-number">5.1. </span>The Vector Space Concept<a class="headerlink" href="#the-vector-space-concept" title="Permalink to this headline">¶</a></h2>
+<section id="the-vector-space-concept">
+<h2><span class="section-number">5.1. </span>The Vector Space Concept<a class="headerlink" href="#the-vector-space-concept" title="Permalink to this headline">#</a></h2>
 <p>To measure similarities between documents, we need to make a bit of a conceptual leap. Imagine projecting every
 document in our corpus into a space. In this space, similar documents have similar orientations to a point of
 origin (in this case, the origin point of XY axes), while dissimilar ones have different orientations. Guiding
 these orientations are the values for each term in a document. Here, <em>space is a metaphor for semantics</em>.</p>
-<div class="section" id="plotting-an-example">
-<h3><span class="section-number">5.1.1. </span>Plotting an example<a class="headerlink" href="#plotting-an-example" title="Permalink to this headline">¶</a></h3>
+<section id="plotting-an-example">
+<h3><span class="section-number">5.1.1. </span>Plotting an example<a class="headerlink" href="#plotting-an-example" title="Permalink to this headline">#</a></h3>
 <p>We can build a toy example to demonstrate this. Imagine two documents, each with a value for two terms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -376,12 +553,13 @@ these orientations are the values for each term in a document. Here, <em>space i
 <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;`screen` Count&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;`page` Count&#39;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">ex1_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">ex1_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;page&#39;</span><span class="p">],</span>
-             <span class="n">ex1_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
-             <span class="n">doc</span><span class="p">,</span>
-             <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span>
-             <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span>
-            <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+        <span class="n">ex1_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;page&#39;</span><span class="p">],</span>
+        <span class="n">ex1_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">doc</span><span class="p">,</span>
+        <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span>
+        <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span>
+    <span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -450,12 +628,13 @@ fairly wide, as the differences between the two counts in each document are roug
 <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;`screen` Count&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;`page` Count&#39;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">ex2_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">ex2_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;page&#39;</span><span class="p">],</span>
-             <span class="n">ex2_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
-             <span class="n">doc</span><span class="p">,</span>
-             <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span>
-             <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span>
-            <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+        <span class="n">ex2_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;page&#39;</span><span class="p">],</span>
+        <span class="n">ex2_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">doc</span><span class="p">,</span>
+        <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span>
+        <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span>
+    <span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -470,9 +649,9 @@ similarity is relatively impervious to the actual value for each word. The count
 still quite different, but the <em>overall relationship</em> between the values for each word is now similar: both
 documents have more instances of “screen” than “page,” and our method of projecting them into this space, or what
 we call a <strong>vector space</strong>, captures this.</p>
-</div>
-<div class="section" id="cosine-similarity">
-<h3><span class="section-number">5.1.2. </span>Cosine similarity<a class="headerlink" href="#cosine-similarity" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cosine-similarity">
+<h3><span class="section-number">5.1.2. </span>Cosine similarity<a class="headerlink" href="#cosine-similarity" title="Permalink to this headline">#</a></h3>
 <p>We can assign a concrete metric to the difference in these angles using a <strong>cosine similarity</strong> score. Cosine
 similarity measures the inner product space between two vectors, that is, the amount of space created by
 divergences in the attribute values of each vector. Typically, we express it within a bounded interval, [0,1],
@@ -494,6 +673,7 @@ intersections of a document with itself.)</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cosine similarity for first example, where:&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">ex1_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
     <span class="n">display</span><span class="p">(</span><span class="n">ex1_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    
 <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">ex1</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">ex1_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">ex1_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...or, simplified: </span><span class="si">{</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">ex1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -558,6 +738,7 @@ Name: Document 2, dtype: int64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cosine similarity for second example, where:&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">ex2_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
     <span class="n">display</span><span class="p">(</span><span class="n">ex2_dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    
 <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">ex2</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">ex2_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">ex2_dtm</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...or, simplified: </span><span class="si">{</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">ex2</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -619,10 +800,10 @@ Name: Document 2, dtype: int64
 </div>
 <p>Of the two examples, which one has more similar documents? Our second one: the cosine similarity score is 0.98, far
 higher than 0.64.</p>
-</div>
-</div>
-<div class="section" id="measuring-similarity">
-<h2><span class="section-number">5.2. </span>Measuring Similarity<a class="headerlink" href="#measuring-similarity" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="measuring-similarity">
+<h2><span class="section-number">5.2. </span>Measuring Similarity<a class="headerlink" href="#measuring-similarity" title="Permalink to this headline">#</a></h2>
 <p>With the principles of text similarity laid out, we can load in the document-matrix we’ve already created and, for
 each text in our corpus, compute a cosine similarity measure between that text and all the others. But rather
 than only measuring the attribute values between two terms, as above, we’ll instead measure the values of every
@@ -799,18 +980,19 @@ single tf-idf score in our corpus.</p>
 </div>
 </div>
 <p>We’re working in very high-dimensional space!</p>
-<div class="section" id="generating-scores">
-<h3><span class="section-number">5.2.1. </span>Generating scores<a class="headerlink" href="#generating-scores" title="Permalink to this headline">¶</a></h3>
+<section id="generating-scores">
+<h3><span class="section-number">5.2.1. </span>Generating scores<a class="headerlink" href="#generating-scores" title="Permalink to this headline">#</a></h3>
 <p>While this might be a bit hard to conceptualize (and indeed impossible to visualize), we can let <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> do
 the heavy lifting and inspect the condensed results. Doing so involves simply running <code class="docutils literal notranslate"><span class="pre">cosine_similarity()</span></code> across
 the entire dataframe and assign the result to a new dataframe. The result will be a square matrix, where rows and
 columns are each of the texts in our corpus.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">similarities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">dtm</span><span class="p">),</span>
-                            <span class="n">columns</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
-                            <span class="n">index</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">index</span>
-                           <span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">similarities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">dtm</span><span class="p">),</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span>
 
 <span class="n">similarities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
@@ -897,13 +1079,13 @@ columns are each of the texts in our corpus.</p>
 </div>
 <p>Now we can identify the most and least similar texts to a given obituary. Note that we need to get the second index
 position for <code class="docutils literal notranslate"><span class="pre">most</span></code>, since the highest score will always be the obituary’s similarity to itself.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">What this loop does</p>
 <ol class="simple">
 <li><p>For each person, sort every associated value, getting the second to highest first</p></li>
 <li><p>Sort again and get the lowest value</p></li>
 </ol>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">people</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ada Lovelace&#39;</span><span class="p">,</span> <span class="s1">&#39;Henrietta Lacks&#39;</span><span class="p">,</span> <span class="s1">&#39;FDR&#39;</span><span class="p">,</span> <span class="s1">&#39;Miles Davis&#39;</span><span class="p">]</span>
@@ -939,9 +1121,9 @@ For Miles Davis:
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="visualizing-the-results">
-<h3><span class="section-number">5.2.2. </span>Visualizing the results<a class="headerlink" href="#visualizing-the-results" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="visualizing-the-results">
+<h3><span class="section-number">5.2.2. </span>Visualizing the results<a class="headerlink" href="#visualizing-the-results" title="Permalink to this headline">#</a></h3>
 <p>It’s perhaps more helpful, however, to get a bird’s eye view of the entire corpus. But remember that <code class="docutils literal notranslate"><span class="pre">similarities</span></code>
 has hundreds of attributes – far more than we can visualize. What we need to do, then, is reduce the dimensionality
 of this data, decomposing the original values into a set of two for each text. We’ll use <strong>T-distributed Stochastic
@@ -950,20 +1132,22 @@ data and decomposes it into a less complex representation of that original data.
 will roughly represent the most important features of the input matrix, which will set a given data point apart
 from others.</p>
 <p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has a built-in function for t-SNE. We call it like so:</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">Want to dive into the weeds?</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> documentation offers a <a class="reference external" href="https://scikit-learn.org/stable/modules/manifold.html#t-sne">good overview</a> of t-SNE and supplies citations to the academic papers
 that first introduced it.</p>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
 
-<span class="n">reduced</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> 
-               <span class="n">learning_rate</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> 
-               <span class="n">init</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span> 
-               <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.65</span><span class="p">,</span>
-               <span class="n">random_state</span> <span class="o">=</span> <span class="mi">357</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">similarities</span><span class="p">)</span>
+<span class="n">reduced</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span>
+    <span class="n">n_components</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>     
+    <span class="n">learning_rate</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>  
+    <span class="n">init</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>  
+    <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.65</span><span class="p">,</span>
+    <span class="n">random_state</span> <span class="o">=</span> <span class="mi">357</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">similarities</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -990,13 +1174,13 @@ people from before.</p>
 <img alt="_images/05_clustering-and-classification_28_0.png" src="_images/05_clustering-and-classification_28_0.png" />
 </div>
 </div>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">A caveat</p>
 <p>It’s important to remember that the transformation between high dimensional space and this 2D plot is a lossy one.
 Distortions will result from it, and having a good sense of what kind of distortions you might expect to see with
 t-SNE will help you interpret these graphs. This <a class="reference external" href="https://distill.pub/2016/misread-tsne/">interactive dashboard</a> offers a really nice overview of these
 considerations.</p>
-</div>
+</aside>
 <p>As with our toy example above, here, space has semantic value. Points that appear closer together in the
 visualization above have more similarities between them than those that are farther apart. We can see this clearly
 if we show a person’s point and the most similar point to that person.</p>
@@ -1014,10 +1198,10 @@ if we show a person’s point and the most similar point to that person.</p>
 </div>
 </div>
 <p>Quite close!</p>
-</div>
-</div>
-<div class="section" id="clustering-by-similarity">
-<h2><span class="section-number">5.3. </span>Clustering by Similarity<a class="headerlink" href="#clustering-by-similarity" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="clustering-by-similarity">
+<h2><span class="section-number">5.3. </span>Clustering by Similarity<a class="headerlink" href="#clustering-by-similarity" title="Permalink to this headline">#</a></h2>
 <p>The last topic we’ll cover in this chapter involves dividing up the feature space of our data so as to broadly
 cluster the texts in our corpus. This will give us a frame for considering general trends in the data, which in
 turn may better help us understand the specificity of individual texts. For example, clustering might allow us to
@@ -1076,14 +1260,14 @@ to discern the clusters.</p>
 <p>Not bad at all! There are a few incursions of one cluster into another, but for the most part this looks pretty
 coherent (it may even be that those incursions are exaggerated by the visualization, as the note above explains).
 Let’s grab some examples of each cluster and show them.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">What this loop does</p>
 <ol class="simple">
 <li><p>Group the data by <code class="docutils literal notranslate"><span class="pre">CLUSTER</span></code></p></li>
 <li><p>For each group, sample <code class="docutils literal notranslate"><span class="pre">n_samples</span></code></p></li>
 <li><p>Print each name in the sampled results</p></li>
 </ol>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">5</span>
@@ -1101,29 +1285,29 @@ Let’s grab some examples of each cluster and show them.</p>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster: 1
 ----------
-Ethel Merman
-Thelonious Monk
-Coleman Hawkins
-James Stewart
-Florenz Ziegfeld
+John Wayne
+Otto Klemperer
+Sammy Davis Jr
+Martha Graham
+Benny Goodman
 
 
 Cluster: 2
 ----------
-Robert Francis Kennedy
-Edouard Daladier
-Adlai Ewing Stevenson
-Jacqueline Kennedy
-King Hussein
+Claude Pepper
+Richard Daley
+Tolstoy
+Hammarskjold
+Dash Ended
 
 
 Cluster: 3
 ----------
-Maria Callas
-Charles Spaulding
-Jack Dempsey
-Jack London
-C E M Clung
+A Philip Randolph
+Jorge Luis Borges
+Bob Kane
+Albert Schweitzer
+Joe Louis
 </pre></div>
 </div>
 </div>
@@ -1147,26 +1331,30 @@ the throne. Should he therefore be in the second cluster or, as he is here, in t
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/h7/tzxfms7d2z7gwlgtbvw15msc0000gn/T/ipykernel_4589/2302825829.py:2: FutureWarning: this method is deprecated in favour of `Styler.hide(axis=&#39;index&#39;)`
+  vis_data[vis_data[&#39;NAME&#39;].isin(unexpected)][[&#39;NAME&#39;, &#39;CLUSTER&#39;, &#39;COLOR&#39;]].style.hide_index()
+</pre></div>
+</div>
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_0d50b_">
+<table id="T_413de">
   <thead>
     <tr>
-      <th class="col_heading level0 col0" >NAME</th>
-      <th class="col_heading level0 col1" >CLUSTER</th>
-      <th class="col_heading level0 col2" >COLOR</th>
+      <th id="T_413de_level0_col0" class="col_heading level0 col0" >NAME</th>
+      <th id="T_413de_level0_col1" class="col_heading level0 col1" >CLUSTER</th>
+      <th id="T_413de_level0_col2" class="col_heading level0 col2" >COLOR</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td id="T_0d50b_row0_col0" class="data row0 col0" >Eugene O Neill</td>
-      <td id="T_0d50b_row0_col1" class="data row0 col1" >2</td>
-      <td id="T_0d50b_row0_col2" class="data row0 col2" >blue</td>
+      <td id="T_413de_row0_col0" class="data row0 col0" >Eugene O Neill</td>
+      <td id="T_413de_row0_col1" class="data row0 col1" >2</td>
+      <td id="T_413de_row0_col2" class="data row0 col2" >blue</td>
     </tr>
     <tr>
-      <td id="T_0d50b_row1_col0" class="data row1 col0" >The Duke of Windsor</td>
-      <td id="T_0d50b_row1_col1" class="data row1 col1" >3</td>
-      <td id="T_0d50b_row1_col2" class="data row1 col2" >green</td>
+      <td id="T_413de_row1_col0" class="data row1 col0" >The Duke of Windsor</td>
+      <td id="T_413de_row1_col1" class="data row1 col1" >3</td>
+      <td id="T_413de_row1_col2" class="data row1 col2" >green</td>
     </tr>
   </tbody>
 </table>
@@ -1178,8 +1366,8 @@ diversity? Something else?</p>
 <p>Investigating these questions will take us beyond the scope of this chapter. For now, it’s enough to know that text
 similarity prompts them and that we can explore and analyze corpora using this metric. We’ll end, then, with this
 preliminary hypothesis about our clusters, which later work will need to either corroborate or challenge.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1203,59 +1391,53 @@ preliminary hypothesis about our clusters, which later work will need to either 
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="04_corpus-analytics.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">4. </span>Corpus Analytics</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="04_corpus-analytics.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">4. </span>Corpus Analytics</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="06_topic-modeling.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Topic Modeling</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="06_topic-modeling.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">6. </span>Topic Modeling</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Tyler Shoemaker and Carl Stahmer<br/>
-        
-          <div class="extra_footer">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Tyler Shoemaker and Carl Stahmer<br/>
+  
+    <div class="extra_footer">
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
   <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"> 
 </a>
 
-          </div>
-      </p>
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
+
   </body>
 </html>

@@ -1,43 +1,51 @@
 Traceback (most recent call last):
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/client.py", line 622, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/util.py", line 85, in ensure_async
-    result = await obj
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/jupyter_client/channels.py", line 267, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
-    record_timing=False,
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/client.py", line 1112, in execute
+  File "/Users/tyler/Environments/nlp/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/Users/tyler/Environments/nlp/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/util.py", line 74, in wrapped
+  File "/Users/tyler/Environments/nlp/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
     return just_run(coro(*args, **kwargs))
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/util.py", line 53, in just_run
+  File "/Users/tyler/Environments/nlp/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
     return loop.run_until_complete(coro)
-  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.7/lib/python3.7/asyncio/base_events.py", line 584, in run_until_complete
+  File "/usr/local/Cellar/python@3.9/3.9.12_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
     return future.result()
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/client.py", line 554, in async_execute
-    cell, index, execution_count=self.code_cells_executed + 1
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/client.py", line 841, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/client.py", line 646, in _async_poll_for_reply
-    await self._async_handle_timeout(timeout, cell)
-  File "/Users/tyler/Environments/nlp/lib/python3.7/site-packages/nbclient/client.py", line 697, in _async_handle_timeout
-    "Cell execution timed out", timeout, cell
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-n_topic_range = range(10, 31)
+  File "/Users/tyler/Environments/nlp/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/Users/tyler/Environments/nlp/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/tyler/Environments/nlp/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import pyLDAvis
+import warnings
+warnings.filterwarnings('ignore')
 
-perplexity_scores = []
-for k in n_topic_range:
-    model = tp.LDAModel(k = k, corpus = corpus, seed = 357)
-    model.train(iter = n_iters)
-    perplexity_scores.append({'N_TOPICS': k, 'SCORE': model.perplexity})
--------------------
+topic_terms = np.stack([tuned.get_topic_word_dist(k) for k in range(tuned.k)])
+doc_lengths = np.array([len(doc.words) for doc in tuned.docs])
+vocab = list(tuned.used_vocabs)
+term_frequency = tuned.used_vocab_freq
+
+vis_data = pyLDAvis.prepare(
+    topic_terms,
+    theta.values,
+    doc_lengths,
+    vocab,
+    term_frequency,
+    start_index = 0,
+    sort_topics = False
+)
+
+pyLDAvis.save_html(vis_data, "data/session_three/output/topic_model_plot.html")
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Input [0;32mIn [49][0m, in [0;36m<cell line: 1>[0;34m()[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mpyLDAvis[39;00m
+[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mwarnings[39;00m
+[1;32m      3[0m warnings[38;5;241m.[39mfilterwarnings([38;5;124m'[39m[38;5;124mignore[39m[38;5;124m'[39m)
+
+[0;31mModuleNotFoundError[0m: No module named 'pyLDAvis'
+ModuleNotFoundError: No module named 'pyLDAvis'
 

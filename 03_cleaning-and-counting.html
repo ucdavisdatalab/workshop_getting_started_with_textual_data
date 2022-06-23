@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3. Cleaning and Counting &#8212; Getting Started with Textual Data</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,49 +20,63 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >let toggleHintShow = 'Click to show';</script>
-    <script >let toggleHintHide = 'Click to hide';</script>
-    <script >let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="4. Corpus Analytics" href="04_corpus-analytics.html" />
     <link rel="prev" title="2. From Text to Data" href="02_from-text-to-data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -69,9 +85,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -89,14 +106,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="index.html">
-   Overview
-  </a>
- </li>
-</ul>
-<ul class="current nav bd-sidenav">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_logistics.html">
    1. Before We Begin…
@@ -130,107 +148,209 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/03_cleaning-and-counting.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2F03_cleaning-and-counting.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/03_cleaning-and-counting.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/03_cleaning-and-counting.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2F03_cleaning-and-counting.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/03_cleaning-and-counting.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#text-cleaning-basics">
    3.1. Text Cleaning: Basics
@@ -316,17 +436,118 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Cleaning and Counting</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#text-cleaning-basics">
+   3.1. Text Cleaning: Basics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#case-normalization">
+     3.1.1. Case normalization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#removing-punctuation">
+     3.1.2. Removing punctuation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#removing-numbers">
+     3.1.3. Removing numbers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#text-formatting">
+     3.1.4. Text formatting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#removing-stop-words">
+     3.1.5. Removing stop words
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#words-with-high-occurence">
+       3.1.5.1. Words with high occurence
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#defining-a-stop-list">
+       3.1.5.2. Defining a stop list
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#iteratively-building-stop-lists">
+       3.1.5.3. Iteratively building stop lists
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#text-cleaning-advanced">
+   3.2. Text Cleaning: Advanced
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stemming">
+     3.2.1. Stemming
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lemmatizing">
+     3.2.2. Lemmatizing
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#part-of-speech-tags-and-dependency-parsing">
+       3.2.2.1. Part-of-speech tags and dependency parsing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sample-lemmatization-workflow">
+       3.2.2.2. Sample lemmatization workflow
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#chunking-with-n-grams">
+   3.3. Chunking with N-Grams
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="cleaning-and-counting">
-<h1><span class="section-number">3. </span>Cleaning and Counting<a class="headerlink" href="#cleaning-and-counting" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="cleaning-and-counting">
+<h1><span class="section-number">3. </span>Cleaning and Counting<a class="headerlink" href="#cleaning-and-counting" title="Permalink to this headline">#</a></h1>
 <p>At the end of the last chapter, we caught a glimpse of the complexities involved in working with textual data. Text
 is incredibly unruly. It presents a number of challenges – which stem as much from general truths about linguistic
 phenomena as they do from the idiosyncracies of data representation – that we’ll need to address so that we may
@@ -350,8 +571,8 @@ applying those metrics to multiple texts.</p>
 <li><p>Use a statistical measure (pointwise mutual information) to measure the uniqueness of phrases</p></li>
 </ul>
 </div>
-<div class="section" id="text-cleaning-basics">
-<h2><span class="section-number">3.1. </span>Text Cleaning: Basics<a class="headerlink" href="#text-cleaning-basics" title="Permalink to this headline">¶</a></h2>
+<section id="text-cleaning-basics">
+<h2><span class="section-number">3.1. </span>Text Cleaning: Basics<a class="headerlink" href="#text-cleaning-basics" title="Permalink to this headline">#</a></h2>
 <p>To begin: think back to the end of the last chapter. There, we discussed a few differences between how computers
 represent and process textual data and our own way of reading. One of the key differences between these two poles
 involves details like spelling or capitalization. For us, the <em>meaning</em> of text tends to cut across these details.
@@ -413,8 +634,8 @@ to generate counts. This removes the need to perform the <code class="docutils l
 </div>
 </div>
 </div>
-<div class="section" id="case-normalization">
-<h3><span class="section-number">3.1.1. </span>Case normalization<a class="headerlink" href="#case-normalization" title="Permalink to this headline">¶</a></h3>
+<section id="case-normalization">
+<h3><span class="section-number">3.1.1. </span>Case normalization<a class="headerlink" href="#case-normalization" title="Permalink to this headline">#</a></h3>
 <p>The first step in cleaning is straightforward. Since our computer treats capitalized and lowercase letters as two
 different things, we’ll need to collapse them together. This will eliminate problems like “the”/”The” and
 “letter”/”Letter.” It’s standard to change all letters to their lowercase forms.</p>
@@ -465,9 +686,9 @@ Number of times &#39;the&#39; appears: 4152
 </div>
 <p>So far so good. In the above output, we can also see that “the” has become even more prominent in the counts: we
 found ~250 more instances of this word after changing its case (it was 3897 earlier).</p>
-</div>
-<div class="section" id="removing-punctuation">
-<h3><span class="section-number">3.1.2. </span>Removing punctuation<a class="headerlink" href="#removing-punctuation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="removing-punctuation">
+<h3><span class="section-number">3.1.2. </span>Removing punctuation<a class="headerlink" href="#removing-punctuation" title="Permalink to this headline">#</a></h3>
 <p>It’s now time to tackle punctuation. This step is a bit trickier, and typically it involves a lot of going back and
 forth between inspecting the original text and the output. This is because punctuation marks have different uses,
 so they can’t all be handled in the same way.</p>
@@ -479,10 +700,10 @@ so they can’t all be handled in the same way.</p>
 </div>
 </div>
 </div>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">Want to practice regex?</p>
 <p><a class="reference external" href="https://regex101.com/">regex101</a> offers an interactive regex viewer with lots of explanations.</p>
-</div>
+</aside>
 <p>It seems most sensible to remove punctuation with some combination of <a class="reference external" href="https://en.wikipedia.org/wiki/Regular_expression">regular expressions</a>, or “regex,” and the
 <code class="docutils literal notranslate"><span class="pre">re.sub()</span></code> function (which substitutes a regex sequence for something else). For example, we could use regex to
 identify anything that is <em>not</em> (<code class="docutils literal notranslate"><span class="pre">^</span></code>) a word (<code class="docutils literal notranslate"><span class="pre">\w</span></code>) or a space (<code class="docutils literal notranslate"><span class="pre">\s</span></code>) and remove it.</p>
@@ -581,9 +802,9 @@ That said, punctuation removal is almost always a multi-step process, the honing
 iterations. If you’re interested to learn more, Laura Turner O’Hara has a <a class="reference external" href="https://programminghistorian.org/en/lessons/cleaning-ocrd-text-with-regular-expressions">tutorial</a> on using regex to clean dirty
 OCR, which offers a particularly good example of how extended the process of punctuation removal can become.</p>
 </div>
-</div>
-<div class="section" id="removing-numbers">
-<h3><span class="section-number">3.1.3. </span>Removing numbers<a class="headerlink" href="#removing-numbers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="removing-numbers">
+<h3><span class="section-number">3.1.3. </span>Removing numbers<a class="headerlink" href="#removing-numbers" title="Permalink to this headline">#</a></h3>
 <p>With our punctuation removed, we can turn our attention to numbers. They should present less of a problem. While
 our regex method above ended up keeping them around, we can remove them by simply finding characters 0-9 and
 replacing them with a blank.</p>
@@ -613,9 +834,9 @@ left with only words.</p>
 </div>
 </div>
 <p>That’s nearly a 40% reduction in the number of unique words!</p>
-</div>
-<div class="section" id="text-formatting">
-<h3><span class="section-number">3.1.4. </span>Text formatting<a class="headerlink" href="#text-formatting" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="text-formatting">
+<h3><span class="section-number">3.1.4. </span>Text formatting<a class="headerlink" href="#text-formatting" title="Permalink to this headline">#</a></h3>
 <p>Our punctuation and number removal process introduced a lot of extra spaces into the text. Look at the first few
 lines, as an example:</p>
 <div class="cell docutils container">
@@ -780,15 +1001,15 @@ count and plot the remaining words. We run <code class="docutils literal notrans
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="removing-stop-words">
-<h3><span class="section-number">3.1.5. </span>Removing stop words<a class="headerlink" href="#removing-stop-words" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="removing-stop-words">
+<h3><span class="section-number">3.1.5. </span>Removing stop words<a class="headerlink" href="#removing-stop-words" title="Permalink to this headline">#</a></h3>
 <p>With the first few steps of our text cleaning done, we can take a closer look at the output. Inspecting the 25-most
 frequent words in <em>Frankenstein</em> shows a pattern: nearly all of them are what we call <strong>deictics</strong>, or words that
 are highly dependent on the contexts in which they appear. We use these constantly to refer to specific times,
 places, and persons – indeed, they’re the very sinew of language, and their high frequency counts reflect this.</p>
-<div class="section" id="words-with-high-occurence">
-<h4><span class="section-number">3.1.5.1. </span>Words with high occurence<a class="headerlink" href="#words-with-high-occurence" title="Permalink to this headline">¶</a></h4>
+<section id="words-with-high-occurence">
+<h4><span class="section-number">3.1.5.1. </span>Words with high occurence<a class="headerlink" href="#words-with-high-occurence" title="Permalink to this headline">#</a></h4>
 <p>We can see the full extent to which we rely on these kinds of words if we plot our counts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -802,11 +1023,11 @@ places, and persons – indeed, they’re the very sinew of language, and their 
 </div>
 <p>See that giant drop? Let’s look at the 200-most frequent words and sample more words from the series index (which
 is the x axis). We’ll put this code into a function, as we’ll be looking at a number of graphs in this section.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">How to sample xticks:</p>
 <p>Define a range of values from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">n</span></code> (in this case, <code class="docutils literal notranslate"><span class="pre">n</span></code> will be <code class="docutils literal notranslate"><span class="pre">n_words</span></code>). Set the step count to your desired
 granularity (here we use <code class="docutils literal notranslate"><span class="pre">5</span></code>).</p>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_counts</span><span class="p">(</span><span class="n">word_counts</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">label_sample</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>    
@@ -828,13 +1049,13 @@ granularity (here we use <code class="docutils literal notranslate"><span class=
 <img alt="_images/03_cleaning-and-counting_41_0.png" src="_images/03_cleaning-and-counting_41_0.png" />
 </div>
 </div>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">Further context:</p>
 <p>The phenomenon we are discussing here is describable in terms of <a class="reference external" href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipf’s law</a>, which states that, for certain types
 of data, the rank-frequency distribution is an inverse relation. That is, the top-most frequent element in the data
 will occur twice as often as the second-most frequent element, which will in turn occur twice as often as the
 third-most frequent element, etc.</p>
-</div>
+</aside>
 <p>Only a few non-deictic words appear in the first half of this graph – “eyes,” “night,” “death,” for example. All
 else are words like “my,” “from,” “their,” etc. And all of these words have screamingly high frequency counts. In
 fact, the 50-most frequent words in <em>Frankenstein</em> comprise nearly 50% of the total number of words in the novel!</p>
@@ -862,9 +1083,9 @@ difficult to find much to say about them in and of themselves. Worse still, ever
 analyses is going to have a very similar distribution in terms – they’re just a general fact of language.</p>
 <p>If we wanted, then, to surface what <em>Frankenstein</em> is about, we’ll need to handle these words. The most common way
 to do this is to simply remove them, or <strong>stop</strong> them out. But how do we know which <strong>stop words</strong> to remove?</p>
-</div>
-<div class="section" id="defining-a-stop-list">
-<h4><span class="section-number">3.1.5.2. </span>Defining a stop list<a class="headerlink" href="#defining-a-stop-list" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="defining-a-stop-list">
+<h4><span class="section-number">3.1.5.2. </span>Defining a stop list<a class="headerlink" href="#defining-a-stop-list" title="Permalink to this headline">#</a></h4>
 <p>The answer to this comes in two parts. First, compiling various <strong>stop lists</strong> has been an ongoing research area in
 natural language processing (NLP) since the emergence of information retrieval in the 1950s. There are a few
 popular ones, like the Buckley-Salton list or the Brown list, which capture many of the words we’d think to remove:
@@ -927,7 +1148,7 @@ thick    in `gensim` stop list: True
 </div>
 <p>“Computer” isn’t likely to turn up in <em>Frankenstein</em>, but “thick” comes up several times in the novel. We can see
 these instances if we return to <code class="docutils literal notranslate"><span class="pre">cleaned</span></code>, which stores the novel in a list:</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">What we’re doing here:</p>
 <p>First, use list comprehension to find the index positions of every instance of “thick.”</p>
 <p>Then, for each of those index positions:</p>
@@ -936,7 +1157,7 @@ these instances if we return to <code class="docutils literal notranslate"><span
 <li><p>Index <code class="docutils literal notranslate"><span class="pre">cleaned</span></code> with those start and end points</p></li>
 <li><p>Join the indexed selection into a string and print</p></li>
 </ul>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span> <span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="s1">&#39;thick&#39;</span><span class="p">]</span>
@@ -1012,9 +1233,9 @@ remove stop words with list comprehension. For example:</p>
 <img alt="_images/03_cleaning-and-counting_56_0.png" src="_images/03_cleaning-and-counting_56_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="iteratively-building-stop-lists">
-<h4><span class="section-number">3.1.5.3. </span>Iteratively building stop lists<a class="headerlink" href="#iteratively-building-stop-lists" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="iteratively-building-stop-lists">
+<h4><span class="section-number">3.1.5.3. </span>Iteratively building stop lists<a class="headerlink" href="#iteratively-building-stop-lists" title="Permalink to this headline">#</a></h4>
 <p>This is better, though there are still some words like “one” and “yet” that it would be best to remove. The list
 provided by <code class="docutils literal notranslate"><span class="pre">nltk</span></code> is good, but it’s a little <em>too</em> conservative, so we’ll want to modify it. This is perfectly
 normal: like removing punctuation, getting a stop list just right is an iterative process that takes multiple
@@ -1211,17 +1432,17 @@ clearly. Here’s unstopped:</p>
 </table>
 </div></div></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="text-cleaning-advanced">
-<h2><span class="section-number">3.2. </span>Text Cleaning: Advanced<a class="headerlink" href="#text-cleaning-advanced" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="text-cleaning-advanced">
+<h2><span class="section-number">3.2. </span>Text Cleaning: Advanced<a class="headerlink" href="#text-cleaning-advanced" title="Permalink to this headline">#</a></h2>
 <p>With our stop words removed, we could consider our text cleaning to be complete. But there are two more steps that
 we could do to further process our data: stemming and lemmatizing. We’ll consider these separately from the steps
 above because they entail making significant changes to our data. Instead of simply removing pieces of irrelevant
 information, as with stop word removal, stemming and lemmatizing transform the forms of words.</p>
-<div class="section" id="stemming">
-<h3><span class="section-number">3.2.1. </span>Stemming<a class="headerlink" href="#stemming" title="Permalink to this headline">¶</a></h3>
+<section id="stemming">
+<h3><span class="section-number">3.2.1. </span>Stemming<a class="headerlink" href="#stemming" title="Permalink to this headline">#</a></h3>
 <p><strong>Stemming</strong> algorithms are rule-based procedures that reduce words to their root forms. They cut down on the
 amount of morphological variance in your corpus, merging plurals into singulars, changing gerunds into static
 verbs, etc. This can be useful for a number of reasons. It cuts down on corpus size, which might be necessary when
@@ -1270,17 +1491,17 @@ inadvertently merge what should be two separate words, as with “complicated”
 And more, “complic,” like “malleabl,” isn’t really a word. Rather, it represents a general idea, but one that a)
 is too baggy (it merges together two different words); and b) is harder to interpret in later analysis (how would
 we know what “complic” means when looking at word count distributions?).</p>
-</div>
-<div class="section" id="lemmatizing">
-<h3><span class="section-number">3.2.2. </span>Lemmatizing<a class="headerlink" href="#lemmatizing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="lemmatizing">
+<h3><span class="section-number">3.2.2. </span>Lemmatizing<a class="headerlink" href="#lemmatizing" title="Permalink to this headline">#</a></h3>
 <p><strong>Lemmatizing</strong> textual data solves some of these problems, though at the cost of more complexity and more
 computational resources. Like stemming, lemmatization removes the inflectional forms of words. While it tends to be
 more conservative in its approach, it is better at avoiding lexical merges like “complicated” and “complicity”
 becoming “complic.” More, the result of lemmatization is always a fully readable word, so no need to worry about
 trying to remember what “malleabl” means. If, say, you want to know something about the <em>theme</em> or <em>topicality</em> of
 a text, lemmatization would be a valuable step.</p>
-<div class="section" id="part-of-speech-tags-and-dependency-parsing">
-<h4><span class="section-number">3.2.2.1. </span>Part-of-speech tags and dependency parsing<a class="headerlink" href="#part-of-speech-tags-and-dependency-parsing" title="Permalink to this headline">¶</a></h4>
+<section id="part-of-speech-tags-and-dependency-parsing">
+<h4><span class="section-number">3.2.2.1. </span>Part-of-speech tags and dependency parsing<a class="headerlink" href="#part-of-speech-tags-and-dependency-parsing" title="Permalink to this headline">#</a></h4>
 <p>Lemmatizers can do all this because they use the context provided by <strong>part-of-speech tags</strong> (POS tags). To get the
 best results, you need to pipe in a tag for each word, which the lemmatizer will use to make its decisions. In
 principle, this is easy enough to do. There are software libraries, including <code class="docutils literal notranslate"><span class="pre">nltk</span></code>, that will automatically
@@ -1301,9 +1522,9 @@ only after the dependency parser has done its work. The revised text cleaning st
 <li><p>Remove stopwords</p></li>
 <li><p>Lemmatize</p></li>
 </ol>
-</div>
-<div class="section" id="sample-lemmatization-workflow">
-<h4><span class="section-number">3.2.2.2. </span>Sample lemmatization workflow<a class="headerlink" href="#sample-lemmatization-workflow" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="sample-lemmatization-workflow">
+<h4><span class="section-number">3.2.2.2. </span>Sample lemmatization workflow<a class="headerlink" href="#sample-lemmatization-workflow" title="Permalink to this headline">#</a></h4>
 <p>We won’t do all of this for <em>Frankenstein</em>, but in the next session, when we start to use classification models to
 understand the differences between texts, we will. For now, we’ll demonstrate an example of POS tagging using the
 <code class="docutils literal notranslate"><span class="pre">nltk</span></code> tokenizer in concert with its lemmatizer.</p>
@@ -1357,11 +1578,11 @@ day
 </div>
 </div>
 <p>Assigning POS tags:</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">What does each tag mean?</p>
 <p><code class="docutils literal notranslate"><span class="pre">nltk</span></code> uses the Penn TreeBank tags, which you can find <a class="reference external" href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">here</a>. If the tagger receives a punctuation mark that isn’t
 one of its special cases (“.” or “$”, for example), it simply repeats that mark.</p>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tagged</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">pos_tag</span><span class="p">(</span><span class="n">tokenized</span><span class="p">)</span>
@@ -1559,7 +1780,7 @@ one of its special cases (“.” or “$”, for example), it simply repeats th
 </table>
 </div></div></div>
 </div>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">Steps:</p>
 <ol class="simple">
 <li><p>Reassign lowercase versions of all words</p></li>
@@ -1567,7 +1788,7 @@ one of its special cases (“.” or “$”, for example), it simply repeats th
 <li><p>Subset <code class="docutils literal notranslate"><span class="pre">tagged</span></code> for all non-numeric numbers</p></li>
 <li><p>Subset <code class="docutils literal notranslate"><span class="pre">tagged</span></code> for words not in stop words</p></li>
 </ol>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tagged</span> <span class="o">=</span> <span class="n">tagged</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">WORD</span> <span class="o">=</span> <span class="n">tagged</span><span class="p">[</span><span class="s1">&#39;WORD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
@@ -1737,12 +1958,12 @@ the tags that this lemmatizer expects. We did say this step is more complicated!
 </div></div></div>
 </div>
 <p>Finally, we can lemmatize.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">A bit of error handling</p>
 <p>In case our tagger fails to assign tag, we can just send the word to our lemmatizer. The lemmatizer may have this
 word stored in its database, in which case it will make a change based on that. Otherwise, it just returns the
 word.</p>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lemmatize_word</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">new_tag</span><span class="p">):</span>
@@ -1857,11 +2078,11 @@ complicity  =&gt; complicity
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="chunking-with-n-grams">
-<h2><span class="section-number">3.3. </span>Chunking with N-Grams<a class="headerlink" href="#chunking-with-n-grams" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="chunking-with-n-grams">
+<h2><span class="section-number">3.3. </span>Chunking with N-Grams<a class="headerlink" href="#chunking-with-n-grams" title="Permalink to this headline">#</a></h2>
 <p>With that, we are now done cleaning text. The last thing we’ll discuss in this session is <strong>chunking</strong>. Chunking is
 closely related to tokenization. It involves breaking text into multi-token spans. This is useful if, for example,
 we want to find phrases in our data, or even entities. To wit: the processes above would dissolve “New York” into
@@ -1898,11 +2119,11 @@ research questions.</p>
 </div>
 <p>As before, let’s load this into a series. Remember too that, while <code class="docutils literal notranslate"><span class="pre">cleaned</span></code> no longer contains punctuation,
 numbers, and extra whitespaces, it still contains stop words. We’ll need to filter them out.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">Note:</p>
 <p>Unlike in the code above, we do not need to use <code class="docutils literal notranslate"><span class="pre">.index</span></code> on our series because our words are stored in the series’
 values.</p>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
@@ -1934,12 +2155,12 @@ dtype: object
 <p>Once again, <code class="docutils literal notranslate"><span class="pre">nltk</span></code> has in-built functionality to help us with our chunking. There are a few options here, but since
 we want to get bigram counts, we’ll use objects from <code class="docutils literal notranslate"><span class="pre">nltk</span></code>’s <code class="docutils literal notranslate"><span class="pre">collocations</span></code> module. <code class="docutils literal notranslate"><span class="pre">BigramAssocMeasures()</span></code> will
 generate our scores, while <code class="docutils literal notranslate"><span class="pre">BigramCollocationFinder()</span></code> will create our bigrams.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">Other options</p>
 <p><code class="docutils literal notranslate"><span class="pre">nltk</span></code> also has a <code class="docutils literal notranslate"><span class="pre">bigrams()</span></code> object that you can call with <code class="docutils literal notranslate"><span class="pre">nltk.bigrams()</span></code>. It returns an iterator of all
 bigrams, which is quite useful. That said, it’s harder to use this object to produce valuable bigram metrics, as
 we’ll do below.</p>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">collocations</span>
@@ -2057,7 +2278,7 @@ strength of a pair of outcomes. In our case, the higher the score, the more like
 respect to the other bigrams in which the two words of the present one appear.</p>
 <p>We can get a PMI score for each bigram using the <code class="docutils literal notranslate"><span class="pre">score_ngrams</span></code> and <code class="docutils literal notranslate"><span class="pre">pmi</span></code> methods of our collocator and measurer,
 respectively. This will return a list of nested tuples, which will take a little work to coerce into a dataframe.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">Steps:</p>
 <ol class="simple">
 <li><p>Make our dataframe; the result stores a tuple in the <code class="docutils literal notranslate"><span class="pre">BIGRAMS</span></code> column</p></li>
@@ -2067,7 +2288,7 @@ respectively. This will return a list of nested tuples, which will take a little
 <li><p>Rearrange our columns</p></li>
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">WORDS</span></code> as our index</p></li>
 </ol>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bigram_pmi</span> <span class="o">=</span> <span class="n">bigram_finder</span><span class="o">.</span><span class="n">score_ngrams</span><span class="p">(</span><span class="n">bigram_measures</span><span class="o">.</span><span class="n">pmi</span><span class="p">)</span>
@@ -2278,129 +2499,129 @@ respectively. This will return a list of nested tuples, which will take a little
   </thead>
   <tbody>
     <tr>
-      <th>advocate</th>
-      <td>stated</td>
+      <th>conformation</th>
+      <td>endurance</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>naval</th>
-      <td>adventurer</td>
+      <th>golden</th>
+      <td>sunrise</td>
       <td>14.894534</td>
     </tr>
     <tr>
-      <th>mechanics</th>
-      <td>encouraged</td>
+      <th>check</th>
+      <td>enjoyments</td>
       <td>13.894534</td>
     </tr>
     <tr>
-      <th>yesterday</th>
-      <td>neer</td>
+      <th>invented</th>
+      <td>tales</td>
+      <td>13.894534</td>
+    </tr>
+    <tr>
+      <th>whisper</th>
+      <td>paradisiacal</td>
+      <td>13.894534</td>
+    </tr>
+    <tr>
+      <th>albertus</th>
+      <td>magnus</td>
+      <td>13.309571</td>
+    </tr>
+    <tr>
+      <th>audible</th>
+      <td>whisper</td>
       <td>12.894534</td>
     </tr>
     <tr>
-      <th>seashore</th>
-      <td>inquired</td>
-      <td>12.572605</td>
-    </tr>
-    <tr>
-      <th>commences</th>
-      <td>rude</td>
+      <th>ariosto</th>
+      <td>gives</td>
       <td>12.309571</td>
     </tr>
     <tr>
-      <th>sensitiveness</th>
-      <td>pulse</td>
-      <td>12.309571</td>
-    </tr>
-    <tr>
-      <th>mortal</th>
-      <td>strife</td>
+      <th>respecting</th>
+      <td>friendship</td>
       <td>12.087179</td>
     </tr>
     <tr>
-      <th>desirous</th>
-      <td>engage</td>
+      <th>unpractised</th>
+      <td>senses</td>
+      <td>11.894534</td>
+    </tr>
+    <tr>
+      <th>infirmities</th>
+      <td>younger</td>
       <td>11.724609</td>
     </tr>
     <tr>
-      <th>situation</th>
-      <td>released</td>
+      <th>studied</th>
+      <td>exercised</td>
       <td>11.572605</td>
     </tr>
     <tr>
-      <th>proceeding</th>
-      <td>succeed</td>
+      <th>rank</th>
+      <td>magnificence</td>
+      <td>11.572605</td>
+    </tr>
+    <tr>
+      <th>glow</th>
+      <td>enthusiasm</td>
+      <td>11.435102</td>
+    </tr>
+    <tr>
+      <th>coming</th>
+      <td>vines</td>
       <td>11.309571</td>
     </tr>
     <tr>
-      <th>diligence</th>
-      <td>journal</td>
+      <th>familiarity</th>
+      <td>increased</td>
       <td>11.309571</td>
     </tr>
     <tr>
-      <th>retire</th>
-      <td>inaccessible</td>
-      <td>11.309571</td>
-    </tr>
-    <tr>
-      <th>nights</th>
-      <td>guessed</td>
-      <td>11.309571</td>
-    </tr>
-    <tr>
-      <th>idol</th>
-      <td>better</td>
+      <th>eradicating</th>
+      <td>remains</td>
       <td>11.194094</td>
     </tr>
     <tr>
-      <th>incredible</th>
-      <td>toil</td>
+      <th>ragged</th>
+      <td>bare</td>
       <td>11.087179</td>
     </tr>
     <tr>
-      <th>scaffold</th>
-      <td>survive</td>
+      <th>disowned</th>
+      <td>describe</td>
       <td>10.987643</td>
     </tr>
     <tr>
-      <th>unacquainted</th>
-      <td>towns</td>
-      <td>10.894534</td>
+      <th>prolong</th>
+      <td>stay</td>
+      <td>10.987643</td>
     </tr>
     <tr>
-      <th>advantages</th>
-      <td>daily</td>
-      <td>10.894534</td>
+      <th>boat</th>
+      <td>keel</td>
+      <td>10.807071</td>
     </tr>
     <tr>
-      <th>floated</th>
-      <td>situation</td>
-      <td>10.572605</td>
+      <th>ruin</th>
+      <td>turkish</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>blind</th>
-      <td>vacancy</td>
-      <td>10.572605</td>
+      <th>way</th>
+      <td>pathless</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>proof</th>
-      <td>fact</td>
-      <td>10.572605</td>
+      <th>purpose</th>
+      <td>quieted</td>
+      <td>10.724609</td>
     </tr>
     <tr>
-      <th>disciple</th>
-      <td>application</td>
+      <th>alluded</th>
+      <td>suffered</td>
       <td>10.502216</td>
-    </tr>
-    <tr>
-      <th>enter</th>
-      <td>masquerades</td>
-      <td>10.502216</td>
-    </tr>
-    <tr>
-      <th>dead</th>
-      <td>hare</td>
-      <td>10.370972</td>
     </tr>
   </tbody>
 </table>
@@ -2409,8 +2630,8 @@ respectively. This will return a list of nested tuples, which will take a little
 <p>Among the worst-scoring bigrams, we see words that are likely to be combined with many different words: “said,”
 “man,” “shall,” etc. On the other hand, among the best-scoring bigrams, we see coherent entities and suggestive
 pairings. The latter especially begin to sketch out the specific qualities of Shelley’s prose style.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2434,59 +2655,53 @@ pairings. The latter especially begin to sketch out the specific qualities of Sh
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="02_from-text-to-data.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">2. </span>From Text to Data</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="02_from-text-to-data.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2. </span>From Text to Data</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="04_corpus-analytics.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Corpus Analytics</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="04_corpus-analytics.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">4. </span>Corpus Analytics</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Tyler Shoemaker and Carl Stahmer<br/>
-        
-          <div class="extra_footer">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Tyler Shoemaker and Carl Stahmer<br/>
+  
+    <div class="extra_footer">
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
   <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"> 
 </a>
 
-          </div>
-      </p>
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
+
   </body>
 </html>

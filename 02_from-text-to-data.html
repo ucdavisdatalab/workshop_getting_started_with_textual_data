@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>2. From Text to Data &#8212; Getting Started with Textual Data</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,49 +20,63 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >let toggleHintShow = 'Click to show';</script>
-    <script >let toggleHintHide = 'Click to hide';</script>
-    <script >let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3. Cleaning and Counting" href="03_cleaning-and-counting.html" />
     <link rel="prev" title="1. Before We Begin…" href="01_logistics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -69,9 +85,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -89,14 +106,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="index.html">
-   Overview
-  </a>
- </li>
-</ul>
-<ul class="current nav bd-sidenav">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_logistics.html">
    1. Before We Begin…
@@ -130,107 +148,209 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/02_from-text-to-data.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2F02_from-text-to-data.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/02_from-text-to-data.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ucdavisdatalab/workshop_getting_started_with_textual_data/master?urlpath=tree/02_from-text-to-data.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2F02_from-text-to-data.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/02_from-text-to-data.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#loading-text">
    2.1. Loading Text
@@ -282,17 +402,84 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>From Text to Data</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-text">
+   2.1. Loading Text
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plain-text">
+     2.1.1. Plain text
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#character-sequences">
+     2.1.2. Character sequences
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tokenizing-strings">
+     2.1.3. Tokenizing strings
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#counting-words">
+   2.2. Counting Words
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-first-pass">
+     2.2.1. A first pass
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#top-words">
+     2.2.2. Top words
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#investigating-duplicates">
+     2.2.3. Investigating duplicates
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wait-what-s-a-word">
+   2.3. Wait, What’s a Word?
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="from-text-to-data">
-<h1><span class="section-number">2. </span>From Text to Data<a class="headerlink" href="#from-text-to-data" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="from-text-to-data">
+<h1><span class="section-number">2. </span>From Text to Data<a class="headerlink" href="#from-text-to-data" title="Permalink to this headline">#</a></h1>
 <p>This chapter, which we’ve asked you to read prior to the first workshop, is a general discussion of working with
 textual data in Python. While the workshop series assumes you have at least a basic understanding of Python, we’ll
 quickly review how to load, or “read in,” a single text file and format it for text analysis. We’ll do so both as a
@@ -312,8 +499,8 @@ below, you should be prepared for our sessions. The skills covered in this chapt
 <p>Need to brush up on Python? The DataLab offers a Python Basics workshop series. You can find links to the series
 reader and recording on our <a class="reference external" href="https://datalab.ucdavis.edu/workshops/">Workshop Archive page</a>.</p>
 </div>
-<div class="section" id="loading-text">
-<h2><span class="section-number">2.1. </span>Loading Text<a class="headerlink" href="#loading-text" title="Permalink to this headline">¶</a></h2>
+<section id="loading-text">
+<h2><span class="section-number">2.1. </span>Loading Text<a class="headerlink" href="#loading-text" title="Permalink to this headline">#</a></h2>
 <p>To open a text file, we’ll use <code class="docutils literal notranslate"><span class="pre">with...open</span></code>. This saves us from forgetting to close the file stream and thereby
 frees up a little memory for later computation. The memory strain a single text file puts on your computer isn’t
 very large at all, but dozens, to say nothing of hundreds or thousands of texts, can start to slow things down, so
@@ -326,8 +513,8 @@ it’s good to get in the habit of automatically closing file streams right from
 </div>
 </div>
 </div>
-<div class="section" id="plain-text">
-<h3><span class="section-number">2.1.1. </span>Plain text<a class="headerlink" href="#plain-text" title="Permalink to this headline">¶</a></h3>
+<section id="plain-text">
+<h3><span class="section-number">2.1.1. </span>Plain text<a class="headerlink" href="#plain-text" title="Permalink to this headline">#</a></h3>
 <p>Here we use <code class="docutils literal notranslate"><span class="pre">r</span></code> in the <code class="docutils literal notranslate"><span class="pre">mode</span></code> argument because we’re working with <strong>plain text</strong> data (as opposed to <strong>binary</strong>
 data, which would require <code class="docutils literal notranslate"><span class="pre">rb</span></code>). In computing, plain text has multiple fuzzy, interlocking meanings, but generally
 it refers to some kind of data that is stored in a human-readable form, which is to say, it is comprised of a
@@ -375,19 +562,19 @@ of my undertaking.
 </div>
 </div>
 </div>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">You might ask…</p>
 <p>Why aren’t spaces also represented by a character? Well, they are, but even in this relatively unformatted view
 your computer continues to automatically render text in a human-readable way.</p>
-</div>
+</aside>
 <p>See all the <code class="docutils literal notranslate"><span class="pre">\n</span></code>, or <strong>newline</strong>, characters? Each one represents a linebreak. On the backend, your computer uses
 newline characters to demarcate things like paragraphs, stanzas, titles, and so forth, but typically it suppreses
 these characters when it renders text for our eyes. What we see in the two different outputs above, then, is a
 difference between <strong>print conventions</strong> and <strong>code conventions</strong>: what appears as a blank in the former is in fact
 an addressable unit in the latter.</p>
-</div>
-<div class="section" id="character-sequences">
-<h3><span class="section-number">2.1.2. </span>Character sequences<a class="headerlink" href="#character-sequences" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="character-sequences">
+<h3><span class="section-number">2.1.2. </span>Character sequences<a class="headerlink" href="#character-sequences" title="Permalink to this headline">#</a></h3>
 <p>The distinction between print and code conventions has some significant consequences for us, both practical and
 conceptual. While, in the print view of the world, we tend to think of the word as the atomic unit of text, in the
 code view of the world, text is – again – a <strong>sequence of characters</strong>. We can see this if we try to count how
@@ -409,9 +596,9 @@ words, that makes the book ~77,000 words long – far less than the number outpu
 output this number? Because it counted characters, not words. To Python, our text is currently represented as a
 giant blob. This blob makes no distinction between the start of one word and the next; its atomic unit is the
 character, and so most of the operations we can run on it will thus address characters, not words.</p>
-</div>
-<div class="section" id="tokenizing-strings">
-<h3><span class="section-number">2.1.3. </span>Tokenizing strings<a class="headerlink" href="#tokenizing-strings" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tokenizing-strings">
+<h3><span class="section-number">2.1.3. </span>Tokenizing strings<a class="headerlink" href="#tokenizing-strings" title="Permalink to this headline">#</a></h3>
 <p>But we want to address our text at the level of words. To do so, we’ll need to manipulate how Python represents our
 data, changing it from a long stream of characters to discrete (and preferably indexed) units. The process of doing
 this is called <strong>tokenization</strong>. <em>To tokenize</em> means to break a continuous sequence of text data into substrings,
@@ -455,29 +642,29 @@ want to know some information about the average number of lines in a stanza. In 
 be more useful than space. We’ll cover this topic more fully in a later section; for the moment just keep in mind
 that there are many different and valid ways to tokenize text.</p>
 </div>
-</div>
-</div>
-<div class="section" id="counting-words">
-<h2><span class="section-number">2.2. </span>Counting Words<a class="headerlink" href="#counting-words" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="counting-words">
+<h2><span class="section-number">2.2. </span>Counting Words<a class="headerlink" href="#counting-words" title="Permalink to this headline">#</a></h2>
 <p>With our text data loaded and properly formatted, we can start one of the core tasks of text analysis: counting words. While the next chapter will discuss this process in greater detail, we’ll preview it here to get a sense of
 what’s to come and to review the basics of control flow in Python.</p>
 <p>Splitting text transforms it into a list, where each word has its own separate index position. Remember that, in
 Python, lists are ordered arrays that store multiple, potentially repeatable values. With this representation of
 our data, it’s much easier get global word counts using something as simple as a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop: we can simply iterate
 through every item in the list and tally them all up.</p>
-<div class="section" id="a-first-pass">
-<h3><span class="section-number">2.2.1. </span>A first pass<a class="headerlink" href="#a-first-pass" title="Permalink to this headline">¶</a></h3>
+<section id="a-first-pass">
+<h3><span class="section-number">2.2.1. </span>A first pass<a class="headerlink" href="#a-first-pass" title="Permalink to this headline">#</a></h3>
 <p>Let’s do this now. We can build a little loop to find the cumulative number of times each word occurs in
 <em>Frankenstein</em>. To store this information, we’ll use a dictionary. This will provide us with a way to access the
 counts of individual words once we’ve looped through the entire novel.</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">What this loop does:</p>
 <p>For every word in the novel, check whether that word is in the dictionary:</p>
 <ul class="simple">
 <li><p>If it isn’t in the dictionary, add that word and count <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
 <li><p>If it is, increase that word’s count by <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
 </ul>
-</div>
+</aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">word_counts</span> <span class="o">=</span> <span class="p">{}</span>
@@ -544,9 +731,9 @@ letter       17
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="top-words">
-<h3><span class="section-number">2.2.2. </span>Top words<a class="headerlink" href="#top-words" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="top-words">
+<h3><span class="section-number">2.2.2. </span>Top words<a class="headerlink" href="#top-words" title="Permalink to this headline">#</a></h3>
 <p>Great! This all seems to work well, though we won’t get very far if we continue to take a top-down approach and
 spot check single words. How would we know what all is in the novel and what isn’t? Instead of approaching the data
 in this way, it would be more useful to see what turns up if we just look at the count distribution as a whole.</p>
@@ -803,9 +990,9 @@ dataframe will make them much easier to work with.</p>
 about 20 words up from the end of the output – and yet it also appears as the <em>first</em> entry in this output. What’s
 going on here?</p>
 </div>
-</div>
-<div class="section" id="investigating-duplicates">
-<h3><span class="section-number">2.2.3. </span>Investigating duplicates<a class="headerlink" href="#investigating-duplicates" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="investigating-duplicates">
+<h3><span class="section-number">2.2.3. </span>Investigating duplicates<a class="headerlink" href="#investigating-duplicates" title="Permalink to this headline">#</a></h3>
 <p>Let’s investigate. To see whether something might be off in the way we’ve generated our counts, we’ll look back at
 our third example, “letter”.</p>
 <p>Let’s grab the value for “letter” one more time.</p>
@@ -1025,10 +1212,10 @@ datatypes.</p>
 </table>
 </div></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="wait-what-s-a-word">
-<h2><span class="section-number">2.3. </span>Wait, What’s a Word?<a class="headerlink" href="#wait-what-s-a-word" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="wait-what-s-a-word">
+<h2><span class="section-number">2.3. </span>Wait, What’s a Word?<a class="headerlink" href="#wait-what-s-a-word" title="Permalink to this headline">#</a></h2>
 <p>The outputs above should make clear what is happening. <em>We have a problem in the way we’ve defined the concept of a
 word.</em> Remember, to our computers, text is just a sequence of characters. Computers are highly literal in this
 respect; they only ever read character-by-character. And while they don’t have an in-built concept of what words
@@ -1044,12 +1231,12 @@ characters surrounded by spaces. The same goes for “letter” and “Letter”
 surrounded by spaces, for in a very rudimentary sense, lowercase <em>l</em> and uppercase <em>L</em> are simply not the same
 character. (To be exact, the underlying Unicode “<a class="reference external" href="https://en.wikipedia.org/wiki/Universal_Character_Set_characters">codepoints</a>” for these letters are <code class="docutils literal notranslate"><span class="pre">U+006C</span></code> and <code class="docutils literal notranslate"><span class="pre">U+004C</span></code>,
 respectively.)</p>
-<div class="margin sidebar">
+<aside class="margin sidebar">
 <p class="sidebar-title">To complicate things further…</p>
 <p>Non-English languages and non-alphabetic writing systems add a productive challenge to all this. We can’t cover
 this topic in full, but Quinn Drombowski has written about it in this <a class="reference external" href="http://quinndombrowski.com/?q=blog/2020/10/15/whats-word-multilingual-dh-and-english-default">helpful blogpost</a> on text analytics and the
 “English default.”</p>
-</div>
+</aside>
 <p>In another sense, however, they <em>are</em> the same letter. We could say the same of “the” and “The.” The problem here
 arises from the fact that, as opposed to our computers’ highly literal way of reading, we tend to consider the
 meaning of words to be something that transcends differences in capitalization; that is mostly separable from
@@ -1059,8 +1246,8 @@ linguists call <strong>lexemes</strong>, or the abstract units of meaning that u
 just counting characters.</p>
 <p>The next chapter – and with it, our first workshop session – will discuss how to prepare textual data so as to
 begin analyzing words.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1084,59 +1271,53 @@ begin analyzing words.</p>
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="01_logistics.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title"><span class="section-number">1. </span>Before We Begin…</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="01_logistics.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">1. </span>Before We Begin…</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="03_cleaning-and-counting.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Cleaning and Counting</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="03_cleaning-and-counting.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title"><span class="section-number">3. </span>Cleaning and Counting</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Tyler Shoemaker and Carl Stahmer<br/>
-        
-          <div class="extra_footer">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Tyler Shoemaker and Carl Stahmer<br/>
+  
+    <div class="extra_footer">
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
   <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"> 
 </a>
 
-          </div>
-      </p>
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
+
   </body>
 </html>
