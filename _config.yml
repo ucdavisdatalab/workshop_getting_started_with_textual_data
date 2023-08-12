@@ -16,7 +16,7 @@ parse:
     - substitution
 
 execute:
-  execute_notebooks: force
+  execute_notebooks: cache
   timeout: 120
 
 html:

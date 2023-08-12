@@ -1,11 +1,15 @@
 format: jb-book
-root: index
-options:
-  numbered: true
-chapters:
-- file: 01_logistics.ipynb
-- file: 02_from-text-to-data.ipynb
-- file: 03_cleaning-and-counting.ipynb
-- file: 04_corpus-analytics.ipynb
-- file: 05_clustering-and-classification.ipynb
-- file: 06_topic-modeling.ipynb
+root: chapters/index
+parts:
+  - caption: Chapters
+    numbered: true
+    chapters:
+      - file: chapters/01_logistics
+      - file: chapters/02_from-text-to-data
+      - file: chapters/03_cleaning-and-counting
+      - file: chapters/04_corpus-analytics
+      - file: chapters/05_clustering-and-classification
+      - file: chapters/06_topic-modeling
+  - caption: Assessment
+    chapters:
+      - file: chapters/90_assessment
