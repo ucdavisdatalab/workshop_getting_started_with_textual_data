@@ -1,0 +1,1137 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en-us" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>5. Clustering and Classification &#8212; Getting Started with Textual Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/05_clustering-and-classification';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Topic Modeling" href="06_topic-modeling.html" />
+    <link rel="prev" title="4. Corpus Analytics" href="04_corpus-analytics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en-us"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_logistics.html">1. Before We Begin…</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_from-text-to-data.html">2. From Text to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_cleaning-and-counting.html">3. Cleaning and Counting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_corpus-analytics.html">4. Corpus Analytics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Clustering and Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_topic-modeling.html">6. Topic Modeling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assessment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="90_assessment.html">Assessment</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2Fchapters/05_clustering-and-classification.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/05_clustering-and-classification.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Clustering and Classification</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">5.1. Preliminaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-vector-space-concept">5.2. The Vector Space Concept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cosine-similarity">5.3. Cosine Similarity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-scores">5.3.1. Generating scores</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-scores">5.3.2. Visualizing scores</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-by-similarity">5.4. Clustering by Similarity</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="clustering-and-classification">
+<h1><span class="section-number">5. </span>Clustering and Classification<a class="headerlink" href="#clustering-and-classification" title="Permalink to this headline">#</a></h1>
+<p>This chapter directly extends the last. Chapter 4 showed you how to build a
+corpus from a collection of text files and product different metrics about
+them. For the most part these metrics hewed either toward the level of
+documents or that of words; we didn’t discuss ways of weaving these two aspects
+of our corpus together. In this chapter we’ll learn how to do so by identifying
+similar documents with a special measure, cosine similarity. With this measure,
+we’ll be able to cluster our corpus into distinct groups, which may in turn
+tell us something about its overall shape, trends, patterns, etc.</p>
+<p>The applications of this technique are broad. Search engines use cosine
+similarity to identify relevant results to queries; literature scholars consult
+it to investigate authorship and topicality. Below, we’ll walk through the
+concepts that underlie cosine similarity and show a few examples of how to
+explore and interpret its results.</p>
+<div class="admonition-learning-objectives admonition">
+<p class="admonition-title">Learning Objectives</p>
+<p>By the end of this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Rank documents by similarity, using cosine similarity</p></li>
+<li><p>Project documents into a feature space to visualize their similarities</p></li>
+<li><p>Cluster documents by their similarities</p></li>
+</ul>
+</div>
+<section id="preliminaries">
+<h2><span class="section-number">5.1. </span>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">#</a></h2>
+<p>As before, we’ll first load some libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">AgglomerativeClustering</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we will load our data as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/session_two/output/tfidf_scores.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-vector-space-concept">
+<h2><span class="section-number">5.2. </span>The Vector Space Concept<a class="headerlink" href="#the-vector-space-concept" title="Permalink to this headline">#</a></h2>
+<p>Measuring similarities requires a conceptual leap. Imagine projecting every
+document in our corpus into a space. In this space, similar documents have
+similar orientations to a point of origin (in this case, the origin point of XY
+axes), while dissimilar ones have different orientations. Guiding these
+orientations are the values for each term in a document. Here, <em>space is a
+metaphor for semantics</em>.</p>
+<p>Here is a toy example to demonstrate this idea. Imagine two documents, each
+with a value for two terms.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">toy</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">]]</span>
+<span class="n">toy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">toy</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">),</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;d1&#39;</span><span class="p">,</span> <span class="s1">&#39;d2&#39;</span><span class="p">))</span>
+<span class="n">toy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>page</th>
+      <th>screen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>d1</th>
+      <td>18</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>d2</th>
+      <td>4</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Since there are only two terms here, we can plot them using XY coordinates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quiver_plot</span><span class="p">(</span><span class="n">dtm</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a quiver plot from a DTM.&quot;&quot;&quot;</span>
+    <span class="n">origin</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="n">dtm</span><span class="p">[</span><span class="n">col1</span><span class="p">],</span> <span class="n">dtm</span><span class="p">[</span><span class="n">col2</span><span class="p">],</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;xy&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="p">,</span> <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+        <span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="n">col1</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="n">col2</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">toy</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="n">col1</span><span class="p">],</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="n">col2</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span>
+            <span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span>
+        <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">quiver_plot</span><span class="p">(</span><span class="n">toy</span><span class="p">,</span> <span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/87bc828e9a60798c27222c61e61ca4ca071fd49507cf93df3d01caadc0efffd9.png" src="../_images/87bc828e9a60798c27222c61e61ca4ca071fd49507cf93df3d01caadc0efffd9.png" />
+</div>
+</div>
+<p>The important part of this plot is the angle created by the two documents.
+Right now, this angle is fairly wide, as the differences between the two counts
+in each document are rough inverses of one another.</p>
+<p>But if we change the counts in our first document to be more like the second…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">toy2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">]]</span>
+<span class="n">toy2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">toy2</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">),</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;d1&#39;</span><span class="p">,</span> <span class="s1">&#39;d2&#39;</span><span class="p">))</span>
+<span class="n">toy2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>page</th>
+      <th>screen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>d1</th>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>d2</th>
+      <td>4</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And re-plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quiver_plot</span><span class="p">(</span><span class="n">toy2</span><span class="p">,</span> <span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="s1">&#39;screen&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01367f1c26f66341de9c10bc14e53909daca05bcae8389adc77963bff2b2b1f4.png" src="../_images/01367f1c26f66341de9c10bc14e53909daca05bcae8389adc77963bff2b2b1f4.png" />
+</div>
+</div>
+<p>We will shrink the angle considerably. The first document is now more like the
+second. Importantly, this similarity is relatively impervious to the actual
+value of each word. The counts in each document are different, but the <em>overall
+relationship</em> between the values for each word is now similar: both documents
+have more instances of “screen” than “page,” and our method of projecting them
+into this space, or what we call a <strong>vector space</strong>, captures this.</p>
+</section>
+<section id="cosine-similarity">
+<h2><span class="section-number">5.3. </span>Cosine Similarity<a class="headerlink" href="#cosine-similarity" title="Permalink to this headline">#</a></h2>
+<p><strong>Cosine similarity</strong> describes this difference in angles. This score measures
+the inner product space between two vectors, that is, the amount of space
+created by divergences in the attributes of each vector. Typically, the score
+is expressed within a bounded interval of [0, 1], where 0 stands for a right
+angle between two vectors (no similarity) and 1 measures vectors that
+completely overlap (total similarity).</p>
+<p>Formally, cosine similarity is expressed</p>
+<div class="math notranslate nohighlight">
+\[
+similarity(A, B) = \frac{A \cdot B}{\Vert A \Vert \cdot \Vert B \Vert}
+\]</div>
+<p>But we don’t need to worry about implementing this ourselves. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>
+has a one-liner for this. It outputs a square matrix of values, where each cell
+is the cosine similarity measure of the intersection between a column and a
+row.</p>
+<p>Here’s the first example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">toy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.63857247],
+       [0.63857247, 1.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s the second:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">toy2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.98287219],
+       [0.98287219, 1.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of the two examples, which one has more similar documents? The second one: the
+cosine similarity score is 0.98, far higher than 0.64.</p>
+<section id="generating-scores">
+<h3><span class="section-number">5.3.1. </span>Generating scores<a class="headerlink" href="#generating-scores" title="Permalink to this headline">#</a></h3>
+<p>For our purposes, the most powerful part of cosine similarity is that it takes
+into account many dimensions, not just two. That means we can send it our
+tf-idf scores, which have many dimensions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of dimensions per text:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of dimensions per text: 31165
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’re working in very high-dimensional space! While this might be hard to
+conceptualize (and indeed impossible to visualize), <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> can do the
+heavy lifting; we’ll just look at the results. Below, we use
+<code class="docutils literal notranslate"><span class="pre">cosine_similarity()</span></code> to compute scores for comparisons across every document
+combination in the corpus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sims</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">dtm</span><span class="p">)</span>
+<span class="n">sims</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sims</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">sims</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/tyler/.mambaforge/envs/nlp_workshop/lib/python3.11/site-packages/sklearn/utils/extmath.py:193: RuntimeWarning: invalid value encountered in matmul
+  ret = a @ b
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>Ada Lovelace</th>
+      <th>Robert E Lee</th>
+      <th>Andrew Johnson</th>
+      <th>Bedford Forrest</th>
+      <th>Lucretia Mott</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Ada Lovelace</th>
+      <td>1.000000</td>
+      <td>0.019804</td>
+      <td>0.026482</td>
+      <td>0.019349</td>
+      <td>0.018810</td>
+    </tr>
+    <tr>
+      <th>Robert E Lee</th>
+      <td>0.019804</td>
+      <td>1.000000</td>
+      <td>0.141180</td>
+      <td>0.159599</td>
+      <td>0.028449</td>
+    </tr>
+    <tr>
+      <th>Andrew Johnson</th>
+      <td>0.026482</td>
+      <td>0.141180</td>
+      <td>1.000000</td>
+      <td>0.100110</td>
+      <td>0.058495</td>
+    </tr>
+    <tr>
+      <th>Bedford Forrest</th>
+      <td>0.019349</td>
+      <td>0.159599</td>
+      <td>0.100110</td>
+      <td>1.000000</td>
+      <td>0.018358</td>
+    </tr>
+    <tr>
+      <th>Lucretia Mott</th>
+      <td>0.018810</td>
+      <td>0.028449</td>
+      <td>0.058495</td>
+      <td>0.018358</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we’re able to identify the most and least similar texts to a given
+obituary. Below, we find most similar ones. When making a query, we need the
+second index position since the highest score will always be the obituary’s
+similarity to itself.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Code explanation</p>
+<p>For every person, get their cosine similarity scores. Find the largest scores
+and use <code class="docutils literal notranslate"><span class="pre">.take()</span></code> to pull out the second-largest one.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">people</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Ada Lovelace&#39;</span><span class="p">,</span> <span class="s1">&#39;Henrietta Lacks&#39;</span><span class="p">,</span> <span class="s1">&#39;FDR&#39;</span><span class="p">,</span> <span class="s1">&#39;Miles Davis&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">sims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">person</span><span class="p">]</span>
+    <span class="n">most</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">nlargest</span><span class="p">()</span><span class="o">.</span><span class="n">take</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;For </span><span class="si">{</span><span class="n">person</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">most</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">most</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For Ada Lovelace: Karen Sparck Jones (0.171)
+For Henrietta Lacks: Ross G Harrison (0.119)
+For FDR: Eleanor Roosevelt (0.507)
+For Miles Davis: Sammy Davis Jr (0.376)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizing-scores">
+<h3><span class="section-number">5.3.2. </span>Visualizing scores<a class="headerlink" href="#visualizing-scores" title="Permalink to this headline">#</a></h3>
+<p>It would be helpful to have a bird’s eye view of the corpus as well. But
+remember that our similarities have hundreds of attributes – far more than it’s
+possible to visualize. We’ll need to reduce the dimensionality of this data,
+decomposing the original values into a set of two for each text. We’ll use
+<strong>t-distributed stochastic neighbor embedding</strong> (t-SNE) to do so. The method
+takes a matrix of multi-dimensional data and decomposes it into a lower set of
+dimensions, which represent the most important features of the input.</p>
+<p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has a built-in for t-SNE:</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Want to dive into the weeds?</p>
+<p>See the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> <a class="reference external" href="https://scikit-learn.org/stable/modules/manifold.html#t-sne">documentation</a> for an overview of t-SNE and
+citations to the papers that first introduced it.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reducer</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span>
+    <span class="n">n_components</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+    <span class="p">,</span> <span class="n">init</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span>
+    <span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.35</span>
+    <span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">357</span>
+    <span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">reduced</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">sims</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With our data transformed, we’ll store the two dimensions in a DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vis</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">reduced</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">reduced</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">sims</span><span class="o">.</span><span class="n">index</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Time to visualize. As with past chapters, we define a function to make multiple
+graphs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sim_plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_colors</span> <span class="o">=</span> <span class="mi">3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a scatterplot and optionally color/label its points.&quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">pal</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;colorblind&#39;</span><span class="p">,</span> <span class="n">n_colors</span> <span class="o">=</span> <span class="n">n_colors</span><span class="p">)</span> <span class="k">if</span> <span class="n">hue</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span>
+        <span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="n">hue</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="n">pal</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.8</span>
+        <span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
+    <span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">yticks</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Dim. 1&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Dim. 2&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">labels</span><span class="p">:</span>
+        <span class="n">to_label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
+        <span class="n">to_label</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+
+<span class="n">sim_plot</span><span class="p">(</span><span class="n">vis</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">people</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/22201887fbd26a9c3c1c3a2f1ed21c54c77ac92eda1440cee4e0ded1a6c07bc1.png" src="../_images/22201887fbd26a9c3c1c3a2f1ed21c54c77ac92eda1440cee4e0ded1a6c07bc1.png" />
+</div>
+</div>
+<p>As with the toy example above, here, space has semantic value. Points that
+appear closer together in the graph have more similarities between them than
+those that are farther apart. The following pair of people illustrates this
+well.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">A caveat</p>
+<p>It’s important to remember that the transformation from high-dimensional space
+to this 2D plot is a lossy one. Distortions will result form it, and having a
+good sense of what kind of distortions you might expect to see with t-SNE will
+help you interpret it. This <a class="reference external" href="https://distill.pub/2016/misread-tsne/">interactive dashboard</a> offers a really nice
+overview of these considerations.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">roosevelts</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;FDR&#39;</span><span class="p">,</span> <span class="s1">&#39;Eleanor Roosevelt&#39;</span><span class="p">)</span>
+<span class="n">sim_plot</span><span class="p">(</span><span class="n">vis</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">roosevelts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/66a2a018cf298cc3b6997c8740742fc6c35fe09e2d9587a3bcdf2fa2f058c944.png" src="../_images/66a2a018cf298cc3b6997c8740742fc6c35fe09e2d9587a3bcdf2fa2f058c944.png" />
+</div>
+</div>
+<p>Quite close!</p>
+</section>
+</section>
+<section id="clustering-by-similarity">
+<h2><span class="section-number">5.4. </span>Clustering by Similarity<a class="headerlink" href="#clustering-by-similarity" title="Permalink to this headline">#</a></h2>
+<p>The last topic we’ll cover in this chapter involves dividing up the feature
+space of our data so as to cluster the texts in our corpus into broad
+categories. This will provide a frame for inspecting general trends in the
+data, which may in turn help us understand the specificity of individual texts.
+For example, clustering might allow us to find various subgenres of obituaries.
+It could also tell us something about how the <em>New York Times</em> writes about
+particular kinds of people (their vocations, backgrounds, etc.). It may even
+indicate something about how the style of the obituary has changed over time.</p>
+<p>But how to do it? Visual inspection of the graphs would be one way, and there
+are a few cluster-like partitions in the output above. But those cues can be
+misleading. It would be better to use methods that can partition our feature
+space automatically.</p>
+<p>Below, we’ll use <strong>hierarchical clustering</strong> to do this. In hierarchical
+clustering, each data point is treated as an individual cluster before being
+merged with its most similar neighbor. Then, the two points are merged with
+another cluster and so on. Merging continues in an upward fashion, growing the
+size of each cluster until the process reaches a predetermined number of
+clusters.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">How many clusters?</p>
+<p>We can’t go into detail about this question. It’s a complex topic, and much
+depends on a) your data; and b) what you want to know about it. For now, we’ll
+stick with a general approach, which you can nuance later on.</p>
+</aside>
+<p>Once again, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has functionality for clustering. Below, we fit an
+<code class="docutils literal notranslate"><span class="pre">AgglomerativeClustering</span></code> object to our similarities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">agg</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">agg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">sims</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>AgglomerativeClustering(n_clusters=3)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">AgglomerativeClustering</label><div class="sk-toggleable__content"><pre>AgglomerativeClustering(n_clusters=3)</pre></div></div></div></div></div></div></div>
+</div>
+<p>Cluster labels are stored in the <code class="docutils literal notranslate"><span class="pre">labels_</span></code> attribute of this object. We’ll
+associate them with our visualization data to color points by cluster.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vis</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">sim_plot</span><span class="p">(</span><span class="n">vis</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">people</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/94fa21ce6efbdf199e364c4a96724265073d677f2dbd8af02e7a7f9fe335cc83.png" src="../_images/94fa21ce6efbdf199e364c4a96724265073d677f2dbd8af02e7a7f9fe335cc83.png" />
+</div>
+</div>
+<p>There are a few incursions of one cluster into another, but for the most part
+this looks pretty coherent. Let’s grab some examples of each cluster and show
+them.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Code explanation</p>
+<p>First, group the cluster data. For each groupe, sample <code class="docutils literal notranslate"><span class="pre">n_sample</span></code> entries.
+Print each label of the sample results.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_sample</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">vis</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;cluster&#39;</span><span class="p">):</span>
+    <span class="n">cluster</span><span class="p">,</span> <span class="n">subset</span> <span class="o">=</span> <span class="n">group</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cluster: </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="se">\n</span><span class="s2">----------&quot;</span><span class="p">)</span>
+    <span class="n">samp</span> <span class="o">=</span> <span class="n">subset</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">samp</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster: 0
+----------
+Katharine Cornell
+Jerome Kern
+Lionel Barrymore
+Will Rogers
+Coleman Hawkins
+
+
+Cluster: 1
+----------
+Franco
+Eddie Rickenbacker
+John Rockefeller
+Eugene O Neill
+Sam Rayburn
+
+
+Cluster: 2
+----------
+Nancy Mitford
+Willa Cather
+Isaac Asimov
+Eva Peron
+Ray A Kroc
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking over these results turns up an interesting pattern: they’re tied to
+profession.</p>
+<ol class="arabic simple">
+<li><p>Cluster 0: Entertainers and performers (Billie Holiday, Marilyn Monroe,
+etc.)</p></li>
+<li><p>Cluster 1: Political figures (Ghandi, Adlai Stevenson, etc.)</p></li>
+<li><p>Cluster 2: Artists, activists, and other public figures (Helen Keller,
+Joseph Pulitzer, Jackie Robinson)</p></li>
+</ol>
+<p>From an initial glance, our similarities seem to suggest that a <em>person’s
+profession indicates something about the type of obituary they have</em>.</p>
+<p>Of course, there are exceptions. Mao Tse Tung (Mao Zedong) is in the third
+cluster. Though he was a poet, he was best known as a politician; the second
+cluster might make for a better home. Tolstoy, who <em>is</em> in the second cluster,
+presents an interesting test case. While known primarily as a novelist, he was
+from an aristocratic family, and his stance towards non-violence has been
+influential for a number of political figures. Should he therefore be in the
+third cluster, or is he in his rightful place here?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unexpected</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Mao Tse Tung&#39;</span><span class="p">,</span> <span class="s1">&#39;Tolstoy&#39;</span><span class="p">)</span>
+<span class="n">sim_plot</span><span class="p">(</span><span class="n">vis</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">unexpected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/dcefb1190906316c5ba7587f0c2341d67a7b2dfe19ca19c3acbfc888a6b5594e.png" src="../_images/dcefb1190906316c5ba7587f0c2341d67a7b2dfe19ca19c3acbfc888a6b5594e.png" />
+</div>
+</div>
+<p>The question for both exceptions is: why? What is it about these two people’s
+obituaries that pushes them outside the cluster we’d expect them to be in? Is
+it a particular set of words? Lexical diversity? Something else?</p>
+<p>Those questions will take us beyond the scope of this chapter. For now, it’s
+enough to know that text similarity prompts them. More, we can explore and
+analyze corpora using this metric. We’ll end, then, with this preliminary
+interpretation of our clusters, which later work will need to corroborate or
+challenge.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_corpus-analytics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Corpus Analytics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="06_topic-modeling.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Topic Modeling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">5.1. Preliminaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-vector-space-concept">5.2. The Vector Space Concept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cosine-similarity">5.3. Cosine Similarity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-scores">5.3.1. Generating scores</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-scores">5.3.2. Visualizing scores</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-by-similarity">5.4. Clustering by Similarity</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tyler Shoemaker and Carl Stahmer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+  <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"> 
+</a>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

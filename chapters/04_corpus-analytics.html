@@ -1,0 +1,1608 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en-us" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>4. Corpus Analytics &#8212; Getting Started with Textual Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04_corpus-analytics';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Clustering and Classification" href="05_clustering-and-classification.html" />
+    <link rel="prev" title="3. Cleaning and Counting" href="03_cleaning-and-counting.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en-us"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_logistics.html">1. Before We Begin…</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_from-text-to-data.html">2. From Text to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_cleaning-and-counting.html">3. Cleaning and Counting</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Corpus Analytics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_clustering-and-classification.html">5. Clustering and Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_topic-modeling.html">6. Topic Modeling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assessment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="90_assessment.html">Assessment</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2Fchapters/04_corpus-analytics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/04_corpus-analytics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Corpus Analytics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">4.1. Preliminaries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">4.1.1. Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#file-manifest">4.1.2. File manifest</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-a-corpus">4.2. Compiling a Corpus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-document-term-matrix">4.3. The Document-Term Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-metrics">4.4. Raw Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documents">4.4.1. Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terms">4.4.2. Terms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-metrics">4.5. Weighted Metrics</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="corpus-analytics">
+<h1><span class="section-number">4. </span>Corpus Analytics<a class="headerlink" href="#corpus-analytics" title="Permalink to this headline">#</a></h1>
+<p>This chapter moves from an individual text to a collection of texts, or a
+<strong>corpus</strong>. While computational methods may lead us to discover interesting
+things about texts in isolation, they’re often at their best when we use them
+to study texts at scale. We’ll do just that in this chapter: below, you’ll
+learn how to compile texts into a corpus and generate several metrics about
+these texts. Doing so will enable us to observe similarities/differences across
+the corpus at scale.</p>
+<p>We’ll also leave <em>Frankenstein</em> behind and turn instead to Melanie Walsh’s
+<a class="reference external" href="https://melaniewalsh.github.io/Intro-Cultural-Analytics/00-Datasets/00-Datasets.html">collection</a> of ~380 obituaries from the <em>New York Times</em>.
+“Obituary subjects,” writes Walsh, “include academics, military generals,
+artists, athletes, activities, politicians, and businesspeople – such as Ada
+Lovelace, Ulysses Grant, Marilyn Monroe, Virginia Woolf, Jackie Robinson,
+Marsha P. Johnson, Cesar Chavez, John F. Kennedy, Ray Kroc, and many more.”</p>
+<div class="admonition-learning-objectives admonition">
+<p class="admonition-title">Learning Objectives</p>
+<p>By the end of this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Compile texts into a corpus</p></li>
+<li><p>Use a document-term matrix to represent relationships in the corpus</p></li>
+<li><p>Generate metrics about texts in a corpus</p></li>
+<li><p>Explain the difference between raw term metrics and weighted term scoring</p></li>
+</ul>
+</div>
+<section id="preliminaries">
+<h2><span class="section-number">4.1. </span>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">#</a></h2>
+<section id="setup">
+<h3><span class="section-number">4.1.1. </span>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h3>
+<p>Before we get into corpus construction, let’s load the libraries we’ll be using
+throughout the chapter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span><span class="p">,</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Initialize a path to the data directory as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/session_two&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="file-manifest">
+<h3><span class="section-number">4.1.2. </span>File manifest<a class="headerlink" href="#file-manifest" title="Permalink to this headline">#</a></h3>
+<p>We’ll also use a file manifest for this chapter. It contains metadata about the
+corpus, and we’ll also use it to keep track of our corpus construction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;manifest.csv&quot;</span><span class="p">),</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">manifest</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 379 entries, 0 to 378
+Data columns (total 3 columns):
+ #   Column     Non-Null Count  Dtype 
+---  ------     --------------  ----- 
+ 0   name       379 non-null    object
+ 1   year       379 non-null    int64 
+ 2   file_name  379 non-null    object
+dtypes: int64(1), object(2)
+memory usage: 11.8+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>A brief plot of the years covered:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Number of obituaries per year&#39;</span>
+    <span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span>
+    <span class="p">,</span> <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8b843c6d144957c199a056070b16f997625aeda3344a6027932f10621475d745.png" src="../_images/8b843c6d144957c199a056070b16f997625aeda3344a6027932f10621475d745.png" />
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Using a metadata sheet like this is a good habit to develop. Use it as a common
+reference point for any processes you run on your data, and you’ll metigate
+major headaches stemming from undocumented projects. For more on this, see the
+DataLab’s <a class="reference external" href="https://ucdavisdatalab.github.io/workshop_how-to-data-documentation">workshop on project organization and data documentation</a>.</p>
+</div>
+</section>
+</section>
+<section id="compiling-a-corpus">
+<h2><span class="section-number">4.2. </span>Compiling a Corpus<a class="headerlink" href="#compiling-a-corpus" title="Permalink to this headline">#</a></h2>
+<p>The obituaries are stored as individual files, which we need to load into
+memory and combine into a corpus. Because cleaning can be labor- and
+time-intensive, <strong>these texts have already been cleaned (lemmatization
+included).</strong> You can find the script that performed this cleaning
+<a class="reference external" href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/tree/main/src/utils">here</a>.</p>
+<p>Corpus compilation is fairly straightforward: we’ll load everything in a <code class="docutils literal notranslate"><span class="pre">for</span></code>
+loop. But the order of these texts is important, and this is where the file
+manifest comes in. Using the manifest, we’ll load the texts in the order
+provided by the <code class="docutils literal notranslate"><span class="pre">file_name</span></code> column. Doing so ensures that the first index (<code class="docutils literal notranslate"><span class="pre">0</span></code>)
+of our corpus corresponds to the first text, the second index (<code class="docutils literal notranslate"><span class="pre">1</span></code>) to the
+second, and so on.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;file_name&#39;</span><span class="p">]</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;input/</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+        <span class="n">corpus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s double-check that this has worked. First, we run an assertion to ensure
+that the number of texts match the number of entries in our manifest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">),</span> <span class="s2">&quot;Length&#39;s don&#39;t match!&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Second, let’s inspect a few pieces of the texts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="mi">25</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gifted mathematician reco
+october obituary gen robe
+august obituary andrew jo
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looks great!</p>
+</section>
+<section id="the-document-term-matrix">
+<h2><span class="section-number">4.3. </span>The Document-Term Matrix<a class="headerlink" href="#the-document-term-matrix" title="Permalink to this headline">#</a></h2>
+<p>Before we switch into data exploration mode, we’ll perform one last formatting
+process on our corpus. Remember from the last chapter that much of text
+analytics relies on <strong>counts</strong> and <strong>contexts</strong>. As with <em>Frankenstein</em>, one
+thing we want to do is tally up all the words in each text. That produces one
+kind of context – or rather, a few hundred different contexts: one for each
+file we’ve loaded. But we also compiled these files into a corpus, the analysis
+of which requires a different kind of context: a single one for all the texts.
+That is, we need a way to relate texts <em>to each other</em>, instead of only
+tracking word values inside a single text.</p>
+<p>To do so, we’ll build a <strong>document-term matrix</strong>, or <strong>DTM</strong>. A DTM is a matrix
+that contains the frequencies of all terms in a corpus. Every row in this
+matrix corresponds to a text, while every column corresponds to a term. For a
+given text, we count the number of times that term appears and enter that
+number in the column in question. We do this <em>even if</em> the count is zero; key
+to the way a DTM works is that it represents corpus-wide relationships between
+texts, so it matters if a text does or doesn’t contain a term.</p>
+<p>Here’s a toy example. Imagine three documents:</p>
+<ol class="arabic simple">
+<li><p>“I like cats. Do you?”</p></li>
+<li><p>“I only like dogs. And you?”</p></li>
+<li><p>“I like cats and dogs.”</p></li>
+</ol>
+<p>Transforming them into a DTM would yield:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D1&#39;</span><span class="p">,</span> <span class="s1">&#39;D2&#39;</span><span class="p">,</span> <span class="s1">&#39;D3&#39;</span><span class="p">]</span>
+<span class="n">terms</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;only&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;cats&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;dogs&#39;</span><span class="p">,</span> <span class="s1">&#39;do&#39;</span><span class="p">,</span> <span class="s1">&#39;you&#39;</span><span class="p">]</span>
+<span class="n">example_dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">terms</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">names</span><span class="p">)</span>
+<span class="n">example_dtm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>i</th>
+      <th>only</th>
+      <th>like</th>
+      <th>cats</th>
+      <th>and</th>
+      <th>dogs</th>
+      <th>do</th>
+      <th>you</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>D1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>D2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>D3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Representing texts in this way is incredibly useful because it enables us to
+discern similarities/differences in our corpus with ease. For example, all of
+the above documents contain the words “i” and “like.” Given that, if we
+wanted to know what makes each document unique, we could ignore those two words
+and focus on the rest of the values.</p>
+<p>Now imagine doing this for thousands of words. What patterns might emerge?</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">More on this</p>
+<p><code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> accepts several arguments that modify its base functionality,
+including arguments for applying some text cleaning steps. We won’t use any of
+these arguments because we’ve cleaned our texts already, but you can learn more
+about them <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">here</a>.</p>
+</aside>
+<p>The <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library makes generating a DTM very easy. All we need to do
+is initialize a <code class="docutils literal notranslate"><span class="pre">Countectorizer</span></code> and fit it to our corpus. This does two
+things: 1) it produces a series of different attributes that are useful for
+corpus exploration; 2) it generates our DTM.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">vectorized</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape of our DTM:&quot;</span><span class="p">,</span> <span class="n">vectorized</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of our DTM: (379, 31165)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> returns a <strong>sparse matrix</strong>, or a matrix comprised mostly of
+zeros. This matrix is formatted to be highly memory efficient, which is useful
+when dealing with big datasets, but it’s not very accessible for data
+exploration. Since our corpus is relatively small, we’ll convert this sparse
+matrix to a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame.</p>
+<p>We will also call our vectorizer’s <code class="docutils literal notranslate"><span class="pre">.get_feature_names_out()</span></code> method. This
+generates an array of all the tokens from all the obituaries. The order of this
+array corresponds to the order of the DTM’s columns. Accordingly, we assign
+this array to the column names of our DTM. Finally, we assign the <code class="docutils literal notranslate"><span class="pre">name</span></code> column
+values from our manifest to the index of our DTM.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+    <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+    <span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="raw-metrics">
+<h2><span class="section-number">4.4. </span>Raw Metrics<a class="headerlink" href="#raw-metrics" title="Permalink to this headline">#</a></h2>
+<p>With the DTM made, it’s time to use it to generate some metrics about each text
+in the corpus. We use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> data manipulations in conjunction with <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>
+to do so; the function below will make plots for us.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_metrics</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot metrics with a histogram.&quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">col</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="documents">
+<h3><span class="section-number">4.4.1. </span>Documents<a class="headerlink" href="#documents" title="Permalink to this headline">#</a></h3>
+<p>Here’s an easy one: let’s count the number of tokens in each text and assign
+the result to a new column in our manifest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;num_tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="n">plot_metrics</span><span class="p">(</span><span class="n">manifest</span><span class="p">,</span> <span class="s1">&#39;num_tokens&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Token counts&#39;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Tokens&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4fbd93689011efa6bb0946dec076a4921e4d509689df41f50453ef82c0d39d30.png" src="../_images/4fbd93689011efa6bb0946dec076a4921e4d509689df41f50453ef82c0d39d30.png" />
+</div>
+</div>
+<p>We can also count the number of unique words, or <strong>types</strong>, in each text. Types
+correspond to a text’s vocabulary, whereas tokens correspond to the amount of
+each of those types.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;num_types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="n">plot_metrics</span><span class="p">(</span><span class="n">manifest</span><span class="p">,</span> <span class="s1">&#39;num_types&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type counts&#39;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Types&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e3c9f346eeba20ee6033b84029ebd211af13e3e05cd401ce50ce5b6d90d152fe.png" src="../_images/e3c9f346eeba20ee6033b84029ebd211af13e3e05cd401ce50ce5b6d90d152fe.png" />
+</div>
+</div>
+<p>We can use tokens and types to generate a metric of <strong>lexical diversity</strong>.
+There are a few such measures. We’ll use the <strong>type-token ratio (TTR)</strong>, which
+measures how much the vocabulary of a text varies over its tokens. It’s a
+simple metric: divide the number of types by the total number of tokens in a
+text and normalize the result. A text with a TTR of 100, for example, would
+never repeat a word.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;TTR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;num_types&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;num_tokens&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">plot_metrics</span><span class="p">(</span><span class="n">manifest</span><span class="p">,</span> <span class="s1">&#39;TTR&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Type-token ratio&#39;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;TTR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9153218c4a90ba762c3e9e562f98f88f5eab72af17c3bbb1268f85e636e7bd50.png" src="../_images/9153218c4a90ba762c3e9e562f98f88f5eab72af17c3bbb1268f85e636e7bd50.png" />
+</div>
+</div>
+<p>What are examples of texts that typify the low, medium, and high range of these
+metrics? The function below will pull up examples for each range.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Code explanation</p>
+<p>This function uses <code class="docutils literal notranslate"><span class="pre">qcut()</span></code> to bin metric values into a set of categories. The
+output of <code class="docutils literal notranslate"><span class="pre">qcut()</span></code> is a Series. We match the index of this Series to our
+DataFrame, pull out the name, and print it.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_examples</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;medium&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">]):</span>
+    <span class="n">cuts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">metric</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+        <span class="n">idxes</span> <span class="o">=</span> <span class="n">cuts</span><span class="p">[</span><span class="n">cuts</span><span class="o">==</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">ex</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">idxes</span><span class="p">)]</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ex</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">ex</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;num_tokens&#39;</span><span class="p">,</span> <span class="s1">&#39;num_types&#39;</span><span class="p">,</span> <span class="s1">&#39;TTR&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Examples for&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span>
+    <span class="n">show_examples</span><span class="p">(</span><span class="n">manifest</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Examples for num_tokens
++ low: Louisa M Alcott (502.00)
++ medium: Rex Harrison (670.00)
++ high: Albert Schweitzer (2119.00)
+
+
+Examples for num_types
++ low: Billie Holiday (299.00)
++ medium: Robert Frost (720.00)
++ high: P T Barnum (1312.00)
+
+
+Examples for TTR
++ low: Hammarskjold (57.86)
++ medium: Ethel Barrymore (64.66)
++ high: James Cagney (66.86)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="terms">
+<h3><span class="section-number">4.4.2. </span>Terms<a class="headerlink" href="#terms" title="Permalink to this headline">#</a></h3>
+<p>Let’s move on to terms. Here are the top-five most frequent terms in the
+corpus:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>year    3929
+say     3009
+new     2350
+make    2258
+time    2191
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here are the bottom five:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>kuhn         1
+lohengrin    1
+loincloth    1
+lois         1
+loiseau      1
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Though there are likely to be quite a few one-count terms. We refer to them as
+<strong>hapax legomena</strong> (Greek for “only said once”). How many are in our corpus
+altogether?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">summed</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">hapaxes</span> <span class="o">=</span> <span class="n">summed</span><span class="p">[</span><span class="n">summed</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span><span class="si">}</span><span class="s2"> hapax legomena (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12399 hapax legomena (0.40%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we plot our term counts, we’ll see a familiar pattern: our term distribution
+is Zipfian.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">summed</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">summed</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Term distribution&#39;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Terms&#39;</span><span class="p">,</span> <span class="n">xticks</span> <span class="o">=</span> <span class="p">[]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5c38ab6ad519b659fb5788c8ca7f2f20ad8e78be7bf5663e78b0b19bb62b33f0.png" src="../_images/5c38ab6ad519b659fb5788c8ca7f2f20ad8e78be7bf5663e78b0b19bb62b33f0.png" />
+</div>
+</div>
+<p>This distribution has a few consequences. It suggests, for example, that we
+might have more cleaning to do in terms of our stopwords: perhaps our list
+hasn’t accounted for some words, and if we don’t remove them, we might have
+trouble identifying more unique aspects of each text in our corpus. But on the
+other hand, all of those hapaxes are a little <em>too</em> unique: one option would be
+to drop them entirely.</p>
+<p>But dropping our hapaxes might lose out on some specificity in our texts. And
+there are some highly frequent words that we want to retain (“year” and “make”
+for example). So what to do? How can we reduce the influence of highly frequent
+terms without removing them, and how can we take into account rare words at the
+same time?</p>
+</section>
+</section>
+<section id="weighted-metrics">
+<h2><span class="section-number">4.5. </span>Weighted Metrics<a class="headerlink" href="#weighted-metrics" title="Permalink to this headline">#</a></h2>
+<p>The answer is to <strong>weight</strong> our terms, doing so in a way that lessens the
+impact of high frequency terms and boosts that of rare ones. The most popular
+weighting method is <strong>tf-idf, or term frequency–inverse document frequency,
+scoring</strong>. A tf-idf score is a measure of term specificity in the context of a
+given document. It is the product of a term’s frequency in that document and
+the number of documents in which that term appears. By offsetting terms that
+appear across many documents, tf-idf pushes down the scores of common terms and
+boosts the scores of rarer ones.</p>
+<p>A tf-idf score is expressed</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">The idf score</p>
+<p>We calculate the inverse document frequency score with</p>
+<div class="math notranslate nohighlight">
+\[
+idf_{i} = log(\frac{n}{df_{i}})
+\]</div>
+<p>Where the score for term <span class="math notranslate nohighlight">\(i\)</span> is the log of the total number of total documents
+(<span class="math notranslate nohighlight">\(n\)</span>) over the number of documents that contain <span class="math notranslate nohighlight">\(i\)</span>.</p>
+</aside>
+<div class="math notranslate nohighlight">
+\[
+score_{ij} = tf_{ij} \cdot idf_{i}
+\]</div>
+<p>Where, for term <span class="math notranslate nohighlight">\(i\)</span> and document <span class="math notranslate nohighlight">\(j\)</span>, the score is the term frequency
+(<span class="math notranslate nohighlight">\(tf_{ij}\)</span>) for <span class="math notranslate nohighlight">\(i\)</span> multiplied by its inverse document frequency (<span class="math notranslate nohighlight">\(idf_{i}\)</span>).
+The higher the score, the more specific a term is to a given document.</p>
+<p>We don’t need to implement any of this math ourselves. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has a
+<code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> object, which works just like <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code>, but instead
+of producing a DTM of raw term counts, it produces one with tf-idf scores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">vectorized_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">vectorized_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+    <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+    <span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To see the difference tf-idf scores make, let’s compare raw counts and tf-idf
+scores for three texts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">counts_vs_tfidf</span><span class="p">(</span><span class="n">dtm</span><span class="p">,</span> <span class="n">tfidf</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare raw document counts with tf-idf scores.&quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">n_terms</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">n_terms</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s1">&#39;count_term&#39;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">values</span>
+        <span class="p">,</span> <span class="s1">&#39;tfidf_term&#39;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tfidf&#39;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">values</span>
+    <span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">comparison</span> <span class="o">=</span> <span class="n">counts_vs_tfidf</span><span class="p">(</span><span class="n">dtm</span><span class="p">,</span> <span class="n">tfidf</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Person:&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">comparison</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Roger Maris
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>maris</td>
+      <td>21</td>
+      <td>maris</td>
+      <td>0.678091</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>run</td>
+      <td>19</td>
+      <td>season</td>
+      <td>0.231741</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>home</td>
+      <td>15</td>
+      <td>yankees</td>
+      <td>0.220641</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>season</td>
+      <td>15</td>
+      <td>ruth</td>
+      <td>0.196659</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>hit</td>
+      <td>11</td>
+      <td>run</td>
+      <td>0.178367</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ruth</td>
+      <td>10</td>
+      <td>asterisk</td>
+      <td>0.161450</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>record</td>
+      <td>9</td>
+      <td>hit</td>
+      <td>0.148366</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>yankees</td>
+      <td>9</td>
+      <td>mantle</td>
+      <td>0.129073</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>game</td>
+      <td>8</td>
+      <td>pennant</td>
+      <td>0.129073</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>year</td>
+      <td>8</td>
+      <td>babe</td>
+      <td>0.125622</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Ed Sullivan
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sullivan</td>
+      <td>24</td>
+      <td>sullivan</td>
+      <td>0.657945</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>show</td>
+      <td>16</td>
+      <td>show</td>
+      <td>0.161235</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>television</td>
+      <td>8</td>
+      <td>chester</td>
+      <td>0.153617</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>make</td>
+      <td>7</td>
+      <td>port</td>
+      <td>0.137072</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>broadway</td>
+      <td>6</td>
+      <td>television</td>
+      <td>0.119472</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>year</td>
+      <td>6</td>
+      <td>broadway</td>
+      <td>0.109964</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ceremony</td>
+      <td>5</td>
+      <td>variety</td>
+      <td>0.105304</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>chester</td>
+      <td>5</td>
+      <td>ceremony</td>
+      <td>0.100081</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>master</td>
+      <td>5</td>
+      <td>puppet</td>
+      <td>0.097054</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>mrs</td>
+      <td>5</td>
+      <td>columnist</td>
+      <td>0.083584</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Cole Porter
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>porter</td>
+      <td>30</td>
+      <td>porter</td>
+      <td>0.642703</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>song</td>
+      <td>21</td>
+      <td>song</td>
+      <td>0.336587</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>write</td>
+      <td>11</td>
+      <td>merman</td>
+      <td>0.162564</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>broadway</td>
+      <td>7</td>
+      <td>cole</td>
+      <td>0.154871</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>make</td>
+      <td>7</td>
+      <td>melody</td>
+      <td>0.148782</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>score</td>
+      <td>7</td>
+      <td>broadway</td>
+      <td>0.110231</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>cole</td>
+      <td>6</td>
+      <td>beguine</td>
+      <td>0.104309</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>love</td>
+      <td>6</td>
+      <td>score</td>
+      <td>0.100157</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>melody</td>
+      <td>6</td>
+      <td>lyric</td>
+      <td>0.088958</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>music</td>
+      <td>6</td>
+      <td>rodgers</td>
+      <td>0.085965</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>There are a few things to note here. First, names often have the largest value,
+regardless of our metric. This makes intuitive sense for our corpus: we’re
+examining obituaries, where the sole subject of each text may be referred to
+many times. A tf-idf score will actually reinforce this effect, since names are
+often specific to the obituary. We can see this especially from the shifts taht
+take place in the rest of the rankings. Whereas raw counts will often refer to
+more general nouns and verbs, tf-idf scores home in on other people with whom
+the present person might’ve been associated, places that person might’ve
+visited, and even things that particular person is known for. Broadly speaking,
+tf-idf scores give us a more situated sense of the person in question.</p>
+<p>To see this in more detail, let’s look at a single obituary in the context of
+the entire corpus. We’ll compare the raw counts and tf-idf scores of this
+obituary to the mean counts and scores of the corpus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kahlo</span> <span class="o">=</span> <span class="n">counts_vs_tfidf</span><span class="p">(</span><span class="n">dtm</span><span class="p">,</span> <span class="n">tfidf</span><span class="p">,</span> <span class="s1">&#39;Frida Kahlo&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">kahlo</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;corpus_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtm</span><span class="p">[</span><span class="n">kahlo</span><span class="p">[</span><span class="s1">&#39;count_term&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+<span class="n">kahlo</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;corpus_tfidf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tfidf</span><span class="p">[</span><span class="n">kahlo</span><span class="p">[</span><span class="s1">&#39;tfidf_term&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;count_term&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;corpus_count&#39;</span><span class="p">,</span> <span class="s1">&#39;tfidf_term&#39;</span><span class="p">,</span> <span class="s1">&#39;tfidf&#39;</span><span class="p">,</span> <span class="s1">&#39;corpus_tfidf&#39;</span><span class="p">]</span>
+<span class="n">kahlo</span> <span class="o">=</span> <span class="n">kahlo</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+<span class="n">kahlo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>corpus_count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+      <th>corpus_tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>artist</td>
+      <td>4</td>
+      <td>0.575198</td>
+      <td>frida</td>
+      <td>0.374507</td>
+      <td>0.000988</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>diego</td>
+      <td>3</td>
+      <td>0.047493</td>
+      <td>kahlo</td>
+      <td>0.350200</td>
+      <td>0.001007</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>frida</td>
+      <td>3</td>
+      <td>0.007916</td>
+      <td>rivera</td>
+      <td>0.308646</td>
+      <td>0.001310</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>kahlo</td>
+      <td>3</td>
+      <td>0.010554</td>
+      <td>diego</td>
+      <td>0.284338</td>
+      <td>0.001488</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>rivera</td>
+      <td>3</td>
+      <td>0.029024</td>
+      <td>artist</td>
+      <td>0.191589</td>
+      <td>0.006170</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>show</td>
+      <td>3</td>
+      <td>1.643799</td>
+      <td>painter</td>
+      <td>0.144198</td>
+      <td>0.003476</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>begin</td>
+      <td>2</td>
+      <td>2.284960</td>
+      <td>mexico</td>
+      <td>0.130955</td>
+      <td>0.002237</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>city</td>
+      <td>2</td>
+      <td>1.569921</td>
+      <td>paint</td>
+      <td>0.129943</td>
+      <td>0.003136</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>july</td>
+      <td>2</td>
+      <td>0.672823</td>
+      <td>arbenz</td>
+      <td>0.124836</td>
+      <td>0.000329</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>long</td>
+      <td>2</td>
+      <td>2.105541</td>
+      <td>beholder</td>
+      <td>0.124836</td>
+      <td>0.000329</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>mexico</td>
+      <td>2</td>
+      <td>0.166227</td>
+      <td>guatemala</td>
+      <td>0.124836</td>
+      <td>0.000329</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>new</td>
+      <td>2</td>
+      <td>6.200528</td>
+      <td>guzman</td>
+      <td>0.124836</td>
+      <td>0.000329</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>paint</td>
+      <td>2</td>
+      <td>0.263852</td>
+      <td>jacobo</td>
+      <td>0.124836</td>
+      <td>0.000329</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>painter</td>
+      <td>2</td>
+      <td>0.192612</td>
+      <td>shaft</td>
+      <td>0.124836</td>
+      <td>0.000329</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>picture</td>
+      <td>2</td>
+      <td>0.788918</td>
+      <td>ousted</td>
+      <td>0.116733</td>
+      <td>0.000368</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In the next chapter we’ll take this one step further. There, we’ll use
+corpus-wide comparisons of tf-idf scores to identify similar obituaries.</p>
+<p>With that in mind, we’ll save our tf-idf DTM and end here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outdir</span> <span class="o">=</span> <span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">)</span>
+<span class="n">tfidf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">outdir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;tfidf_scores.csv&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_cleaning-and-counting.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Cleaning and Counting</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_clustering-and-classification.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Clustering and Classification</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">4.1. Preliminaries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">4.1.1. Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#file-manifest">4.1.2. File manifest</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-a-corpus">4.2. Compiling a Corpus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-document-term-matrix">4.3. The Document-Term Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-metrics">4.4. Raw Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documents">4.4.1. Documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terms">4.4.2. Terms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-metrics">4.5. Weighted Metrics</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tyler Shoemaker and Carl Stahmer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+  <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"> 
+</a>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

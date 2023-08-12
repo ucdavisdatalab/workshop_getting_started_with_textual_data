@@ -1,0 +1,1730 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en-us" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>3. Cleaning and Counting &#8212; Getting Started with Textual Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_cleaning-and-counting';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Corpus Analytics" href="04_corpus-analytics.html" />
+    <link rel="prev" title="2. From Text to Data" href="02_from-text-to-data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en-us"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_logistics.html">1. Before We Begin…</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_from-text-to-data.html">2. From Text to Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Cleaning and Counting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_corpus-analytics.html">4. Corpus Analytics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_clustering-and-classification.html">5. Clustering and Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_topic-modeling.html">6. Topic Modeling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assessment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="90_assessment.html">Assessment</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2Fchapters/03_cleaning-and-counting.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/03_cleaning-and-counting.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cleaning and Counting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">3.1. Preliminaries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">3.1.1. Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">3.1.2. Setup</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-cleaning">3.2. Basic Cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-normalization">3.2.1. Case normalization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-punctuation">3.2.2. Removing Punctuation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-numbers">3.2.3. Removing numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-formatting">3.2.4. Text formatting</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stopword-removal">3.3. Stopword Removal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-frequency-words">3.3.1. High frequency words</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-a-stop-list">3.3.2. Defining a stop list</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-cleaning">3.4. Advanced Cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming">3.4.1. Stemming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lemmatizing">3.4.2. Lemmatizing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-of-speech-tags-and-dependency-parsing">3.4.2.1. Part-of-speech tags and dependency parsing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-lemmatization-workflow">3.4.2.2. Sample lemmatization workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-with-n-grams">3.5. Chunking with N-Grams</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cleaning-and-counting">
+<h1><span class="section-number">3. </span>Cleaning and Counting<a class="headerlink" href="#cleaning-and-counting" title="Permalink to this headline">#</a></h1>
+<p>At the end of the last chapter, we briefly discussed the complexities involved
+in working with textual data. Textual data presents a number of challenges –
+which stem as much from general truths about language as they do from data
+representations – that we need to address so that we can formalize text in a
+computationally tractable manner.</p>
+<p>This formalization enables us to count words. Nearly all methods in text
+analytics begin by counting the number of times a word occurs and by taking
+note of the context in which that word occurs. With these two pieces of
+information, <strong>counts</strong> and <strong>context</strong>, we can identify relationships among
+words and, on this basis, formulate interpretations.</p>
+<p>This chapter will discuss how to wrangle the messiness of text so we can count
+it. We’ll continue with <em>Frankenstein</em> and learn how to prepare text so as to
+generate valuable metrics about the words within the novel (later sessions will
+use these metrics for multiple texts).</p>
+<div class="admonition-learning-objectives admonition">
+<p class="admonition-title">Learning Objectives</p>
+<p>By the end of this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Clean textual data</p></li>
+<li><p>Recognize how cleaning changes the findings of text analysis</p></li>
+<li><p>Implement preliminary counting operations on cleaned text</p></li>
+<li><p>Use a statistical measure (pointwise mutual information) to measure unique
+phrases</p></li>
+</ul>
+</div>
+<section id="preliminaries">
+<h2><span class="section-number">3.1. </span>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">#</a></h2>
+<section id="overview">
+<h3><span class="section-number">3.1.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h3>
+<p>Think back to the end of the last chapter. There, we discussed differences
+between how computers represent and process text and our own way of reading.
+A key difference involves details like spelling and capitalization. For us, the
+<em>meaning</em> of text tends to cut across these details. But they make all the
+difference in how computers track information. So, if we want to work at a
+higher order of meaning, not just character sequences, we need to eliminate as
+many variances as possible in textual data.</p>
+<p>Eliminating these variances is known as <strong>cleaning</strong> text. The entire process
+typically happens in steps, which include:</p>
+<ol class="arabic simple">
+<li><p>Resolving word cases</p></li>
+<li><p>Removing punctuation</p></li>
+<li><p>Removing numbers</p></li>
+<li><p>Removing extra whitespaces</p></li>
+<li><p>Removing stop words</p></li>
+</ol>
+<p>Note though that <em>there is no pre-set way to clean text</em>. The steps you need to
+perform all depend on your data and the questions you have. We’ll walk through
+each of these steps below and, along the way, compare how they alter the
+original text to show why you might (or might not) implement them.</p>
+</section>
+<section id="setup">
+<h3><span class="section-number">3.1.2. </span>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h3>
+<p>To make these comparisons, load in <em>Frankenstein</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/session_one/shelley_frankenstein.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+    <span class="n">frankenstein</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And import some libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.stem.porter</span> <span class="kn">import</span> <span class="n">PorterStemmer</span>
+<span class="kn">from</span> <span class="nn">nltk.stem.wordnet</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">collocations</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, define a simple function to count words. This will help us quickly
+check the results of a cleaning step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_words</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count words in a document.&quot;&quot;&quot;</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">counts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s use this function to get the original number of words in <em>Frankenstein</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">count_words</span><span class="p">(</span><span class="n">frankenstein</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unique words:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unique words: 11590
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="basic-cleaning">
+<h2><span class="section-number">3.2. </span>Basic Cleaning<a class="headerlink" href="#basic-cleaning" title="Permalink to this headline">#</a></h2>
+<section id="case-normalization">
+<h3><span class="section-number">3.2.1. </span>Case normalization<a class="headerlink" href="#case-normalization" title="Permalink to this headline">#</a></h3>
+<p>The first step in cleaning is straightforward. Since computers are
+case-sensitive, we need to convert all characters to upper- or lowercase. It’s
+standard to change all letters to their lowercase forms.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uncased</span> <span class="o">=</span> <span class="n">frankenstein</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This should reduce the number of unique words.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uncased_counts</span> <span class="o">=</span> <span class="n">count_words</span><span class="p">(</span><span class="n">uncased</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unique words:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">uncased_counts</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unique words: 11219
+</pre></div>
+</div>
+</div>
+</div>
+<p>Double check: will we face the same problems from the last chapter?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&#39;Letter&#39; in `uncased`:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Letter&quot;</span> <span class="ow">in</span> <span class="n">uncased_counts</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of times &#39;the&#39; appears:&quot;</span><span class="p">,</span> <span class="n">uncased_counts</span><span class="p">[</span><span class="s1">&#39;the&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Letter&#39; in `uncased`: False
+Number of times &#39;the&#39; appears: 4152
+</pre></div>
+</div>
+</div>
+</div>
+<p>So far so good. Now, “the” has become even more prominent in the counts: there
+are ~250 more instances of this word after changing its case (it was 3,897
+earlier).</p>
+</section>
+<section id="removing-punctuation">
+<h3><span class="section-number">3.2.2. </span>Removing Punctuation<a class="headerlink" href="#removing-punctuation" title="Permalink to this headline">#</a></h3>
+<p>Time to tackle punctuation. This step is trickier and it typically involves
+some back and forth between inspecting the original text and the output. This
+is because punctuation marks have different uses, so they can’t all be handled
+the same way.</p>
+<p>Consider the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m a self-taught programmer.&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It seems most sensible to remove punctuation with some combination of [regular
+expressions][reg], or “regex,” with <code class="docutils literal notranslate"><span class="pre">re.sub()</span></code>, which substitutes a regex
+sequence with something else. For example, using regex to remove anything that
+is <em>not</em> (<code class="docutils literal notranslate"><span class="pre">^</span></code>) a word (<code class="docutils literal notranslate"><span class="pre">\w</span></code>) or a space (<code class="docutils literal notranslate"><span class="pre">\s</span></code>) will give the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w\s]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Im a selftaught programmer
+</pre></div>
+</div>
+</div>
+</div>
+<p>This method has its advantages. It sticks the <em>m</em> in “I’m” back to the <em>I</em>.
+While this isn’t perfect, as long as we remember that, whenever we see “Im,” we
+mean “I’m,” it’s doable. That said, this method also sticks “self” and “taught”
+together, which we don’t want. It would be better to separate those two words
+than create a new one altogether. Ultimately, this is a tokenization question:
+what do we define as acceptable tokens in our data, and how are we going to
+create those tokens?</p>
+<p>Different NLP libraries in Python will handle this question in different ways.
+For example, the <code class="docutils literal notranslate"><span class="pre">word_tokenize</span></code> function from <code class="docutils literal notranslate"><span class="pre">nltk</span></code> returns the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;I&#39;, &quot;&#39;m&quot;, &#39;a&#39;, &#39;self-taught&#39;, &#39;programmer&#39;, &#39;.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>See how it handles punctuation differently, depending on the string?</p>
+<p>In our case, we’ll want to separate phrases like “self-taught” into their
+components. The best way to do so is to process punctuation marks in stages.
+First, remove hyphens, then remove other punctuation marks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w\s]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Im a self taught programmer
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s use the same logic on <em>Frankenstein</em>. Note that we’re actually removing
+two different kinds of hyphens, the en dash (-) and the em dash (—). We also
+use different replacement strategies depending on the type of character.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">no_punct</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[-—]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">uncased</span><span class="p">)</span>
+<span class="n">no_punct</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w\s]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">no_punct</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we remove underscores, which regex classes as word characters. The
+expression <code class="docutils literal notranslate"><span class="pre">^\w</span></code> does not capture this punctuation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">no_punct</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">no_punct</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you didn’t want to do this separately, you could always include underscores
+in your code for handling hyphens. That said, punctuation removal is almost
+always a multi-step process, the honing of which involves multiple iterations.</p>
+</div>
+<p>With punctuation removed, here is the text:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">no_punct</span><span class="p">[:</span><span class="mi">351</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>letter 1
+
+to mrs saville england
+
+
+st petersburgh dec 11th 17 
+
+
+you will rejoice to hear that no disaster has accompanied the
+commencement of an enterprise which you have regarded with such evil
+forebodings i arrived here yesterday and my first task is to assure
+my dear sister of my welfare and increasing confidence in the success
+of my undertaking
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="removing-numbers">
+<h3><span class="section-number">3.2.3. </span>Removing numbers<a class="headerlink" href="#removing-numbers" title="Permalink to this headline">#</a></h3>
+<p>Removing numbers presents less of a problem. All we need to do is find
+characters 0-9 and replace them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">no_punctnum</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">no_punct</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve removed punctuation and numbers, unique word counts should
+significantly decrease. This is because we’ve separated these characters from
+word sequences, so “letter:” and “letter.” will count as “letter.”</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">no_punctnum_counts</span> <span class="o">=</span> <span class="n">count_words</span><span class="p">(</span><span class="n">no_punctnum</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unique words:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_punctnum_counts</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unique words: 6992
+</pre></div>
+</div>
+</div>
+</div>
+<p>That’s nearly a 40% reduction in the number of unique words!</p>
+</section>
+<section id="text-formatting">
+<h3><span class="section-number">3.2.4. </span>Text formatting<a class="headerlink" href="#text-formatting" title="Permalink to this headline">#</a></h3>
+<p>Our punctuation and number removal introduced extra whitespaces in the text
+(recall that we used a whitespace as a replacement character for some
+punctuation). We need to remove those, along with newlines and tabs. There are
+regex patterns for doing so, but Python’s <code class="docutils literal notranslate"><span class="pre">.split()</span></code> method captures all
+whitespace characters. In fact, the <code class="docutils literal notranslate"><span class="pre">count_words()</span></code> function above has been
+doing this all along. So tokenizing our text as before will also take care of
+this step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned</span> <span class="o">=</span> <span class="n">no_punctnum</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With that, we are back to the list representation of <em>Frankenstein</em> that we
+worked with in the last chapter – but this time, our metrics are much more
+robust. Here are the top 25 words:</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">cleaned_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;the&#39;, 4194)
+(&#39;and&#39;, 2976)
+(&#39;i&#39;, 2850)
+(&#39;of&#39;, 2642)
+(&#39;to&#39;, 2094)
+(&#39;my&#39;, 1776)
+(&#39;a&#39;, 1391)
+(&#39;in&#39;, 1129)
+(&#39;was&#39;, 1021)
+(&#39;that&#39;, 1017)
+(&#39;me&#39;, 867)
+(&#39;but&#39;, 687)
+(&#39;had&#39;, 686)
+(&#39;with&#39;, 667)
+(&#39;he&#39;, 608)
+(&#39;you&#39;, 574)
+(&#39;which&#39;, 558)
+(&#39;it&#39;, 547)
+(&#39;his&#39;, 535)
+(&#39;as&#39;, 528)
+(&#39;not&#39;, 510)
+(&#39;for&#39;, 498)
+(&#39;by&#39;, 460)
+(&#39;on&#39;, 460)
+(&#39;this&#39;, 402)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="stopword-removal">
+<h2><span class="section-number">3.3. </span>Stopword Removal<a class="headerlink" href="#stopword-removal" title="Permalink to this headline">#</a></h2>
+<p>With the first few steps of our cleaning done, let’s pause and look more
+closely at our output. Inspecting the counts above shows a pattern: nearly all
+of them are <strong>deictic</strong> words, or words that are highly dependent on the
+context in which they appear. We use these words constantly to refer to
+specific times, places, and persons – indeed, they’re the very sinew of
+language, and their high frequency counts reflect this.</p>
+<section id="high-frequency-words">
+<h3><span class="section-number">3.3.1. </span>High frequency words<a class="headerlink" href="#high-frequency-words" title="Permalink to this headline">#</a></h3>
+<p>Plotting word counts shows the full extent of these high frequency words.
+Below, we define a function to show them.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">How to sample xticks</p>
+<p>Define a range of values from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">n_words</span></code>. Set the step count (<code class="docutils literal notranslate"><span class="pre">by_x</span></code>) to
+your desired granularity.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_counts</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">n_words</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">by_x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot word counts.&quot;&quot;&quot;</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">))</span>
+    <span class="n">counts</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">counts</span><span class="p">[:</span><span class="n">n_words</span><span class="p">],</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Words&quot;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Counts&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_words</span><span class="p">,</span> <span class="n">by_x</span><span class="p">));</span>
+
+<span class="n">plot_counts</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="p">),</span> <span class="mi">150</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/786cfcb3f466cf8db180bbbd98378fb4e32f97978fe67348d643f84ad49e07a6.png" src="../_images/786cfcb3f466cf8db180bbbd98378fb4e32f97978fe67348d643f84ad49e07a6.png" />
+</div>
+</div>
+<p>See that giant drop? Let’s look at the 200-most frequent words.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_counts</span><span class="p">(</span><span class="n">cleaned_counts</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1e3fb75f54caf4719be359ff95149ff6aa7041addbaed644b307a93143e6a84a.png" src="../_images/1e3fb75f54caf4719be359ff95149ff6aa7041addbaed644b307a93143e6a84a.png" />
+</div>
+</div>
+<p>Only a few non-deictic words appear in the first half of this graph – “eyes,”
+“night,” “death,” for example. All others are words like “my,” “from,” etc.
+And this second set of words have incredibly high frequency counts. In fact,
+the 50-most frequent words in <em>Frankenstein</em> comprise nearly 50% of the total
+number of words in the novel!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top50</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">count</span> <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">cleaned_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+<span class="n">total</span> <span class="o">=</span> <span class="n">cleaned_counts</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Percentage of 50-most frequent words: </span><span class="si">{</span><span class="n">top50</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">total</span><span class="si">:</span><span class="s2">.02f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Percentage of 50-most frequent words: 0.48%
+</pre></div>
+</div>
+</div>
+</div>
+<p>The problem here is that, even though these high frequency words help us mean
+what we say, they paradoxically don’t seem to have much meaning in and of
+themselves. These words are so common and so context-dependent that it’s
+difficult to find much to say about them in isolation. Worse still, every novel
+we put through the above analyses is going to have a very similar distribution
+in terms – they’re just a general fact of language.</p>
+<p>We need a way to handle these words. The most common way to do this is to
+remove them altogether. This is called <strong>stopping</strong> the text. But how do we
+know which <strong>stopwords</strong> to remove?</p>
+</section>
+<section id="defining-a-stop-list">
+<h3><span class="section-number">3.3.2. </span>Defining a stop list<a class="headerlink" href="#defining-a-stop-list" title="Permalink to this headline">#</a></h3>
+<p>The answer comes in two parts. First, compiling various <strong>stop lists</strong> has been
+an ongoing research area in NLP since the emergence of information retrieval in
+the 1950s. There are several popular lists, which capture many of the words
+we’d think to remove: “the,” “do,” “as,” etc. Popular NLP packages even come
+preloaded with generalized lists; we’ll be using one compiled by the developers
+of <a class="reference external" href="https://voyant-tools.org/">Voyant</a>, a text analysis portal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/voyant_stoplist.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+    <span class="n">stopwords</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">stopwords</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;a&#39;, &#39;about&#39;, &#39;above&#39;, &#39;across&#39;, &#39;after&#39;, &#39;afterwards&#39;, &#39;again&#39;, &#39;against&#39;, &#39;all&#39;, &#39;almost&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Removing stopwords can be done with a list comprehension:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stopped</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">cleaned</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>
+<span class="n">stopped_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">stopped</span><span class="p">)</span>
+<span class="n">plot_counts</span><span class="p">(</span><span class="n">stopped_counts</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/116f094ca38a2c565bdf7d6074904899c188a21ca8b2ebd080f80f08bd2bfa71.png" src="../_images/116f094ca38a2c565bdf7d6074904899c188a21ca8b2ebd080f80f08bd2bfa71.png" />
+</div>
+</div>
+<p>This is looking good, but it would be nice if we could also remove “said” from
+our text. Doing so brings us to the second, and most important part of the
+answer to the question, which stopwords should we use? In truth, <em>removing
+stopwords depends on your texts and your research question(s)</em>. We’re looking
+at a novel, so we know there will be a lot of dialogue. But dialogue markers
+aren’t useful for understanding something a concept like topicality (i.e. what
+the novel is about). So, we’ll remove those markers.</p>
+<p>But in other texts, or with other research questions, we might not want to do
+so. A good stop list, then, is application-specific. You may in fact find
+yourself using different stop lists for different parts of a project.</p>
+<p>That all said, there are a broad set of NLP tasks that can really depend on
+keeping stopwords in your text. These are tasks that fall under
+<strong>part-of-speech</strong> tagging: they rely on stopwords to parse the grammatical
+structure of text. Below, we will discuss one such example of these tasks,
+though for now, we’ll go ahead with our current stop list.</p>
+<p>Let’s add “said” to our stop list, redo the stopping process, and count the
+results. Note that it’s also customary to remove words that are two characters
+long or less (this prevents us from seeing things like “st,” for street).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stopwords</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;said&#39;</span><span class="p">]</span>
+<span class="n">stopped</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">cleaned</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>
+<span class="n">stopped</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">stopped</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">stopped_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">stopped</span><span class="p">)</span>
+<span class="n">plot_counts</span><span class="p">(</span><span class="n">stopped_counts</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a7ee20db285343fd15b04dfe5af22a9f56df4ba921911a9ab4c6ce64b237dd64.png" src="../_images/a7ee20db285343fd15b04dfe5af22a9f56df4ba921911a9ab4c6ce64b237dd64.png" />
+</div>
+</div>
+<p>Finally, here are the 50-most frequent words from our completely cleaned text:</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">stopped_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;man&#39;, 132)
+(&#39;life&#39;, 115)
+(&#39;father&#39;, 113)
+(&#39;shall&#39;, 105)
+(&#39;eyes&#39;, 104)
+(&#39;time&#39;, 98)
+(&#39;saw&#39;, 94)
+(&#39;night&#39;, 92)
+(&#39;elizabeth&#39;, 88)
+(&#39;mind&#39;, 85)
+(&#39;heart&#39;, 81)
+(&#39;day&#39;, 80)
+(&#39;felt&#39;, 80)
+(&#39;death&#39;, 79)
+(&#39;feelings&#39;, 76)
+(&#39;thought&#39;, 74)
+(&#39;dear&#39;, 72)
+(&#39;soon&#39;, 71)
+(&#39;friend&#39;, 71)
+(&#39;passed&#39;, 67)
+(&#39;miserable&#39;, 65)
+(&#39;place&#39;, 64)
+(&#39;like&#39;, 63)
+(&#39;heard&#39;, 62)
+(&#39;became&#39;, 61)
+(&#39;love&#39;, 59)
+(&#39;clerval&#39;, 59)
+(&#39;little&#39;, 58)
+(&#39;human&#39;, 58)
+(&#39;appeared&#39;, 57)
+(&#39;country&#39;, 54)
+(&#39;misery&#39;, 54)
+(&#39;words&#39;, 54)
+(&#39;friends&#39;, 54)
+(&#39;justine&#39;, 54)
+(&#39;nature&#39;, 53)
+(&#39;cottage&#39;, 51)
+(&#39;feel&#39;, 50)
+(&#39;great&#39;, 50)
+(&#39;old&#39;, 50)
+(&#39;away&#39;, 50)
+(&#39;hope&#39;, 50)
+(&#39;felix&#39;, 50)
+(&#39;return&#39;, 49)
+(&#39;happiness&#39;, 49)
+(&#39;know&#39;, 49)
+(&#39;days&#39;, 49)
+(&#39;despair&#39;, 49)
+(&#39;long&#39;, 48)
+(&#39;voice&#39;, 46)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="advanced-cleaning">
+<h2><span class="section-number">3.4. </span>Advanced Cleaning<a class="headerlink" href="#advanced-cleaning" title="Permalink to this headline">#</a></h2>
+<p>With stopwords removed, all primary text cleaning steps are complete. But there
+are two more steps that we could perform to further process our data: stemming
+and lemmatizing. We’ll consider these separately from the steps above because
+they entail making significant changes to our data. Instead of simply removing
+pieces of irrelevant information, as with stopword removal, stemming and
+lemmatizing transform the forms of words.</p>
+<section id="stemming">
+<h3><span class="section-number">3.4.1. </span>Stemming<a class="headerlink" href="#stemming" title="Permalink to this headline">#</a></h3>
+<p><strong>Stemming</strong> algorithms are rule-based procedures that reduce words to their
+root forms. They cut down on the amount of morphological variance in a corpus,
+merging plurals into singulars, changing gerunds into static verbs, etc. As
+with the steps above, stemming a corpus cuts down on lexical variety. More, it
+enacts a shift to a generalized form of words’ meanings: instead of counting
+“have” and “having” as two different words with two different meanings,
+stemming would enable us to count them as a single entity, “have.”</p>
+<p><code class="docutils literal notranslate"><span class="pre">nltk</span></code> implements stemming with its <code class="docutils literal notranslate"><span class="pre">PorterStemmer</span></code>. It’s a class object, which
+must be initialized by saving it to a variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stemmer</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at a few words.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">to_stem</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;books&#39;</span><span class="p">,</span> <span class="s1">&#39;having&#39;</span><span class="p">,</span> <span class="s1">&#39;running&#39;</span><span class="p">,</span> <span class="s1">&#39;complicated&#39;</span><span class="p">,</span> <span class="s1">&#39;complicity&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">to_stem</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">word</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> =&gt; </span><span class="si">{</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>books      =&gt; book
+having     =&gt; have
+running    =&gt; run
+complicated =&gt; complic
+complicity =&gt; complic
+</pre></div>
+</div>
+</div>
+</div>
+<p>There’s a lot of potential value in enacting these transformations. So far we
+haven’t developed a method for handling plurals; the stemmer can take care of
+them. Likewise, it usefully merges “have” with “having.” It would be difficult
+to come up with a custom algorithm that could handle the complexities of such a
+transformation.</p>
+<p>That said, the problem with stemming is that the process is rule-based and
+struggles with certain words. It can inadvertently merge what should be two
+separate words, as with “complicated” and “complicity” both becoming “complic.”
+And more, “complic” isn’t really a word. How would we know what it means when
+looking at word distributions?</p>
+</section>
+<section id="lemmatizing">
+<h3><span class="section-number">3.4.2. </span>Lemmatizing<a class="headerlink" href="#lemmatizing" title="Permalink to this headline">#</a></h3>
+<p><strong>Lemmatizing</strong> solves some of these problems, though at the cost of more
+complexity. Like stemming, lemmatization removes the inflectional forms of
+words. While it tends to be more conservative in its approach, it is better at
+avoiding lexical merges like “complic.” More, the result of lemmatization is
+always a fully readable word.</p>
+<section id="part-of-speech-tags-and-dependency-parsing">
+<h4><span class="section-number">3.4.2.1. </span>Part-of-speech tags and dependency parsing<a class="headerlink" href="#part-of-speech-tags-and-dependency-parsing" title="Permalink to this headline">#</a></h4>
+<p>Lemmatizers can do all this because they use the context provided by
+<strong>part-of-speech tags</strong> (POS tags). To get the best results, you need to pipe
+in a tag for each word, which the lemmatizer uses to make its decisions. In
+principle, this is easy enough to do. Libraries like <code class="docutils literal notranslate"><span class="pre">nltk</span></code> can assign POS tags
+through a process called <strong>dependency parsing</strong>. This process analyzes the
+grammatical structure of a text string and tags words accordingly.</p>
+<p>But now for the catch: to work at their best, <em>dependency parsers require both
+stop words and some punctuation marks</em>. Because of this, if you know you want
+to lemmatize your text, you’ll need to tag your text before doing other steps
+in the text cleaning process. Many lemmatizers also rely on assumptions made by
+associated tokenization processes, so it’s best to use those processes when
+lemmatizing.</p>
+<p>A revised text cleaning workflow with the above considerations in mind would
+look like this:</p>
+<ol class="arabic simple">
+<li><p>Tokenize with an automatic tokenizer</p></li>
+<li><p>Assign POS tags</p></li>
+<li><p>Lemmatize</p></li>
+<li><p>Remove punctuation</p></li>
+<li><p>Remove numbers</p></li>
+<li><p>Remove extra whitespace</p></li>
+<li><p>Remove stop words</p></li>
+</ol>
+</section>
+<section id="sample-lemmatization-workflow">
+<h4><span class="section-number">3.4.2.2. </span>Sample lemmatization workflow<a class="headerlink" href="#sample-lemmatization-workflow" title="Permalink to this headline">#</a></h4>
+<p>We won’t do all of this for <em>Frankenstein</em>, but in the next session, when we
+start to use classification models to understand the difference between texts,
+we will. For now, we’ll demonstrate an example of POS tagging using the <code class="docutils literal notranslate"><span class="pre">nltk</span></code>
+tokenizer in concert with its lemmatizer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;The strong coffee, which I had after lunch, was $3. </span>
+<span class="s2">It kept me going the rest of the day.&quot;&quot;&quot;</span>
+
+<span class="n">tokenized</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokenized</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The
+strong
+coffee
+,
+which
+I
+had
+after
+lunch
+,
+was
+$
+3
+.
+It
+kept
+me
+going
+the
+rest
+of
+the
+day
+.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Assigning POS tags:</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">What does each tag mean?</p>
+<p><code class="docutils literal notranslate"><span class="pre">nltk</span></code> Uses the Penn TreeBank tags, which you can find <a class="reference external" href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">here</a>. If the
+tagger receives a punctuation mark that isn’t one of its special cases, it
+simply repeats that mark.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tagged</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">pos_tag</span><span class="p">(</span><span class="n">tokenized</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tagged</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;The&#39;, &#39;DT&#39;)
+(&#39;strong&#39;, &#39;JJ&#39;)
+(&#39;coffee&#39;, &#39;NN&#39;)
+(&#39;,&#39;, &#39;,&#39;)
+(&#39;which&#39;, &#39;WDT&#39;)
+(&#39;I&#39;, &#39;PRP&#39;)
+(&#39;had&#39;, &#39;VBD&#39;)
+(&#39;after&#39;, &#39;IN&#39;)
+(&#39;lunch&#39;, &#39;NN&#39;)
+(&#39;,&#39;, &#39;,&#39;)
+(&#39;was&#39;, &#39;VBD&#39;)
+(&#39;$&#39;, &#39;$&#39;)
+(&#39;3&#39;, &#39;CD&#39;)
+(&#39;.&#39;, &#39;.&#39;)
+(&#39;It&#39;, &#39;PRP&#39;)
+(&#39;kept&#39;, &#39;VBD&#39;)
+(&#39;me&#39;, &#39;PRP&#39;)
+(&#39;going&#39;, &#39;VBG&#39;)
+(&#39;the&#39;, &#39;DT&#39;)
+(&#39;rest&#39;, &#39;NN&#39;)
+(&#39;of&#39;, &#39;IN&#39;)
+(&#39;the&#39;, &#39;DT&#39;)
+(&#39;day&#39;, &#39;NN&#39;)
+(&#39;.&#39;, &#39;.&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Time to lemmatize. We do so in two steps. First, we need to convert the POS
+tags <code class="docutils literal notranslate"><span class="pre">nltk</span></code> produces to tags that this lemmatizer expects. We did say this is
+more complicated!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wordnet</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">corpus</span><span class="o">.</span><span class="n">wordnet</span>
+
+<span class="k">def</span> <span class="nf">convert_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a TreeBank tag to a WordNet tag.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">):</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">wordnet</span><span class="o">.</span><span class="n">ADJ</span>
+    <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">):</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">wordnet</span><span class="o">.</span><span class="n">VERB</span>
+    <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">):</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">wordnet</span><span class="o">.</span><span class="n">NOUN</span>
+    <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;R&#39;</span><span class="p">):</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">wordnet</span><span class="o">.</span><span class="n">ADV</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="n">tag</span>
+
+<span class="n">tagged</span> <span class="o">=</span> <span class="p">[(</span><span class="n">word</span><span class="p">,</span> <span class="n">convert_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tagged</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can lemmatize.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Some error handling</p>
+<p>The method we’re using will fail on empty POS strings, so we need to be sure
+not to send it any.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lemmatize a word.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+<span class="n">lemmatized</span> <span class="o">=</span> <span class="p">[</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tagged</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Joining the list entries back into a string will give the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joined</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lemmatized</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">joined</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The strong coffee , which I have after lunch , be $ 3 . It keep me go the rest of the day .
+</pre></div>
+</div>
+</div>
+</div>
+<p>From here, pass this string back through the cleaning steps we’ve already
+covered.</p>
+</section>
+</section>
+</section>
+<section id="chunking-with-n-grams">
+<h2><span class="section-number">3.5. </span>Chunking with N-Grams<a class="headerlink" href="#chunking-with-n-grams" title="Permalink to this headline">#</a></h2>
+<p>We are now finished cleaning text. The last thing we’ll discuss in this session
+is <strong>chunking</strong>. Chunking is closely related to tokenization. It involves
+breaking text into multi-token spans. This is useful if you want to find
+phrases in data, or even entities. For example, all the steps above would
+dissolve “New York” into “new” and “york.” A multi-token span, on the other
+hand, would keep this string intact.</p>
+<p>In this sense, it’s often useful to count not only single words in text, but
+continuous two-word strings, or even longer ones. These strings are called
+<strong>n-grams</strong>, where <em>n</em> is the number of tokens in the span. “Bigrams” are
+two-token spans.” “Trigrams” have three tokens, while “4-grams” and “5-grams”
+have four and five tokens, respectively. Technically, there’s no limit to
+n-gram sizes, though their usefulness depend on your data and research
+questions.</p>
+<p>To finish this chapter, we’ll produce bigram counts on <em>Frankenstein</em>. <code class="docutils literal notranslate"><span class="pre">nltk</span></code>
+has built-in functionality to help us do so. There are a few options here.
+We’ll use objects from the <code class="docutils literal notranslate"><span class="pre">collocations</span></code> module.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">BigramCollocationFinder</span></code> will find the bigrams.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">finder</span> <span class="o">=</span> <span class="n">collocations</span><span class="o">.</span><span class="n">BigramCollocationFinder</span><span class="o">.</span><span class="n">from_words</span><span class="p">(</span><span class="n">stopped</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Accessing its <code class="docutils literal notranslate"><span class="pre">ngram_fd</span></code> attribute generates counts, which we’ll store in a
+<code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bigrams</span> <span class="o">=</span> <span class="n">finder</span><span class="o">.</span><span class="n">ngram_fd</span>
+
+<span class="n">bigrams</span> <span class="o">=</span> <span class="p">[(</span><span class="n">word</span><span class="p">,</span> <span class="n">pair</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pair</span><span class="p">),</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">bigrams</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+<span class="n">bigrams</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bigrams</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="s1">&#39;pair&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">))</span>
+<span class="n">bigrams</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Top bigrams:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bigrams</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>pair</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>826</th>
+      <td>old</td>
+      <td>man</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>623</th>
+      <td>native</td>
+      <td>country</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>3333</th>
+      <td>natural</td>
+      <td>philosophy</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>6999</th>
+      <td>taken</td>
+      <td>place</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>5901</th>
+      <td>fellow</td>
+      <td>creatures</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>3395</th>
+      <td>dear</td>
+      <td>victor</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>6784</th>
+      <td>short</td>
+      <td>time</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>7606</th>
+      <td>young</td>
+      <td>man</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2631</th>
+      <td>long</td>
+      <td>time</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2434</th>
+      <td>poor</td>
+      <td>girl</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Looks good! Some phrases are peeking through. But while raw counts provide us
+with information about frequently occurring phrases in text, it’s hard to know
+how <em>unique</em> these phrases are. For example, “man” appears throughout the
+novel, so it’s likely to appear in many bigrams. How, then, might we determine
+whether there’s something unique about whether “old” and “man” consistently
+stick together?</p>
+<p>One way to do this is with a PMI, or <strong>pointwise mutual information</strong>, score.
+PMI measures the association strength of a pair of outcomes. In our case, the
+higher the score, the more likely a given bigram pair will be with respect to
+the other bigrams in which the two words of the one under consideration.</p>
+<p>We can get a PMI score for each bigram using our finder’s <code class="docutils literal notranslate"><span class="pre">.score_ngrams()</span></code>
+method in concert with a <code class="docutils literal notranslate"><span class="pre">BigramAssocMeasures</span></code> object. As before, we will
+format the result for a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measures</span> <span class="o">=</span> <span class="n">collocations</span><span class="o">.</span><span class="n">BigramAssocMeasures</span><span class="p">()</span>
+
+<span class="n">bigram_pmi</span> <span class="o">=</span> <span class="n">finder</span><span class="o">.</span><span class="n">score_ngrams</span><span class="p">(</span><span class="n">measures</span><span class="o">.</span><span class="n">pmi</span><span class="p">)</span>
+<span class="n">bigram_pmi</span> <span class="o">=</span> <span class="p">[(</span><span class="n">word</span><span class="p">,</span> <span class="n">pair</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pair</span><span class="p">),</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">bigram_pmi</span><span class="p">]</span>
+<span class="n">bigram_pmi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bigram_pmi</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="s1">&#39;pair&#39;</span><span class="p">,</span> <span class="s1">&#39;pmi&#39;</span><span class="p">))</span>
+<span class="n">bigram_pmi</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;pmi&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>10 bottom-most scoring bigrams:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bigram_pmi</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>pair</th>
+      <th>pmi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>29025</th>
+      <td>eyes</td>
+      <td>eyes</td>
+      <td>1.491758</td>
+    </tr>
+    <tr>
+      <th>29026</th>
+      <td>eyes</td>
+      <td>shall</td>
+      <td>1.477952</td>
+    </tr>
+    <tr>
+      <th>29027</th>
+      <td>man</td>
+      <td>saw</td>
+      <td>1.293655</td>
+    </tr>
+    <tr>
+      <th>29028</th>
+      <td>saw</td>
+      <td>man</td>
+      <td>1.293655</td>
+    </tr>
+    <tr>
+      <th>29029</th>
+      <td>father</td>
+      <td>father</td>
+      <td>1.252280</td>
+    </tr>
+    <tr>
+      <th>29030</th>
+      <td>life</td>
+      <td>father</td>
+      <td>1.226969</td>
+    </tr>
+    <tr>
+      <th>29031</th>
+      <td>man</td>
+      <td>eyes</td>
+      <td>1.147804</td>
+    </tr>
+    <tr>
+      <th>29032</th>
+      <td>man</td>
+      <td>shall</td>
+      <td>1.133998</td>
+    </tr>
+    <tr>
+      <th>29033</th>
+      <td>shall</td>
+      <td>man</td>
+      <td>1.133998</td>
+    </tr>
+    <tr>
+      <th>29034</th>
+      <td>man</td>
+      <td>father</td>
+      <td>1.028065</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And 10 random bigrams with scores above the 75th percentile.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bigram_pmi</span><span class="p">[</span><span class="n">bigram_pmi</span><span class="p">[</span><span class="s1">&#39;pmi&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">bigram_pmi</span><span class="p">[</span><span class="s1">&#39;pmi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>pair</th>
+      <th>pmi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6577</th>
+      <td>glaciers</td>
+      <td>hide</td>
+      <td>10.500320</td>
+    </tr>
+    <tr>
+      <th>1023</th>
+      <td>grant</td>
+      <td>prayer</td>
+      <td>13.307675</td>
+    </tr>
+    <tr>
+      <th>2288</th>
+      <td>injuries</td>
+      <td>inflict</td>
+      <td>12.307675</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>staggered</td>
+      <td>proof</td>
+      <td>12.570710</td>
+    </tr>
+    <tr>
+      <th>6443</th>
+      <td>solitary</td>
+      <td>grandeur</td>
+      <td>10.570710</td>
+    </tr>
+    <tr>
+      <th>551</th>
+      <td>fervent</td>
+      <td>longing</td>
+      <td>13.892638</td>
+    </tr>
+    <tr>
+      <th>1344</th>
+      <td>break</td>
+      <td>pour</td>
+      <td>12.892638</td>
+    </tr>
+    <tr>
+      <th>1871</th>
+      <td>france</td>
+      <td>lyons</td>
+      <td>12.570710</td>
+    </tr>
+    <tr>
+      <th>568</th>
+      <td>gaolers</td>
+      <td>turnkeys</td>
+      <td>13.892638</td>
+    </tr>
+    <tr>
+      <th>4987</th>
+      <td>address</td>
+      <td>pause</td>
+      <td>10.985747</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Among the worst-scoring bigrams there are words that are likely to appear
+alongside many different words: “said,” “man,” “shall,” etc. On the other hand,
+among the best-scoring bigrams there are coherent entities and suggestive
+pairings. The latter especially begin to sketch out the specific qualities of
+Shelley’s prose style.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_from-text-to-data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>From Text to Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_corpus-analytics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Corpus Analytics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">3.1. Preliminaries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">3.1.1. Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">3.1.2. Setup</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-cleaning">3.2. Basic Cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-normalization">3.2.1. Case normalization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-punctuation">3.2.2. Removing Punctuation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-numbers">3.2.3. Removing numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-formatting">3.2.4. Text formatting</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stopword-removal">3.3. Stopword Removal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-frequency-words">3.3.1. High frequency words</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-a-stop-list">3.3.2. Defining a stop list</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-cleaning">3.4. Advanced Cleaning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming">3.4.1. Stemming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lemmatizing">3.4.2. Lemmatizing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-of-speech-tags-and-dependency-parsing">3.4.2.1. Part-of-speech tags and dependency parsing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-lemmatization-workflow">3.4.2.2. Sample lemmatization workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-with-n-grams">3.5. Chunking with N-Grams</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tyler Shoemaker and Carl Stahmer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+  <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"> 
+</a>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

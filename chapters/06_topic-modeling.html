@@ -1,0 +1,2590 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en-us" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>6. Topic Modeling &#8212; Getting Started with Textual Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/06_topic-modeling';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Assessment" href="90_assessment.html" />
+    <link rel="prev" title="5. Clustering and Classification" href="05_clustering-and-classification.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en-us"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/datalab-logo-full-color-rgb.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Overview
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_logistics.html">1. Before We Begin…</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_from-text-to-data.html">2. From Text to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_cleaning-and-counting.html">3. Cleaning and Counting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_corpus-analytics.html">4. Corpus Analytics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_clustering-and-classification.html">5. Clustering and Classification</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Topic Modeling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assessment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="90_assessment.html">Assessment</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ucdavisdatalab/workshop_getting_started_with_textual_data/issues/new?title=Issue%20on%20page%20%2Fchapters/06_topic-modeling.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/06_topic-modeling.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic Modeling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topic-modeling-introduction">6.1. Topic Modeling: Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">6.2. Preliminaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-topic-model">6.3. Building a Topic Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-a-corpus">6.3.1. Initializing a corpus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-a-model">6.3.2. Initializing a model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-model">6.3.3. Training a model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-the-results">6.3.4. Inspecting the results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-the-basics">6.4. Fine Tuning: The Basics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-topics">6.4.1. Number of topics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perplexity">6.4.2. Perplexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coherence">6.4.3. Coherence</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-advanced">6.5. Fine Tuning: Advanced</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters-alpha-and-eta">6.5.1. Hyperparameters: alpha and eta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-hyperparameter-values">6.5.2. Choosing hyperparameter values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-configuration">6.5.3. Final configuration</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-exploration">6.6. Model Exploration</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-modeling">
+<h1><span class="section-number">6. </span>Topic Modeling<a class="headerlink" href="#topic-modeling" title="Permalink to this headline">#</a></h1>
+<p>This final chapter follows from the previous chapter’s use of cosine
+similarity. The latter used this metric to cluster obituaries into broad
+categories based on what those obituaries were about. Similarly, in this
+chapter we’ll use <strong>topic modeling</strong> to identify the thematic content of a
+corpus and, on this basis, associate themes with individual documents.</p>
+<p>As we’ll discuss below, human interpretation plays a key role in this process:
+topic models produce textual structures, but it’s on us to give those
+structures meaning. Doing so is an iterative process, in which we <strong>fine tune</strong>
+various aspects of a model to effectively represent our corpus. This chapter
+will show you how to build a model, how to appraise it, and how to start
+iterating through the process of fine tuning to produce a model that best
+serves your research questions.</p>
+<p>To do so, we’ll use a corpus of book blurbs sampled from the U. Hamburg
+Language Technology Group’s <a class="reference external" href="https://www.inf.uni-hamburg.de/en/inst/ab/lt/resources/data/blurb-genre-collection.html">Blurb Genre Collection</a>. The collection
+contains ~92,000 blurbs from Penguin Random House, ranging from Colson
+Whitehead’s books to steamy supermarket romances and self-help manuals. We’ll
+use just 1,500 – not so much that we’d be stuck waiting for hours for models to
+train, but enough to get a broad sense of different topics among the blurbs.</p>
+<div class="admonition-learning-objectives admonition">
+<p class="admonition-title">Learning Objectives</p>
+<p>By the end of this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Explain what a topic model is, what it represents, and how to use one to
+explore a corpus</p></li>
+<li><p>Build a topic model</p></li>
+<li><p>Use two scoring metrics, perplexity and coherence, to appraise the quality of
+a model</p></li>
+<li><p>Understand how to improve a model by fine tuning its number of topics and its
+hyperparameters</p></li>
+</ul>
+</div>
+<section id="topic-modeling-introduction">
+<h2><span class="section-number">6.1. </span>Topic Modeling: Introduction<a class="headerlink" href="#topic-modeling-introduction" title="Permalink to this headline">#</a></h2>
+<aside class="margin sidebar">
+<p class="sidebar-title">Citations</p>
+<p>This description of topic modeling is influenced by Ted Underwood’s very
+effective <a class="reference external" href="https://tedunderwood.com/2012/04/07/topic-modeling-made-just-simple-enough/">explanation</a>. This <a class="reference external" href="http://www.cs.columbia.edu/~blei/papers/Blei2012.pdf">review article</a>, from David M.
+Blei (one of the original developers of the method), is also quite helpful.</p>
+</aside>
+<p>There are a few different flavors of topic models. We’ll be using the most
+popular one, a <strong>latent Dirichlet allocation</strong>, or LDA, model. It involves two
+assumptions: 1) documents are comprised of a mixture of topics; 2) topics are
+comprised of a mixture of words. An LDA model represents these mixtures in
+terms of probability distributions: a given passage, with a given set of words,
+is more or less likely to be about a particular topic, which is in turn more or
+less likely to be made up of a certain grouping of words.</p>
+<p>We initialize a model by predefining how many topics we think it should find.
+When the model begins training, it randomly guesses which words are most
+associated with which topic. But over the course of its training, it will start
+to keep track of the probabilities of recurrent word collocations: “river”,
+“bank,” and “water,” for example, might keep showing up together. This suggests
+some coherence, a possible grouping of words. A second topic, on the other
+hand, might have words like “money,” “bank,” and “robber.” The challenge here
+is that words belong to multiple topics. In this instance, given a single
+instance of “bank,” it could be in either the first or second topic. Given
+this, how does the model tell which topic a document containing the word “bank”
+is more strongly associated with?</p>
+<p>It does two things. First, the model tracks how often “bank” appears with its
+various collocates in the corpus. If “bank” is generally more likely to appear
+with “river” and “water” than “money” and “robber”, this weights the
+probability that this particular instance of “bank” belongs to the first topic.
+To put a check on this weighting, the model also tracks how often collocates of
+“bank” appear in the document in question. If, in this document, “river” and
+“water” appear more often than “robber” and “money,” then that will weight this
+instance of “bank” even further toward the first topic, not the second.</p>
+<p>Using these weightings as a basis, the model assigns a probability score for a
+document’s association with these two topics. This assignment will also inform
+the overall probability distribution of topics to words, which will then inform
+further document-topic associations, and so on. Over the course of this
+process, topics become more consistent and focused and their associations with
+documents become stronger and weaker, as appropriate.</p>
+<p>Here’s the formula that summarizes this process. Given topic <span class="math notranslate nohighlight">\(T\)</span>, word <span class="math notranslate nohighlight">\(W\)</span>, and
+document <span class="math notranslate nohighlight">\(D\)</span>, we determine the probability of <span class="math notranslate nohighlight">\(W\)</span> belonging to <span class="math notranslate nohighlight">\(T\)</span> with:</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Those two other letters…</p>
+<p>These represent hyperparameters, which we’ll discuss below.</p>
+</aside>
+<div class="math notranslate nohighlight">
+\[
+P(T|W,D) = \frac{\text{# of $W$ in } T + \eta_W}{\text{total tokens in } T + \eta}
+\cdot (\text{# words in $D$ that belong to } T + \alpha)
+\]</div>
+</section>
+<section id="preliminaries">
+<h2><span class="section-number">6.2. </span>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">#</a></h2>
+<p>Before we begin building a model, we’ll load the libraries we need and our
+data. As we’ve done in past chapters, we use a file manifest to keep track of
+things.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">tomotopy</span> <span class="k">as</span> <span class="nn">tp</span>
+<span class="kn">from</span> <span class="nn">tomotopy.utils</span> <span class="kn">import</span> <span class="n">Corpus</span>
+<span class="kn">from</span> <span class="nn">tomotopy.coherence</span> <span class="kn">import</span> <span class="n">Coherence</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pyLDAvis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our input directory:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/session_three&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And our manifest:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;manifest.csv&quot;</span><span class="p">),</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;pub_date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">manifest</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 1500 entries, 0 to 1499
+Data columns (total 7 columns):
+ #   Column     Non-Null Count  Dtype 
+---  ------     --------------  ----- 
+ 0   author     1500 non-null   object
+ 1   title      1500 non-null   object
+ 2   genre      1500 non-null   object
+ 3   pub_date   1500 non-null   object
+ 4   isbn       1500 non-null   int64 
+ 5   file_name  1500 non-null   object
+ 6   year       1500 non-null   int32 
+dtypes: int32(1), int64(1), object(5)
+memory usage: 87.9+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>A small snapshot of its contents:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of blurbs: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pub dates: </span><span class="si">{</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> -- </span><span class="si">{</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genres: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;genre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of blurbs: 1500
+Pub dates: 1958 -- 2018
+Genres: Fiction, Classics, Nonfiction, Children’s Books, Teen &amp; Young Adult, Poetry, Humor
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-topic-model">
+<h2><span class="section-number">6.3. </span>Building a Topic Model<a class="headerlink" href="#building-a-topic-model" title="Permalink to this headline">#</a></h2>
+<aside class="margin sidebar">
+<p class="sidebar-title">You may be asking…</p>
+<p>…why not use <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>? Well, there’s a <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/issues/6777">reported bug</a> in this
+implementation that has to do with a key metric we’ll be using later on.</p>
+</aside>
+<p>With our preliminary work done, we’re ready to build a topic model. There are
+numerous implementations of LDA modeling available, ranging from the command
+line utility, <a class="reference external" href="https://mimno.github.io/Mallet/">MALLET</a>, to built-in APIs offered by both <code class="docutils literal notranslate"><span class="pre">gensim</span></code> and
+<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. We will be using <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code>, a Python wrapper built around the
+C++ topic modeling too, Tomato. Its API is fairly intuitive and comes with a
+lot of options, which we’ll leverage to build the best possible model for our
+corpus.</p>
+<section id="initializing-a-corpus">
+<h3><span class="section-number">6.3.1. </span>Initializing a corpus<a class="headerlink" href="#initializing-a-corpus" title="Permalink to this headline">#</a></h3>
+<p>Before we build the model, we need to load the data on which it will be
+trained. We use <code class="docutils literal notranslate"><span class="pre">Corpus</span></code> to do so. Be sure to split each file into a list of
+tokens before adding it to this object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="n">Corpus</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;input/</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">corpus</span><span class="o">.</span><span class="n">add_doc</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initializing-a-model">
+<h3><span class="section-number">6.3.2. </span>Initializing a model<a class="headerlink" href="#initializing-a-model" title="Permalink to this headline">#</a></h3>
+<p>To initialize a model with <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code>, all we need is the corpus from above and
+the number of topics the model will generate. Determining how many topics to
+use is a matter of some debate and complexity, which you’ll learn more about
+below. For now, just pick a small number. We’ll also set a set for
+reproducibility.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seed</span> <span class="o">=</span> <span class="mi">357</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="training-a-model">
+<h3><span class="section-number">6.3.3. </span>Training a model<a class="headerlink" href="#training-a-model" title="Permalink to this headline">#</a></h3>
+<p>Our model is now ready to be trained. Under the hood, this happens in an
+iterative fashion, so we need to set the total number of iterations for the
+training. With that set, it’s simply a matter of calling <code class="docutils literal notranslate"><span class="pre">.train()</span></code>.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Number of iterations</p>
+<p>Deciding on the number of iterations to use takes some tweaking. You can assume
+that the number set here will allow a model to properly <a class="reference external" href="https://machine-learning.paperspace.com/wiki/convergence">converge</a>
+for this data.</p>
+</aside>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iters</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inspecting-the-results">
+<h3><span class="section-number">6.3.4. </span>Inspecting the results<a class="headerlink" href="#inspecting-the-results" title="Permalink to this headline">#</a></h3>
+<p>Let’s look at the trained model. For each topic, we can get the words that are
+most associated with it. The accompanying score is the probability of that word
+appearing in the topic.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">top_words</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the top words for topic k in a model.&quot;&quot;&quot;</span>
+    <span class="n">top_words</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic_id</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">top_words</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">%)&quot;</span> <span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span> <span class="ow">in</span> <span class="n">top_words</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Topic </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: history (0.0102%), world (0.0101%), story (0.0089%), american (0.0083%), new (0.0081%)
+Topic 1: book (0.0130%), guide (0.0079%), use (0.0076%), life (0.0063%), include (0.0059%)
+Topic 2: life (0.0194%), love (0.0107%), new (0.0090%), year (0.0090%), woman (0.0089%)
+Topic 3: book (0.0154%), little (0.0081%), make (0.0078%), best (0.0068%), new (0.0068%)
+Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>These results make intuitive sense: we’re dealing with several hundred book
+blurbs, so we’d expect to see words like “book,” “reader,” and “new.”</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.get_topic_dist()</span></code> method performs a similar function, but for a document.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doc_topic_dist</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the topic distribution for a document.&quot;&quot;&quot;</span>
+    <span class="n">topics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">get_topic_dist</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topics</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ Topic #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">prob</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="n">random_title</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">doc_topic_dist</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">random_title</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+ Topic #0: 0.07%
++ Topic #1: 0.17%
++ Topic #2: 0.23%
++ Topic #3: 0.02%
++ Topic #4: 0.52%
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> also offers some shorthand to produce the top topics for a document.
+Below, we sample from our manifest, send the indexes to our model, and retrieve
+top topics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampled_titles</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">sampled_titles</span><span class="p">:</span>
+    <span class="n">top_topics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">get_topics</span><span class="p">(</span><span class="n">top_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">topic</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">top_topics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: #</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Privileged Information: #1 (0.28%)
+The Paranormal: #1 (0.47%)
+What a Lady Craves: #2 (0.61%)
+Mrs. Kaputnik&#39;s Pool Hall and Matzo Ball Emporium: #4 (0.33%)
+The Lost Daughter: #2 (0.67%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s possible to get even more granular. Every word in a document in a document
+has its own associated topic, which will change depending on the document. This
+is about as close to context-sensitive semantics as we can get with this
+method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">random_title</span><span class="p">]</span>
+<span class="n">word_to_topic</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">doc</span><span class="o">.</span><span class="n">topics</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">word</span><span class="p">,</span> <span class="n">topic</span> <span class="o">=</span> <span class="n">word_to_topic</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+ year (2)
++ colossal (4)
++ battle (4)
++ megatron (4)
++ optimus (4)
++ prime (4)
++ captivate (2)
++ transformers (4)
++ fan (4)
++ world (4)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s zoom out to the level of the corpus and retrieve the topic probability
+distribution for each document. In the literature, this is called the
+<strong>theta</strong>. More informally, we’ll refer to it as the <strong>document-topic matrix</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_theta</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the theta matrix from a model.&quot;&quot;&quot;</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">doc</span><span class="o">.</span><span class="n">get_topic_dist</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">docs</span><span class="p">])</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">theta</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">get_theta</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+<span class="n">theta</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+    </tr>
+    <tr>
+      <th>title</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>After Atlas</th>
+      <td>0.113308</td>
+      <td>0.081607</td>
+      <td>0.352574</td>
+      <td>0.029556</td>
+      <td>0.422954</td>
+    </tr>
+    <tr>
+      <th>Ragged Dick and Struggling Upward</th>
+      <td>0.688176</td>
+      <td>0.047536</td>
+      <td>0.134876</td>
+      <td>0.107657</td>
+      <td>0.021755</td>
+    </tr>
+    <tr>
+      <th>The Shape of Snakes</th>
+      <td>0.171699</td>
+      <td>0.009422</td>
+      <td>0.325449</td>
+      <td>0.114915</td>
+      <td>0.378514</td>
+    </tr>
+    <tr>
+      <th>The Setting Sun</th>
+      <td>0.284472</td>
+      <td>0.033805</td>
+      <td>0.492601</td>
+      <td>0.109370</td>
+      <td>0.079752</td>
+    </tr>
+    <tr>
+      <th>Stink and the Shark Sleepover</th>
+      <td>0.011927</td>
+      <td>0.052131</td>
+      <td>0.276666</td>
+      <td>0.469876</td>
+      <td>0.189400</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Greetings From Angelus</th>
+      <td>0.848809</td>
+      <td>0.035545</td>
+      <td>0.088243</td>
+      <td>0.023748</td>
+      <td>0.003655</td>
+    </tr>
+    <tr>
+      <th>Peppa Pig's Pop-up Princess Castle</th>
+      <td>0.169732</td>
+      <td>0.011254</td>
+      <td>0.035234</td>
+      <td>0.755861</td>
+      <td>0.027919</td>
+    </tr>
+    <tr>
+      <th>What Should the Left Propose?</th>
+      <td>0.399707</td>
+      <td>0.420762</td>
+      <td>0.134537</td>
+      <td>0.038993</td>
+      <td>0.006002</td>
+    </tr>
+    <tr>
+      <th>Peter and the Wolf</th>
+      <td>0.298455</td>
+      <td>0.123670</td>
+      <td>0.109557</td>
+      <td>0.367842</td>
+      <td>0.100477</td>
+    </tr>
+    <tr>
+      <th>Macedonia</th>
+      <td>0.343510</td>
+      <td>0.112836</td>
+      <td>0.288597</td>
+      <td>0.113768</td>
+      <td>0.141289</td>
+    </tr>
+  </tbody>
+</table>
+<p>1500 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>It’s often helpful to know how large each topic is. There’s a caveat here,
+however, in that each word in the model technically belongs to each topic, so
+it’s somewhat of a heuristic to say that a topic’s size is <span class="math notranslate nohighlight">\(n\)</span> words.
+<code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> derives the output below by multiplying each column of the theta
+matrix by the document lengths in the corpus. It then sums the results for each
+topic.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_sizes</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of words per topic:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ Topic #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">topic_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> words&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of words per topic:
++ Topic #0: 22269 words
++ Topic #1: 25184 words
++ Topic #2: 33400 words
++ Topic #3: 25518 words
++ Topic #4: 20294 words
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, using the <code class="docutils literal notranslate"><span class="pre">num_words</span></code> attribute we can express this as percentages:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Topic proportion across the corpus:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ Topic #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">topic_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">num_words</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic proportion across the corpus:
++ Topic #0: 0.18%
++ Topic #1: 0.20%
++ Topic #2: 0.26%
++ Topic #3: 0.20%
++ Topic #4: 0.16%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="fine-tuning-the-basics">
+<h2><span class="section-number">6.4. </span>Fine Tuning: The Basics<a class="headerlink" href="#fine-tuning-the-basics" title="Permalink to this headline">#</a></h2>
+<p>Everything is working so far. But our topics are extremely general. More, their
+total proportions across the corpus are relatively homogeneous. This may be an
+indicator that our model has not been fitted to our corpus particularly well.</p>
+<p>Looking at the word-by-word topic distributions for a document from above shows
+this well. Below, we once again print those out, but we’ll add the top words
+for each topic in general.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">word</span><span class="p">,</span> <span class="n">topic</span> <span class="o">=</span> <span class="n">word_to_topic</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Word: </span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">topic</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word: year
+Topic 2: life (0.0194%), love (0.0107%), new (0.0090%), year (0.0090%), woman (0.0089%)
+Word: colossal
+Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
+Word: battle
+Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
+Word: megatron
+Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
+Word: optimus
+Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It would appear that the actual words in a document do not really match the top
+words for its associated topic. This suggests that we need to make adjustments
+to the way we initialize our model so that it better reflects the specifics of
+our corpus.</p>
+<p>But there are several different parameters to adjust. So what should we change?</p>
+<section id="number-of-topics">
+<h3><span class="section-number">6.4.1. </span>Number of topics<a class="headerlink" href="#number-of-topics" title="Permalink to this headline">#</a></h3>
+<p>An easy answer would be the number of topics. If, as above, your topics seem
+too general, it may be because you’ve set too small a number of topics for the
+model. Let’s set a higher number of topics for our model and see what changes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model10</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+<span class="n">model10</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model10</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">model10</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: book (0.0278%), story (0.0143%), little (0.0117%), child (0.0112%), reader (0.0105%)
+Topic 1: war (0.0182%), political (0.0127%), world (0.0108%), america (0.0103%), power (0.0099%)
+Topic 2: new (0.0222%), life (0.0204%), story (0.0179%), world (0.0120%), great (0.0117%)
+Topic 3: work (0.0147%), history (0.0107%), art (0.0106%), volume (0.0105%), classic (0.0099%)
+Topic 4: secret (0.0119%), man (0.0087%), new (0.0086%), mystery (0.0083%), murder (0.0077%)
+Topic 5: book (0.0150%), life (0.0100%), use (0.0084%), help (0.0066%), include (0.0062%)
+Topic 6: world (0.0105%), battle (0.0076%), new (0.0067%), star (0.0059%), tale (0.0054%)
+Topic 7: life (0.0248%), love (0.0226%), woman (0.0178%), family (0.0146%), year (0.0129%)
+Topic 8: food (0.0157%), recipe (0.0137%), guide (0.0131%), new (0.0082%), top (0.0078%)
+Topic 9: make (0.0140%), just (0.0126%), new (0.0110%), time (0.0110%), like (0.0101%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>That looks better! Adding more topics spreads out the word distributions. Given
+that, what if we increased the number of topics even more?</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model30</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+<span class="n">model30</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model30</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">model30</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: recipe (0.0313%), food (0.0255%), family (0.0142%), italian (0.0128%), meal (0.0106%)
+Topic 1: new (0.0276%), make (0.0178%), just (0.0175%), time (0.0141%), like (0.0140%)
+Topic 2: life (0.0384%), love (0.0193%), year (0.0189%), family (0.0185%), old (0.0126%)
+Topic 3: book (0.0363%), new (0.0302%), times (0.0277%), york (0.0251%), story (0.0214%)
+Topic 4: history (0.0253%), american (0.0189%), year (0.0171%), story (0.0169%), great (0.0166%)
+Topic 5: school (0.0259%), kid (0.0178%), little (0.0176%), animal (0.0170%), child (0.0167%)
+Topic 6: music (0.0360%), japanese (0.0207%), tale (0.0153%), junie (0.0094%), rock (0.0094%)
+Topic 7: art (0.0295%), artist (0.0181%), work (0.0172%), president (0.0123%), portrait (0.0115%)
+Topic 8: book (0.0252%), guide (0.0192%), use (0.0177%), learn (0.0167%), step (0.0155%)
+Topic 9: mystery (0.0246%), murder (0.0244%), killer (0.0129%), police (0.0117%), dead (0.0114%)
+Topic 10: city (0.0265%), rule (0.0091%), old (0.0087%), light (0.0084%), paul (0.0081%)
+Topic 11: book (0.0356%), story (0.0237%), adventure (0.0185%), reader (0.0177%), classic (0.0154%)
+Topic 12: life (0.0258%), practice (0.0205%), spiritual (0.0165%), art (0.0126%), peace (0.0115%)
+Topic 13: van (0.0134%), whale (0.0089%), bee (0.0082%), plant (0.0074%), riley (0.0074%)
+Topic 14: god (0.0551%), jesus (0.0162%), religious (0.0162%), bible (0.0143%), spiritual (0.0124%)
+Topic 15: world (0.0231%), poem (0.0209%), collection (0.0156%), tree (0.0151%), feel (0.0133%)
+Topic 16: penguin (0.0234%), work (0.0213%), classic (0.0184%), literature (0.0180%), text (0.0176%)
+Topic 17: black (0.0218%), jane (0.0176%), vampire (0.0144%), aunt (0.0097%), queen (0.0097%)
+Topic 18: game (0.0237%), team (0.0180%), baseball (0.0165%), sport (0.0149%), hockey (0.0118%)
+Topic 19: health (0.0184%), body (0.0154%), healthy (0.0143%), weight (0.0131%), food (0.0124%)
+Topic 20: king (0.0268%), london (0.0214%), elizabeth (0.0111%), england (0.0107%), life (0.0103%)
+Topic 21: sea (0.0195%), ship (0.0164%), planet (0.0133%), island (0.0130%), human (0.0120%)
+Topic 22: life (0.0213%), people (0.0157%), book (0.0157%), change (0.0121%), way (0.0121%)
+Topic 23: human (0.0122%), social (0.0116%), book (0.0106%), political (0.0101%), include (0.0095%)
+Topic 24: dark (0.0143%), power (0.0137%), secret (0.0128%), face (0.0122%), world (0.0113%)
+Topic 25: travel (0.0217%), new (0.0177%), guide (0.0177%), eyewitness (0.0168%), top (0.0163%)
+Topic 26: christmas (0.0325%), cole (0.0157%), holiday (0.0119%), longarm (0.0119%), town (0.0103%)
+Topic 27: star (0.0278%), lego (0.0182%), wars (0.0177%), action (0.0118%), group (0.0118%)
+Topic 28: woman (0.0356%), love (0.0241%), man (0.0212%), heart (0.0149%), romance (0.0141%)
+Topic 29: war (0.0377%), world (0.0187%), military (0.0118%), soldier (0.0107%), battle (0.0105%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This also looks pretty solid. The two models appear to share topics, but the
+second model, which has a higher number of topics, includes a wider range of
+words in the top word distribution. While all that seems well and good, we
+don’t yet have a way to determine whether an increase in the number of topics
+will always produce more interpretable results. At some point, we might start
+splitting hairs. In fact, we can already see this beginning to happen in a few
+instances in the second model.</p>
+<p>So the question is, what is an ideal number of topics?</p>
+<p>One way to approach this question would be to run through a range of different
+topic sizes and inspect the results for each. In some cases, it can be
+perfectly valid to pick the number of topics that’s most interpretable for you
+and the questions you have about your corpus. But there are also a few metrics
+available that will assess the quality of a given model in terms of the
+underlying data it represents. Sometimes these metrics lead to models that
+aren’t quite as interpretable, but they also help us make a more empirically
+grounded assessment of the resultant topics.</p>
+</section>
+<section id="perplexity">
+<h3><span class="section-number">6.4.2. </span>Perplexity<a class="headerlink" href="#perplexity" title="Permalink to this headline">#</a></h3>
+<p>The first of these measures is <strong>perplexity</strong>. In text analysis, we use
+perplexity scoring to evaluate how well a model predicts an sample sequence of
+words. Essentially, it measures how “surprised” a model is by that sequence.
+The lower the perplexity, the more your model is capable of mapping predictions
+against the data it was trained on.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">More on perplexity</p>
+<p>If you’d like to read more about perplexity, <a class="reference external" href="https://towardsdatascience.com/perplexity-intuition-and-derivation-105dd481c8f3">this post</a> offers a good
+walkthrough of the concept and its application to the kind of work we’re doing
+here.</p>
+</aside>
+<p>When you train a <code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> model object, the model records a perplexity score
+for the training run.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">(</span><span class="n">model10</span><span class="p">,</span> <span class="n">model30</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Perplexity for the </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">k</span><span class="si">}</span><span class="s2">-topic model: </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">perplexity</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perplexity for the 10-topic model: 10777.7660
+Perplexity for the 30-topic model: 10449.8925
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this instance, the model with more topics has a better perplexity score.
+This would suggest that the second model is better fitted to our data and is
+thus a “better” model.</p>
+<p>But can we do better? What if there’s a model with a better score that sits
+somewhere between these two topic numbers (or beyond them)? We can test to see
+whether this is the case by constructing a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, in which we iterate
+through a range of different topic numbers, train a model on each, and record
+the resultant scores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+<span class="n">p_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_range</span><span class="p">:</span>
+    <span class="n">_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="n">_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+    <span class="n">p_scores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;n_topics&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;perplexity&#39;</span><span class="p">:</span> <span class="n">_model</span><span class="o">.</span><span class="n">perplexity</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Convert the results to a DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">p_scores</span><span class="p">)</span>
+<span class="n">p_scores</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;perplexity&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">p_scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n_topics</th>
+      <th>perplexity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>19</th>
+      <td>29</td>
+      <td>10259.426721</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>18</td>
+      <td>10356.584460</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23</td>
+      <td>10443.413781</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>30</td>
+      <td>10449.892548</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>15</td>
+      <td>10458.080301</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>26</td>
+      <td>10469.298786</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24</td>
+      <td>10476.101149</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>21</td>
+      <td>10557.088274</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>22</td>
+      <td>10599.010769</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>27</td>
+      <td>10614.836784</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11</td>
+      <td>10616.506218</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20</td>
+      <td>10632.128637</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>25</td>
+      <td>10660.327686</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>28</td>
+      <td>10728.454395</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>13</td>
+      <td>10730.003636</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+      <td>10777.766018</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>17</td>
+      <td>10785.896924</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14</td>
+      <td>10861.638410</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>16</td>
+      <td>10912.364732</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12</td>
+      <td>10944.483263</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>19</td>
+      <td>10997.969707</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We’ll train a new model with the best score.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_k</span> <span class="o">=</span> <span class="n">p_scores</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;perplexity&#39;</span><span class="p">)[</span><span class="s1">&#39;n_topics&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">best_p</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+<span class="n">best_p</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the top words:</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">best_p</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">best_p</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: emma (0.0151%), sin (0.0120%), roy (0.0113%), sheriff (0.0090%), alpine (0.0075%)
+Topic 1: new (0.0199%), make (0.0176%), just (0.0152%), like (0.0142%), time (0.0131%)
+Topic 2: horse (0.0234%), tale (0.0178%), wild (0.0132%), animal (0.0127%), weird (0.0122%)
+Topic 3: story (0.0255%), volume (0.0169%), collection (0.0162%), include (0.0154%), book (0.0133%)
+Topic 4: music (0.0262%), film (0.0157%), star (0.0138%), movie (0.0131%), thomas (0.0105%)
+Topic 5: guide (0.0280%), travel (0.0156%), new (0.0124%), history (0.0124%), cover (0.0115%)
+Topic 6: health (0.0189%), body (0.0160%), weight (0.0127%), healthy (0.0113%), program (0.0098%)
+Topic 7: dead (0.0153%), vampire (0.0112%), john (0.0108%), death (0.0108%), cole (0.0099%)
+Topic 8: recipe (0.0315%), food (0.0275%), italian (0.0147%), family (0.0117%), meal (0.0106%)
+Topic 9: business (0.0201%), financial (0.0137%), money (0.0137%), new (0.0127%), success (0.0121%)
+Topic 10: murder (0.0293%), mystery (0.0266%), police (0.0126%), solve (0.0117%), crime (0.0108%)
+Topic 11: magic (0.0286%), adventure (0.0215%), city (0.0208%), london (0.0174%), princess (0.0134%)
+Topic 12: history (0.0240%), american (0.0213%), america (0.0167%), great (0.0128%), century (0.0122%)
+Topic 13: sea (0.0253%), ship (0.0157%), island (0.0126%), far (0.0107%), water (0.0100%)
+Topic 14: god (0.0464%), spiritual (0.0260%), life (0.0152%), religious (0.0148%), jesus (0.0136%)
+Topic 15: work (0.0308%), penguin (0.0236%), literature (0.0198%), year (0.0165%), text (0.0165%)
+Topic 16: school (0.0422%), friend (0.0248%), girl (0.0248%), kid (0.0163%), day (0.0111%)
+Topic 17: conan (0.0130%), ford (0.0093%), lacey (0.0087%), wit (0.0081%), sadie (0.0081%)
+Topic 18: war (0.0315%), military (0.0143%), president (0.0129%), men (0.0119%), soldier (0.0109%)
+Topic 19: book (0.0403%), child (0.0216%), little (0.0170%), story (0.0147%), perfect (0.0143%)
+Topic 20: new (0.0491%), york (0.0397%), times (0.0376%), book (0.0329%), author (0.0313%)
+Topic 21: king (0.0311%), empire (0.0143%), lady (0.0108%), sword (0.0094%), long (0.0084%)
+Topic 22: human (0.0234%), science (0.0234%), planet (0.0187%), universe (0.0158%), scientist (0.0153%)
+Topic 23: art (0.0320%), artist (0.0267%), step (0.0168%), create (0.0149%), paint (0.0118%)
+Topic 24: life (0.0323%), world (0.0248%), story (0.0164%), year (0.0154%), new (0.0107%)
+Topic 25: woman (0.0389%), love (0.0306%), life (0.0250%), father (0.0187%), family (0.0178%)
+Topic 26: book (0.0276%), life (0.0139%), use (0.0115%), include (0.0109%), offer (0.0100%)
+Topic 27: world (0.0179%), battle (0.0145%), star (0.0138%), power (0.0133%), know (0.0099%)
+Topic 28: social (0.0212%), power (0.0115%), political (0.0110%), culture (0.0092%), theory (0.0092%)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="coherence">
+<h3><span class="section-number">6.4.3. </span>Coherence<a class="headerlink" href="#coherence" title="Permalink to this headline">#</a></h3>
+<p>If you find that your perplexity scores don’t translate to interpretable
+models, you might use a <strong>coherence score</strong> instead. Coherence scores measure
+the degree of semantic similarity among words in a topic. Some people prefer to
+use them in place of perplexity because these scores help distinguish between
+topics that fit snugly on consistent word co-occurrence and those that are
+artifacts of statistic inference.</p>
+<p>There are a few ways to calculate coherence. We’ll use <code class="docutils literal notranslate"><span class="pre">c_v</span></code> coherence, which
+uses the two kinds of text similarity we’ve already seen: pointwise mutual
+information (PMI) and cosine similarity. This method takes the co-occurrence
+counts of top words in a given topic and calculates a PMI score for each word.
+Then, it looks to every other topic in the model and calculates a PMI score for
+the present topic’s words and those in the other topics. This results in a
+series of PMI vectors, which are then measured with cosine similarity.</p>
+<p>Let’s look at the score for the best model above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_p_coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">best_p</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coherence score: </span><span class="si">{</span><span class="n">best_p_coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coherence score: 0.6988
+</pre></div>
+</div>
+</div>
+</div>
+<p>As with perplexity, we can look for the best score among a set of topic
+numbers. Here, we’re looking for the highest score, which will be a number
+between 0 and 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_range</span><span class="p">:</span>
+    <span class="n">_model</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="n">_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+    <span class="n">coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+    <span class="n">c_scores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;n_topics&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;coherence&#39;</span><span class="p">:</span> <span class="n">coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s format the scores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">c_scores</span><span class="p">)</span>
+<span class="n">c_scores</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;coherence&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">c_scores</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n_topics</th>
+      <th>coherence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>20</th>
+      <td>30</td>
+      <td>0.700868</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>29</td>
+      <td>0.698793</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24</td>
+      <td>0.690023</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>26</td>
+      <td>0.689783</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>27</td>
+      <td>0.682885</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>25</td>
+      <td>0.670136</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>21</td>
+      <td>0.648808</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23</td>
+      <td>0.645939</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>28</td>
+      <td>0.641926</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20</td>
+      <td>0.638035</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we select the best one and train a model on that.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_k</span> <span class="o">=</span> <span class="n">c_scores</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;coherence&#39;</span><span class="p">)[</span><span class="s1">&#39;n_topics&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">best_c</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">best_k</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+<span class="n">best_c</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the top words for each topic:</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">best_c</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">best_c</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: recipe (0.0313%), food (0.0255%), family (0.0142%), italian (0.0128%), meal (0.0106%)
+Topic 1: new (0.0276%), make (0.0178%), just (0.0175%), time (0.0141%), like (0.0140%)
+Topic 2: life (0.0384%), love (0.0193%), year (0.0189%), family (0.0185%), old (0.0126%)
+Topic 3: book (0.0363%), new (0.0302%), times (0.0277%), york (0.0251%), story (0.0214%)
+Topic 4: history (0.0253%), american (0.0189%), year (0.0171%), story (0.0169%), great (0.0166%)
+Topic 5: school (0.0259%), kid (0.0178%), little (0.0176%), animal (0.0170%), child (0.0167%)
+Topic 6: music (0.0360%), japanese (0.0207%), tale (0.0153%), junie (0.0094%), rock (0.0094%)
+Topic 7: art (0.0295%), artist (0.0181%), work (0.0172%), president (0.0123%), portrait (0.0115%)
+Topic 8: book (0.0252%), guide (0.0192%), use (0.0177%), learn (0.0167%), step (0.0155%)
+Topic 9: mystery (0.0246%), murder (0.0244%), killer (0.0129%), police (0.0117%), dead (0.0114%)
+Topic 10: city (0.0265%), rule (0.0091%), old (0.0087%), light (0.0084%), paul (0.0081%)
+Topic 11: book (0.0356%), story (0.0237%), adventure (0.0185%), reader (0.0177%), classic (0.0154%)
+Topic 12: life (0.0258%), practice (0.0205%), spiritual (0.0165%), art (0.0126%), peace (0.0115%)
+Topic 13: van (0.0134%), whale (0.0089%), bee (0.0082%), plant (0.0074%), riley (0.0074%)
+Topic 14: god (0.0551%), jesus (0.0162%), religious (0.0162%), bible (0.0143%), spiritual (0.0124%)
+Topic 15: world (0.0231%), poem (0.0209%), collection (0.0156%), tree (0.0151%), feel (0.0133%)
+Topic 16: penguin (0.0234%), work (0.0213%), classic (0.0184%), literature (0.0180%), text (0.0176%)
+Topic 17: black (0.0218%), jane (0.0176%), vampire (0.0144%), aunt (0.0097%), queen (0.0097%)
+Topic 18: game (0.0237%), team (0.0180%), baseball (0.0165%), sport (0.0149%), hockey (0.0118%)
+Topic 19: health (0.0184%), body (0.0154%), healthy (0.0143%), weight (0.0131%), food (0.0124%)
+Topic 20: king (0.0268%), london (0.0214%), elizabeth (0.0111%), england (0.0107%), life (0.0103%)
+Topic 21: sea (0.0195%), ship (0.0164%), planet (0.0133%), island (0.0130%), human (0.0120%)
+Topic 22: life (0.0213%), people (0.0157%), book (0.0157%), change (0.0121%), way (0.0121%)
+Topic 23: human (0.0122%), social (0.0116%), book (0.0106%), political (0.0101%), include (0.0095%)
+Topic 24: dark (0.0143%), power (0.0137%), secret (0.0128%), face (0.0122%), world (0.0113%)
+Topic 25: travel (0.0217%), new (0.0177%), guide (0.0177%), eyewitness (0.0168%), top (0.0163%)
+Topic 26: christmas (0.0325%), cole (0.0157%), holiday (0.0119%), longarm (0.0119%), town (0.0103%)
+Topic 27: star (0.0278%), lego (0.0182%), wars (0.0177%), action (0.0118%), group (0.0118%)
+Topic 28: woman (0.0356%), love (0.0241%), man (0.0212%), heart (0.0149%), romance (0.0141%)
+Topic 29: war (0.0377%), world (0.0187%), military (0.0118%), soldier (0.0107%), battle (0.0105%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s a distribution plot of topic proportions. We’ll define a function to
+create this as we’ll be making a few of these plots later on.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">format_top_words</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a formatted string of the top words for a topic.&quot;&quot;&quot;</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="n">top_n</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="k">def</span> <span class="nf">plot_topic_proportions</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the topic proportions for a model.&quot;&quot;&quot;</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">()</span> <span class="o">/</span> <span class="n">tm</span><span class="o">.</span><span class="n">num_words</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">format_top_words</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">top_n</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">k</span><span class="p">)]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">dists</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">))</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;dist&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;dist&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Topic proportions for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">&quot;Proportion&quot;</span><span class="p">);</span>
+
+<span class="n">plot_topic_proportions</span><span class="p">(</span><span class="n">best_c</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Best coherence&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/51bd4883f744f19d19584eec2cee645957a18c6c84d29de55e6508da1986225f.png" src="../_images/51bd4883f744f19d19584eec2cee645957a18c6c84d29de55e6508da1986225f.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="fine-tuning-advanced">
+<h2><span class="section-number">6.5. </span>Fine Tuning: Advanced<a class="headerlink" href="#fine-tuning-advanced" title="Permalink to this headline">#</a></h2>
+<section id="hyperparameters-alpha-and-eta">
+<h3><span class="section-number">6.5.1. </span>Hyperparameters: alpha and eta<a class="headerlink" href="#hyperparameters-alpha-and-eta" title="Permalink to this headline">#</a></h3>
+<p>The number of topics is not the only value we can set when initializing a
+model. LDA modeling has two key <strong>hyperparameters</strong>, which we can configure to
+control the nature of the topics a training run produces:</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">Want more details?</p>
+<p>This StackExchange <a class="reference external" href="https://datascience.stackexchange.com/questions/199/what-does-the-alpha-and-beta-hyperparameters-contribute-to-in-latent-dirichlet-a/202#202">answer</a> has a remarkably succinct summary of these
+two hyperparameters. Additionally, this <a class="reference external" href="https://blog.bogatron.net/blog/2014/02/02/visualizing-dirichlet-distributions/">blogpost</a> features graphs of
+how changes in hyperparameters change the probability distributions in a
+Dirichlet space.</p>
+</aside>
+<ul class="simple">
+<li><p><strong>Alpha</strong>: represents document-topic density. The higher the alpha, the more
+evenly distributed, or “symmetric,” topic proportions are in a particular
+document. A lower alpha means topic proportions are “asymmetric,” that is, a
+document will have fewer predominating topics, rather than several</p></li>
+<li><p><strong>Eta</strong>: represents word-topic density. The higher the eta, the more word
+probabilities will be distributed evenly across a topic (specifically, this
+boosts the presence of low-probability words). A lower eta means word
+distributions are more uneven, so each topic will have less dominant words</p></li>
+</ul>
+<p>At core, these two hyperparameters variously control specificity in models: one
+for the way models handle document specificity, and one for the way they handle
+topic specificity.</p>
+<div class="admonition-on-terminology admonition">
+<p class="admonition-title">On terminology</p>
+<p>Different LDA implementations have different names for these hyperparameters.
+Eta, for example, is also referred to as beta. When reading the documentation
+for an implementation, look for whatever term stands for the “document prior”
+(alpha) and the “word prior” (eta).</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tomotopy</span></code> has actually been setting values for alpha and eta all along. We can
+declare them specifically with arguments when initializing a model. Below, we
+boost the alpha and lessen the eta. This configuration should give us a more
+even distribution in topics among the documents and higher probabilities for
+the words in each topic. We’ll use the topic number from our best coherence
+model above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ae_adjusted</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">best_c</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">eta</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+<span class="p">)</span>
+<span class="n">ae_adjusted</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s compare with the best coherence model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compare</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;best coherence&#39;</span><span class="p">:</span> <span class="n">best_c</span><span class="p">,</span> <span class="s1">&#39;high alpha/low eta&#39;</span><span class="p">:</span> <span class="n">ae_adjusted</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">compare</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tm</span><span class="o">.</span><span class="n">get_topic_words</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)]</span>
+        <span class="n">probs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+    <span class="n">words_per_topic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">get_count_by_topics</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;For the </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> model:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ Median words/topic: </span><span class="si">{</span><span class="n">words_per_topic</span><span class="si">:</span><span class="s2">0.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+ Mean probablity of a topic&#39;s top-five words: </span><span class="si">{</span><span class="n">probs</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For the best coherence model:
++ Median words/topic: 2652
++ Mean probablity of a topic&#39;s top-five words: 0.0175%
+For the high alpha/low eta model:
++ Median words/topic: 4278
++ Mean probablity of a topic&#39;s top-five words: 0.0260%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="choosing-hyperparameter-values">
+<h3><span class="section-number">6.5.2. </span>Choosing hyperparameter values<a class="headerlink" href="#choosing-hyperparameter-values" title="Permalink to this headline">#</a></h3>
+<p>In the literature about LDA modeling, researchers have suggested various ways
+of setting hyperparameters. For example, the authors of <a class="reference external" href="https://www.pnas.org/doi/10.1073/pnas.0307752101">this paper</a>
+suggest that the ideal alpha and eta values are <span class="math notranslate nohighlight">\(\frac{50}{k}\)</span> and 0.1,
+respectively (where <span class="math notranslate nohighlight">\(k\)</span> is the number of topics). Alternatively, you’ll often
+see people advocate for an approach called <strong>grid searching</strong>. This involves
+selecting a range of different values for the hyperparameters, permuting them,
+and building as many different models as it takes to go through all possible
+permutations.</p>
+<p>Both approaches are valid but they don’t emphasize an important point about
+what our hyperparameters represent. Alpha and eta are <em>priors</em>, meaning they
+represent certain kinds of knowledge we have about our data before we even
+model it. In our case, we’re working with book blurbs. The generic conventions
+of these texts are fairly constrained, so it probably doesn’t make sense to
+raise our alpha values. The same might hold for a corpus of tweets collected
+around a small keyword set: the data collection is already a form of
+hyperparameter optimization. Put another way, <em>setting hyperparameters depends
+on your data and your research question(s)</em>. It’s as valid to ask, “do these
+values give me an interpretable model?” as it is to look to perplexity and
+coherence scores as the sole arbiters of model quality.</p>
+<p>Here’s an example of where the interpretability consideration matters. In the
+model below, we set hyperparameters to produce low perplexity and coherence
+scores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimized</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">best_c</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">eta</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+<span class="p">)</span>
+<span class="n">optimized</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+<span class="n">optimized_coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">optimized</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The scores look good.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Perplexity: </span><span class="si">{</span><span class="n">optimized</span><span class="o">.</span><span class="n">perplexity</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coherence: </span><span class="si">{</span><span class="n">optimized_coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perplexity: 7354.1627
+Coherence: 0.8756
+</pre></div>
+</div>
+</div>
+</div>
+<p>But look at the topics:</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">optimized</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">optimized</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: recalcitrants (0.0001%), sculley (0.0001%), kropp (0.0001%), distort (0.0001%), sixth (0.0001%)
+Topic 1: forces (0.0001%), rwanda (0.0001%), awakes (0.0001%), armada (0.0001%), inseparable (0.0001%)
+Topic 2: haight (0.0001%), jung (0.0001%), youdon (0.0001%), reconstruction (0.0001%), gifts (0.0001%)
+Topic 3: yugoslavia (0.0001%), mistery (0.0001%), brainiac (0.0001%), pilchuk (0.0001%), lola (0.0001%)
+Topic 4: cuneiform (0.0001%), purport (0.0001%), quadratic (0.0001%), warts (0.0001%), alphabetic (0.0001%)
+Topic 5: jinks (0.0001%), neuro (0.0001%), shivers (0.0001%), cull (0.0001%), beet (0.0001%)
+Topic 6: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 7: subdue (0.0001%), cooperative (0.0001%), heated (0.0001%), anara (0.0001%), improved (0.0001%)
+Topic 8: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 9: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 10: corporal (0.0001%), piston (0.0001%), disembarks (0.0001%), oriented (0.0001%), introductionfrom (0.0001%)
+Topic 11: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 12: teroni (0.0001%), exhilarating (0.0001%), wifesanta (0.0001%), rosa (0.0001%), ragtag (0.0001%)
+Topic 13: heartbreakingly (0.0001%), chances (0.0001%), vivacious (0.0001%), behindin (0.0001%), thorkellson (0.0001%)
+Topic 14: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 15: unfulfilled (0.0001%), cameo (0.0001%), nationis (0.0001%), paean (0.0001%), medalwinning (0.0001%)
+Topic 16: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 17: una (0.0001%), banda (0.0001%), coburn (0.0001%), eso (0.0001%), justamente (0.0001%)
+Topic 18: possessiveness (0.0001%), dauntless (0.0001%), yearsfrom (0.0001%), goodfrom (0.0001%), meddle (0.0001%)
+Topic 19: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 20: underprivileged (0.0001%), widen (0.0001%), enchanting (0.0001%), rabbi (0.0001%), prop (0.0001%)
+Topic 21: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 22: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 23: del (0.0001%), que (0.0001%), elendel (0.0001%), más (0.0001%), mistborn (0.0001%)
+Topic 24: sneezing (0.0001%), haynes (0.0001%), choucroute (0.0001%), tanksincludes (0.0001%), literaturelabeled (0.0001%)
+Topic 25: boomer (0.0001%), transformationfor (0.0001%), cosimo (0.0001%), nergal (0.0001%), coerce (0.0001%)
+Topic 26: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 27: new (0.0000%), life (0.0000%), book (0.0000%), world (0.0000%), story (0.0000%)
+Topic 28: new (0.0056%), life (0.0052%), book (0.0050%), world (0.0037%), story (0.0035%)
+Topic 29: josephus (0.0001%), employees (0.0001%), snowbound (0.0001%), chaffino (0.0001%), hatches (0.0001%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the proportions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_topic_proportions</span><span class="p">(</span><span class="n">optimized</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Hyperoptimized&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f2160c022a822f09b7c559c554d7789f387fc3a2f147403e4a08aa8d219e1101.png" src="../_images/f2160c022a822f09b7c559c554d7789f387fc3a2f147403e4a08aa8d219e1101.png" />
+</div>
+</div>
+<p>The top words are incoherent and one topic all but completely dominates the
+topic distribution.</p>
+<p>The challenge of setting hyperparameters, then, is that it’s a balancing act.
+In light of the above output, for example, you might decide to favor
+interpretability above everything else. But doing so can lead to overfitting.
+Hence the balancing act: the whole process of fine tuning involves
+incorporating a number of different considerations (and compromises!) that, at
+the end of the day, should work in the service of your research question.</p>
+</section>
+<section id="final-configuration">
+<h3><span class="section-number">6.5.3. </span>Final configuration<a class="headerlink" href="#final-configuration" title="Permalink to this headline">#</a></h3>
+<p>To return to the question of our own corpus, here are the best topic
+number/hyperparameter configuration from a grid search run:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;grid_search_results.csv&quot;</span><span class="p">),</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">grid_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;coherence&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">grid_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n_topics</th>
+      <th>alpha</th>
+      <th>eta</th>
+      <th>perplexity</th>
+      <th>coherence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>315</th>
+      <td>29</td>
+      <td>0.100</td>
+      <td>0.0150</td>
+      <td>10190.744366</td>
+      <td>0.726677</td>
+    </tr>
+    <tr>
+      <th>335</th>
+      <td>30</td>
+      <td>0.125</td>
+      <td>0.0150</td>
+      <td>10101.535785</td>
+      <td>0.723886</td>
+    </tr>
+    <tr>
+      <th>323</th>
+      <td>30</td>
+      <td>0.050</td>
+      <td>0.0150</td>
+      <td>10248.757358</td>
+      <td>0.721783</td>
+    </tr>
+    <tr>
+      <th>318</th>
+      <td>29</td>
+      <td>0.125</td>
+      <td>0.0125</td>
+      <td>10449.013502</td>
+      <td>0.720463</td>
+    </tr>
+    <tr>
+      <th>310</th>
+      <td>29</td>
+      <td>0.075</td>
+      <td>0.0125</td>
+      <td>10630.975052</td>
+      <td>0.719463</td>
+    </tr>
+    <tr>
+      <th>326</th>
+      <td>30</td>
+      <td>0.075</td>
+      <td>0.0125</td>
+      <td>10241.915592</td>
+      <td>0.718477</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>30</td>
+      <td>0.100</td>
+      <td>0.0125</td>
+      <td>10304.032934</td>
+      <td>0.717663</td>
+    </tr>
+    <tr>
+      <th>275</th>
+      <td>27</td>
+      <td>0.050</td>
+      <td>0.0150</td>
+      <td>10222.881381</td>
+      <td>0.716541</td>
+    </tr>
+    <tr>
+      <th>319</th>
+      <td>29</td>
+      <td>0.125</td>
+      <td>0.0150</td>
+      <td>10266.766973</td>
+      <td>0.714951</td>
+    </tr>
+    <tr>
+      <th>311</th>
+      <td>29</td>
+      <td>0.075</td>
+      <td>0.0150</td>
+      <td>10229.393637</td>
+      <td>0.712904</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If you look closely at the scores, you’ll see that they’re all very close to
+one another; any one of these options would make for a good model. The
+perplexity is a bit high, but the coherence scores look good and the topic
+numbers produce a nice spread of topics. Past testing has shown that the
+following configuration makes for a particularly good – which is to say,
+interpretable – one:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tuned</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">LDAModel</span><span class="p">(</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">29</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">eta</span> <span class="o">=</span> <span class="mf">0.015</span><span class="p">,</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+<span class="p">)</span>
+<span class="n">tuned</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="nb">iter</span> <span class="o">=</span> <span class="n">iters</span><span class="p">)</span>
+<span class="n">tuned_coherence</span> <span class="o">=</span> <span class="n">Coherence</span><span class="p">(</span><span class="n">tuned</span><span class="p">,</span> <span class="n">coherence</span> <span class="o">=</span> <span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our metrics:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Perplexity: </span><span class="si">{</span><span class="n">tuned</span><span class="o">.</span><span class="n">perplexity</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coherence: </span><span class="si">{</span><span class="n">tuned_coherence</span><span class="o">.</span><span class="n">get_score</span><span class="p">()</span><span class="si">:</span><span class="s2">0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perplexity: 10170.1982
+Coherence: 0.7075
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our topics:</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tuned</span><span class="o">.</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">top_words</span><span class="p">(</span><span class="n">tuned</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: war (0.0457%), history (0.0138%), soldier (0.0124%), military (0.0108%), line (0.0087%)
+Topic 1: new (0.0184%), make (0.0177%), just (0.0156%), like (0.0138%), time (0.0129%)
+Topic 2: child (0.0276%), mother (0.0263%), school (0.0253%), parent (0.0214%), family (0.0201%)
+Topic 3: adventure (0.0180%), cat (0.0176%), love (0.0156%), tale (0.0145%), animal (0.0121%)
+Topic 4: music (0.0202%), american (0.0143%), song (0.0123%), star (0.0119%), film (0.0115%)
+Topic 5: team (0.0179%), money (0.0157%), game (0.0148%), sport (0.0139%), financial (0.0125%)
+Topic 6: book (0.0456%), child (0.0188%), reader (0.0157%), little (0.0146%), young (0.0142%)
+Topic 7: christmas (0.0259%), horse (0.0173%), town (0.0147%), cole (0.0125%), family (0.0117%)
+Topic 8: murder (0.0272%), mystery (0.0225%), killer (0.0139%), crime (0.0136%), police (0.0130%)
+Topic 9: band (0.0132%), aunt (0.0108%), amy (0.0102%), junie (0.0096%), jones (0.0096%)
+Topic 10: political (0.0270%), america (0.0139%), states (0.0114%), united (0.0103%), politics (0.0095%)
+Topic 11: secret (0.0143%), world (0.0122%), new (0.0103%), human (0.0088%), power (0.0085%)
+Topic 12: life (0.0261%), story (0.0246%), year (0.0195%), world (0.0167%), family (0.0105%)
+Topic 13: recipe (0.0277%), food (0.0258%), italian (0.0117%), family (0.0104%), meal (0.0095%)
+Topic 14: star (0.0240%), universe (0.0146%), planet (0.0142%), lego (0.0138%), wars (0.0134%)
+Topic 15: work (0.0174%), penguin (0.0171%), classic (0.0156%), introduction (0.0147%), english (0.0144%)
+Topic 16: guide (0.0305%), travel (0.0138%), new (0.0134%), include (0.0128%), top (0.0121%)
+Topic 17: comic (0.0179%), volume (0.0124%), tale (0.0115%), sword (0.0107%), adventure (0.0098%)
+Topic 18: york (0.0554%), new (0.0526%), times (0.0514%), book (0.0283%), author (0.0269%)
+Topic 19: guide (0.0175%), help (0.0136%), learn (0.0109%), health (0.0107%), program (0.0101%)
+Topic 20: novel (0.0231%), reader (0.0165%), character (0.0142%), story (0.0128%), author (0.0123%)
+Topic 21: van (0.0108%), ellie (0.0101%), landscape (0.0074%), riley (0.0068%), quinn (0.0068%)
+Topic 22: book (0.0189%), work (0.0101%), life (0.0098%), world (0.0092%), people (0.0091%)
+Topic 23: art (0.0411%), artist (0.0237%), step (0.0227%), use (0.0167%), create (0.0157%)
+Topic 24: sea (0.0213%), ship (0.0159%), island (0.0101%), sam (0.0093%), crew (0.0093%)
+Topic 25: woman (0.0437%), love (0.0358%), life (0.0225%), husband (0.0152%), passion (0.0130%)
+Topic 26: century (0.0183%), king (0.0179%), history (0.0171%), london (0.0149%), great (0.0086%)
+Topic 27: vampire (0.0156%), dead (0.0139%), hunter (0.0110%), black (0.0110%), queen (0.0101%)
+Topic 28: god (0.0339%), life (0.0277%), spiritual (0.0215%), practice (0.0177%), book (0.0143%)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our proportions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_topic_proportions</span><span class="p">(</span><span class="n">tuned</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Tuned&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/10dc4d39d4d5ada53b664abcdca104bfbda7ea25ae52fe5d9754a0c39ebac3a5.png" src="../_images/10dc4d39d4d5ada53b664abcdca104bfbda7ea25ae52fe5d9754a0c39ebac3a5.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="model-exploration">
+<h2><span class="section-number">6.6. </span>Model Exploration<a class="headerlink" href="#model-exploration" title="Permalink to this headline">#</a></h2>
+<p>Topic proportions and top words are all helpful, but there are other ways to
+dig more deeply into a model. This final section will show you a few examples
+of this.</p>
+<p>First, let’s rebuild a theta matrix from the fine-tuned model. Remember that a
+theta is a document-topic matrix, where each cell is a probability score for a
+document’s association with a particular topic.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">get_theta</span><span class="p">(</span><span class="n">tuned</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll also make a quick set of labels for our topics, which list the top five
+words for each one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">format_top_words</span><span class="p">(</span><span class="n">tuned</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tuned</span><span class="o">.</span><span class="n">k</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A heatmap is a natural fit for inspecting the probability distributions of
+theta.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_samples</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">blurb_set</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+<span class="n">sub_theta</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="n">theta</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">blurb_set</span><span class="p">)]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">sub_theta</span><span class="p">,</span> <span class="n">linewidths</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Topic&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="n">xticklabels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">tick_top</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8d32e55aef840a0a9ff256760542626a3a1be34a9b37c1781e58bc2d72e2e3a0.png" src="../_images/8d32e55aef840a0a9ff256760542626a3a1be34a9b37c1781e58bc2d72e2e3a0.png" />
+</div>
+</div>
+<p>Topic 15 appears to be about the classics. What kind of titles have a
+particularly high association with this topic?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doc_topic_associations</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">manifest</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find highly associated documents from a manifest with a topic.&quot;&quot;&quot;</span>
+    <span class="n">topk</span> <span class="o">=</span> <span class="n">theta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">theta</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+    <span class="n">associated</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">topk</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">associated</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">topk</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">return</span> <span class="n">associated</span><span class="p">[[</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;genre&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">_score&#39;</span><span class="p">]]</span>
+
+<span class="n">k15</span> <span class="o">=</span> <span class="n">doc_topic_associations</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">manifest</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">k15</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>author</th>
+      <th>title</th>
+      <th>genre</th>
+      <th>15_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Horatio Alger</td>
+      <td>Ragged Dick and Struggling Upward</td>
+      <td>Classics</td>
+      <td>0.510900</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>Chris Carter, Roy Thomas, Glenn Morgan, James ...</td>
+      <td>X-Files Classics: Season 1 Volume 1</td>
+      <td>Fiction</td>
+      <td>0.344544</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>Marge Piercy</td>
+      <td>The Art of Blessing the Day</td>
+      <td>Poetry</td>
+      <td>0.174064</td>
+    </tr>
+    <tr>
+      <th>258</th>
+      <td>Chretien de Troyes</td>
+      <td>Arthurian Romances</td>
+      <td>Classics</td>
+      <td>0.731107</td>
+    </tr>
+    <tr>
+      <th>271</th>
+      <td>Various</td>
+      <td>American Science Fiction: Nine Classic Novels ...</td>
+      <td>Fiction</td>
+      <td>0.350466</td>
+    </tr>
+    <tr>
+      <th>275</th>
+      <td>Nicola Sacco, Bartolomeo Vanzetti</td>
+      <td>The Letters of Sacco and Vanzetti</td>
+      <td>Classics</td>
+      <td>0.588130</td>
+    </tr>
+    <tr>
+      <th>412</th>
+      <td>Michel de Montaigne</td>
+      <td>The Essays</td>
+      <td>Classics</td>
+      <td>0.291393</td>
+    </tr>
+    <tr>
+      <th>443</th>
+      <td>David Goodis</td>
+      <td>The Burglar</td>
+      <td>Fiction</td>
+      <td>0.221486</td>
+    </tr>
+    <tr>
+      <th>464</th>
+      <td>Frances Hodgson Burnett</td>
+      <td>A Little Princess</td>
+      <td>Classics</td>
+      <td>0.246585</td>
+    </tr>
+    <tr>
+      <th>480</th>
+      <td>Laura Ingalls Wilder</td>
+      <td>Laura Ingalls Wilder: The Little House Books V...</td>
+      <td>Fiction</td>
+      <td>0.358375</td>
+    </tr>
+    <tr>
+      <th>485</th>
+      <td>Brooks Haxton</td>
+      <td>They Lift Their Wings to Cry</td>
+      <td>Classics</td>
+      <td>0.191476</td>
+    </tr>
+    <tr>
+      <th>595</th>
+      <td>Mary Boykin Chesnut</td>
+      <td>Mary Chesnut's Diary</td>
+      <td>Classics</td>
+      <td>0.522240</td>
+    </tr>
+    <tr>
+      <th>601</th>
+      <td>Kenneth Grahame</td>
+      <td>The Wind in the Willows</td>
+      <td>Classics</td>
+      <td>0.633616</td>
+    </tr>
+    <tr>
+      <th>621</th>
+      <td>Harriet Jacobs</td>
+      <td>Incidents in the Life of a Slave Girl</td>
+      <td>Classics</td>
+      <td>0.573353</td>
+    </tr>
+    <tr>
+      <th>631</th>
+      <td>Richard E. Kim</td>
+      <td>The Martyred</td>
+      <td>Classics</td>
+      <td>0.425864</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Certain topics seem to map very nicely onto particular book genres. Here are
+some titles associated with topic 13, which is about recipes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k13</span> <span class="o">=</span> <span class="n">doc_topic_associations</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">manifest</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+<span class="n">k13</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>author</th>
+      <th>title</th>
+      <th>genre</th>
+      <th>13_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>Adele Yellin, Kevin West</td>
+      <td>The Grand Central Market Cookbook</td>
+      <td>Nonfiction</td>
+      <td>0.432363</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Gene Daoust, Joyce Daoust</td>
+      <td>The Formula</td>
+      <td>Nonfiction</td>
+      <td>0.352713</td>
+    </tr>
+    <tr>
+      <th>188</th>
+      <td>Lilach German</td>
+      <td>Cookies, Cookies &amp; More Cookies!</td>
+      <td>Nonfiction</td>
+      <td>0.382768</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>Katharine Ibbs</td>
+      <td>DK Children's Cookbook</td>
+      <td>Nonfiction</td>
+      <td>0.455814</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>Christina Orchid</td>
+      <td>Christina's Cookbook</td>
+      <td>Nonfiction</td>
+      <td>0.421846</td>
+    </tr>
+    <tr>
+      <th>327</th>
+      <td>Nicola Graimes</td>
+      <td>The Low-Sugar Cookbook</td>
+      <td>Nonfiction</td>
+      <td>0.439704</td>
+    </tr>
+    <tr>
+      <th>368</th>
+      <td>Sara Deseran, Joe Hargrave, Antelmo Faria, Mik...</td>
+      <td>Tacolicious</td>
+      <td>Nonfiction</td>
+      <td>0.663644</td>
+    </tr>
+    <tr>
+      <th>395</th>
+      <td>Kendra Bailey Morris</td>
+      <td>The Southern Slow Cooker</td>
+      <td>Nonfiction</td>
+      <td>0.509477</td>
+    </tr>
+    <tr>
+      <th>452</th>
+      <td>Carmen Posadas</td>
+      <td>Little Indiscretions</td>
+      <td>Fiction</td>
+      <td>0.201231</td>
+    </tr>
+    <tr>
+      <th>459</th>
+      <td>Suvir Saran, Stephanie Lyness</td>
+      <td>Indian Home Cooking</td>
+      <td>Nonfiction</td>
+      <td>0.683412</td>
+    </tr>
+    <tr>
+      <th>462</th>
+      <td>Helene Siegel</td>
+      <td>Totally Salmon Cookbook</td>
+      <td>Nonfiction</td>
+      <td>0.653585</td>
+    </tr>
+    <tr>
+      <th>549</th>
+      <td>Carly de Castro, Hedi Gores, Hayden Slater</td>
+      <td>Juice</td>
+      <td>Nonfiction</td>
+      <td>0.406312</td>
+    </tr>
+    <tr>
+      <th>578</th>
+      <td>Hi Soo Shin Hepinstall</td>
+      <td>Growing up in a Korean Kitchen</td>
+      <td>Nonfiction</td>
+      <td>0.379062</td>
+    </tr>
+    <tr>
+      <th>612</th>
+      <td>Maria del Mar Sacasa</td>
+      <td>Winter Cocktails</td>
+      <td>Nonfiction</td>
+      <td>0.438557</td>
+    </tr>
+    <tr>
+      <th>620</th>
+      <td>Frank Pellegrino</td>
+      <td>Rao's Cookbook</td>
+      <td>Nonfiction</td>
+      <td>0.541190</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Topic 2 appears to be about girlhood.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k2</span> <span class="o">=</span> <span class="n">doc_topic_associations</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">manifest</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">k2</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>author</th>
+      <th>title</th>
+      <th>genre</th>
+      <th>2_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>Liz Curtis Higgs</td>
+      <td>Thorn in My Heart</td>
+      <td>Fiction</td>
+      <td>0.306729</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>Paul D. White, Ron Arias</td>
+      <td>White's Rules</td>
+      <td>Nonfiction</td>
+      <td>0.260193</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Liz Curtis Higgs</td>
+      <td>Grace in Thine Eyes</td>
+      <td>Fiction</td>
+      <td>0.305969</td>
+    </tr>
+    <tr>
+      <th>278</th>
+      <td>Julianna Margulies, Paul Margulies</td>
+      <td>Three Magic Balloons</td>
+      <td>Children’s Books</td>
+      <td>0.289717</td>
+    </tr>
+    <tr>
+      <th>328</th>
+      <td>John Ramsey Miller</td>
+      <td>The Last Family</td>
+      <td>Fiction</td>
+      <td>0.392691</td>
+    </tr>
+    <tr>
+      <th>382</th>
+      <td>Val Brelinski</td>
+      <td>The Girl Who Slept with God</td>
+      <td>Fiction</td>
+      <td>0.274784</td>
+    </tr>
+    <tr>
+      <th>416</th>
+      <td>Sarah Henstra</td>
+      <td>Mad Miss Mimic</td>
+      <td>Teen &amp; Young Adult</td>
+      <td>0.216246</td>
+    </tr>
+    <tr>
+      <th>678</th>
+      <td>Leigh Stein</td>
+      <td>The Fallback Plan</td>
+      <td>Fiction</td>
+      <td>0.363485</td>
+    </tr>
+    <tr>
+      <th>698</th>
+      <td>Suzanne Fisher Staples</td>
+      <td>The House of Djinn</td>
+      <td>Teen &amp; Young Adult</td>
+      <td>0.305969</td>
+    </tr>
+    <tr>
+      <th>718</th>
+      <td>Goce Smilevski</td>
+      <td>Freud's Sister</td>
+      <td>Fiction</td>
+      <td>0.241625</td>
+    </tr>
+    <tr>
+      <th>763</th>
+      <td>Edd Doerr</td>
+      <td>The Case Against School Vouchers</td>
+      <td>Nonfiction</td>
+      <td>0.276409</td>
+    </tr>
+    <tr>
+      <th>897</th>
+      <td>Adolf Schroder</td>
+      <td>The Game of Cards</td>
+      <td>Fiction</td>
+      <td>0.294001</td>
+    </tr>
+    <tr>
+      <th>921</th>
+      <td>Bobby Henderson</td>
+      <td>The Gospel of the Flying Spaghetti Monster</td>
+      <td>Classics</td>
+      <td>0.227076</td>
+    </tr>
+    <tr>
+      <th>942</th>
+      <td>Manuela Monari</td>
+      <td>Zero Kisses for Me</td>
+      <td>Children’s Books</td>
+      <td>0.360254</td>
+    </tr>
+    <tr>
+      <th>1142</th>
+      <td>Emily Bazelon</td>
+      <td>Sticks and Stones</td>
+      <td>Nonfiction</td>
+      <td>0.257467</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Though there are some perplexing titles listed here. What’s <em>The Gospel of the
+Flying Spaghetti Monster</em> doing here? <em>The Case Against School Vouchers</em> is
+similarly odd, though maybe it’s a sensible fit given what we might expect from
+shared vocabulary. Topic models, remember, are ultimately counting word
+co-occurrences, not the different semantic valences of a word, or tone, style,
+etc. It’s up to us to parse the latter kinds of things.</p>
+<p>To do so, it’s helpful to examine the overall similarities and differences
+between topics, much in the way we projected our documents into a vector space
+in the previous chapter. We’ll prepare the code to do something similar here
+but will save the final result for a separate webpage. Below, we produce the
+following:</p>
+<ul class="simple">
+<li><p>A topic-term distribution matrix (word probabilities for each topic)</p></li>
+<li><p>The lengths of every blurb</p></li>
+<li><p>A list of the corpus vocabulary</p></li>
+<li><p>The corresponding frequency counts for the corpus vocabulary</p></li>
+</ul>
+<p>Once we’ve made these, we’ll prepare our visualization data with a package
+called <code class="docutils literal notranslate"><span class="pre">pyLDAvis</span></code> and save it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_terms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">tuned</span><span class="o">.</span><span class="n">get_topic_word_dist</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tuned</span><span class="o">.</span><span class="n">k</span><span class="p">)])</span>
+<span class="n">doc_lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">words</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">tuned</span><span class="o">.</span><span class="n">docs</span><span class="p">])</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tuned</span><span class="o">.</span><span class="n">used_vocabs</span><span class="p">)</span>
+<span class="n">term_frequency</span> <span class="o">=</span> <span class="n">tuned</span><span class="o">.</span><span class="n">used_vocab_freq</span>
+
+<span class="n">vis</span> <span class="o">=</span> <span class="n">pyLDAvis</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+    <span class="n">topic_terms</span><span class="p">,</span> <span class="n">theta</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">doc_lengths</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">term_frequency</span>
+    <span class="p">,</span> <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sort_topics</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">outdir</span> <span class="o">=</span> <span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;output/topic_model_plot.html&quot;</span><span class="p">)</span>
+<span class="n">pyLDAvis</span><span class="o">.</span><span class="n">save_html</span><span class="p">(</span><span class="n">vis</span><span class="p">,</span> <span class="n">outdir</span><span class="o">.</span><span class="n">as_posix</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With that done, we’ve finished our initial work with topic models. The
+resultant visualization of the above is available <a class="reference external" href="https://ucdavisdatalab.github.io/workshop_getting_started_with_textual_data/topic_model_plot.html">here</a>. It’s a scatter
+plot that represents topic similarity; the size of each topic circle
+corresponds to that topic’s proportion in the model. Explore it some and see
+what you find!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="05_clustering-and-classification.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Clustering and Classification</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="90_assessment.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Assessment</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topic-modeling-introduction">6.1. Topic Modeling: Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">6.2. Preliminaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-topic-model">6.3. Building a Topic Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-a-corpus">6.3.1. Initializing a corpus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-a-model">6.3.2. Initializing a model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-model">6.3.3. Training a model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-the-results">6.3.4. Inspecting the results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-the-basics">6.4. Fine Tuning: The Basics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-topics">6.4.1. Number of topics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perplexity">6.4.2. Perplexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coherence">6.4.3. Coherence</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-advanced">6.5. Fine Tuning: Advanced</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters-alpha-and-eta">6.5.1. Hyperparameters: alpha and eta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-hyperparameter-values">6.5.2. Choosing hyperparameter values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-configuration">6.5.3. Final configuration</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-exploration">6.6. Model Exploration</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tyler Shoemaker and Carl Stahmer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+  <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"> 
+</a>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
