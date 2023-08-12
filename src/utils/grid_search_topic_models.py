@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+from pathlib import Path
 import itertools
 
 import pandas as pd
@@ -24,7 +25,7 @@ def model_metrics(
     , n_topics: int
     , alpha: float
     , eta: float
-): -> tuple[float, float]
+) -> tuple[float, float]:
     """Build a topic model and retrieve metrics from it."""
     model = tp.LDAModel(
         k = n_topics, alpha = alpha, eta = eta, corpus = corpus, seed = 357
@@ -32,7 +33,7 @@ def model_metrics(
     model.train(iter = 1000)
     coherence_model = Coherence(model, coherence = 'c_v')
     
-    return model.perplexity, coherence_model.get_scores()
+    return model.perplexity, coherence_model.get_score()
 
 def main(args: argparse.Namespace) -> None:
     """Run the script."""
