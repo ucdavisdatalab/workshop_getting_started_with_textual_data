@@ -3,6 +3,7 @@
 
 import argparse
 from pathlib import Path
+import tomllib
 import itertools
 
 import pandas as pd
@@ -40,16 +41,18 @@ def main(args: argparse.Namespace) -> None:
     # Build the corpus
     corpus = build_corpus(args.indir)
 
-    # Set a range of hyperparameters
-    k = range(10, 31)
-    alphas = [0.001, 0.01, 0.1, 0.2, 0.5, 0.75, 1]
-    etas = [0.001, 0.01, 0.1, 0.2, 0.5, 0.75, 1]
-    params = list(itertools.product(k, alphas, etas))
-    print("Parameter combinations to search:", len(params))
+    # Load the hyperparameters TOML
+    with args.params.open('rb') as fin:
+        params = tomllib.load(fin)
+
+    # Permute the parameters
+    k = range(params['kmin'], params['kmax'])
+    param_list = list(itertools.product(k, params['alphas'], params['etas']))
+    print("Parameter combinations to search:", len(param_list))
 
     # Grid search
     results = []
-    for idx, param_set in enumerate(params):
+    for idx, param_set in enumerate(param_list):
         n_topics, alpha, eta = param_set
         perplexity, coherence = model_metrics(corpus, n_topics, alpha, eta)
         run = {
@@ -62,7 +65,7 @@ def main(args: argparse.Namespace) -> None:
         results.append(run)
 
         if idx % 10 == 0:
-            print(f"Completed {idx} of {len(params)} combinations")
+            print(f"Completed {idx} of {len(param_list)} combinations")
 
     results = pd.DataFrame(results)
     results.to_csv(args.results)
@@ -72,6 +75,7 @@ if __name__ == '__main__':
         description="Grid search a list of hyperparameters for topic modeling"
     )
     parser.add_argument('--indir', type=Path, help="Input directory")
+    parser.add_argument('--params', type=Path, help="Parameters to search")
     parser.add_argument('--results', type=Path, help="Results manifest")
     args = parser.parse_args()
     main(args)
