@@ -57,8 +57,8 @@ By the end of this chapter, you will be able to:
   hyperparameters
 ```
 
-Topic Modeling: Introduction
-----------------------------
+How It Works
+------------
 
 ```{margin} Citations
 This description of topic modeling is influenced by Ted Underwood's very
