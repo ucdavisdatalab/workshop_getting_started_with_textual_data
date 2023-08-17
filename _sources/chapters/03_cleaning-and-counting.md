@@ -160,10 +160,19 @@ Consider the following:
 s = "I'm a self-taught programmer."
 ```
 
+```{margin} Want some practice?
+[Regular Expressions 101][reg101] offers a sandbox in which to learn and test
+regular expressions.
+
+[reg101]: https://regex101.com
+```
+
 It seems most sensible to remove punctuation with some combination of [regular
 expressions][reg], or "regex," with `re.sub()`, which substitutes a regex
 sequence with something else. For example, using regex to remove anything that
 is _not_ (`^`) a word (`\w`) or a space (`\s`) will give the following:
+
+[reg]: https://en.wikipedia.org/wiki/Regular_expression
 
 ```{code-cell}
 print(re.sub(r"[^\w\s]", "", s))
@@ -178,7 +187,7 @@ what do we define as acceptable tokens in our data, and how are we going to
 create those tokens?
 
 Different NLP libraries in Python will handle this question in different ways.
-For example, the `word_tokenize` function from `nltk` returns the following:
+For example, the `word_tokenize()` function from `nltk` returns the following:
 
 ```{code-cell}
 nltk.word_tokenize(s)
@@ -578,7 +587,7 @@ hand, would keep this string intact.
 In this sense, it's often useful to count not only single words in text, but
 continuous two-word strings, or even longer ones. These strings are called
 **n-grams**, where _n_ is the number of tokens in the span. "Bigrams" are
-two-token spans." "Trigrams" have three tokens, while "4-grams" and "5-grams"
+two-token spans. "Trigrams" have three tokens, while "4-grams" and "5-grams"
 have four and five tokens, respectively. Technically, there's no limit to
 n-gram sizes, though their usefulness depend on your data and research
 questions.
@@ -593,8 +602,8 @@ A `BigramCollocationFinder` will find the bigrams.
 finder = collocations.BigramCollocationFinder.from_words(stopped)
 ```
 
-Accessing its `ngram_fd` attribute generates counts, which we'll store in a
-`pandas` DataFrame.
+Access its `ngram_fd` attribute for counts, which we'll store in a `pandas`
+DataFrame.
 
 ```{code-cell}
 bigrams = finder.ngram_fd
@@ -623,8 +632,9 @@ higher the score, the more likely a given bigram pair will be with respect to
 the other bigrams in which the two words of the one under consideration.
 
 We can get a PMI score for each bigram using our finder's `.score_ngrams()`
-method in concert with a `BigramAssocMeasures` object. As before, we will
-format the result for a `pandas` DataFrame.
+method in concert with a `BigramAssocMeasures` object; we send the latter as an
+argument to the former. As before, let's format the result for a `pandas`
+DataFrame.
 
 ```{code-cell}
 measures = collocations.BigramAssocMeasures()

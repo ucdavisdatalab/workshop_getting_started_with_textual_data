@@ -569,8 +569,13 @@ the same way.</p>
 </div>
 </div>
 </div>
-<p>It seems most sensible to remove punctuation with some combination of [regular
-expressions][reg], or “regex,” with <code class="docutils literal notranslate"><span class="pre">re.sub()</span></code>, which substitutes a regex
+<aside class="margin sidebar">
+<p class="sidebar-title">Want some practice?</p>
+<p><a class="reference external" href="https://regex101.com">Regular Expressions 101</a> offers a sandbox in which to learn and test
+regular expressions.</p>
+</aside>
+<p>It seems most sensible to remove punctuation with some combination of <a class="reference external" href="https://en.wikipedia.org/wiki/Regular_expression">regular
+expressions</a>, or “regex,” with <code class="docutils literal notranslate"><span class="pre">re.sub()</span></code>, which substitutes a regex
 sequence with something else. For example, using regex to remove anything that
 is <em>not</em> (<code class="docutils literal notranslate"><span class="pre">^</span></code>) a word (<code class="docutils literal notranslate"><span class="pre">\w</span></code>) or a space (<code class="docutils literal notranslate"><span class="pre">\s</span></code>) will give the following:</p>
 <div class="cell docutils container">
@@ -593,7 +598,7 @@ than create a new one altogether. Ultimately, this is a tokenization question:
 what do we define as acceptable tokens in our data, and how are we going to
 create those tokens?</p>
 <p>Different NLP libraries in Python will handle this question in different ways.
-For example, the <code class="docutils literal notranslate"><span class="pre">word_tokenize</span></code> function from <code class="docutils literal notranslate"><span class="pre">nltk</span></code> returns the following:</p>
+For example, the <code class="docutils literal notranslate"><span class="pre">word_tokenize()</span></code> function from <code class="docutils literal notranslate"><span class="pre">nltk</span></code> returns the following:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -1232,7 +1237,7 @@ hand, would keep this string intact.</p>
 <p>In this sense, it’s often useful to count not only single words in text, but
 continuous two-word strings, or even longer ones. These strings are called
 <strong>n-grams</strong>, where <em>n</em> is the number of tokens in the span. “Bigrams” are
-two-token spans.” “Trigrams” have three tokens, while “4-grams” and “5-grams”
+two-token spans. “Trigrams” have three tokens, while “4-grams” and “5-grams”
 have four and five tokens, respectively. Technically, there’s no limit to
 n-gram sizes, though their usefulness depend on your data and research
 questions.</p>
@@ -1247,8 +1252,8 @@ We’ll use objects from the <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 </div>
-<p>Accessing its <code class="docutils literal notranslate"><span class="pre">ngram_fd</span></code> attribute generates counts, which we’ll store in a
-<code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame.</p>
+<p>Access its <code class="docutils literal notranslate"><span class="pre">ngram_fd</span></code> attribute for counts, which we’ll store in a <code class="docutils literal notranslate"><span class="pre">pandas</span></code>
+DataFrame.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bigrams</span> <span class="o">=</span> <span class="n">finder</span><span class="o">.</span><span class="n">ngram_fd</span>
@@ -1367,8 +1372,9 @@ PMI measures the association strength of a pair of outcomes. In our case, the
 higher the score, the more likely a given bigram pair will be with respect to
 the other bigrams in which the two words of the one under consideration.</p>
 <p>We can get a PMI score for each bigram using our finder’s <code class="docutils literal notranslate"><span class="pre">.score_ngrams()</span></code>
-method in concert with a <code class="docutils literal notranslate"><span class="pre">BigramAssocMeasures</span></code> object. As before, we will
-format the result for a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame.</p>
+method in concert with a <code class="docutils literal notranslate"><span class="pre">BigramAssocMeasures</span></code> object; we send the latter as an
+argument to the former. As before, let’s format the result for a <code class="docutils literal notranslate"><span class="pre">pandas</span></code>
+DataFrame.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measures</span> <span class="o">=</span> <span class="n">collocations</span><span class="o">.</span><span class="n">BigramAssocMeasures</span><span class="p">()</span>

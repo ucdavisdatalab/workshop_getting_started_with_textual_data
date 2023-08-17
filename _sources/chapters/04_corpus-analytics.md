@@ -13,8 +13,10 @@ kernelspec:
 ```{code-cell}
 :tags: [remove-cell]
 import os
+import warnings
 
 os.chdir("..")
+warnings.filterwarnings('ignore')
 ```
 
 Corpus Analytics
