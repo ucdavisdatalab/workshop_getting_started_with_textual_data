@@ -491,8 +491,9 @@ look like this:
 
 We won't do all of this for _Frankenstein_, but in the next session, when we
 start to use classification models to understand the difference between texts,
-we will. For now, we'll demonstrate an example of POS tagging using the `nltk`
-tokenizer in concert with its lemmatizer.
+we'll do so using texts cleaned according to the above workflow. For now, we'll
+demonstrate an example of POS tagging using the `nltk` tokenizer in concert
+with its lemmatizer.
 
 ```{code-cell}
 example = """The strong coffee, which I had after lunch, was $3. 

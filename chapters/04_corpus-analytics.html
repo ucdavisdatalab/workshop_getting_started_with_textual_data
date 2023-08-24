@@ -660,7 +660,7 @@ these arguments because we’ve cleaned our texts already, but you can learn mor
 about them <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">here</a>.</p>
 </aside>
 <p>The <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library makes generating a DTM very easy. All we need to do
-is initialize a <code class="docutils literal notranslate"><span class="pre">Countectorizer</span></code> and fit it to our corpus. This does two
+is initialize a <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> and fit it to our corpus. This does two
 things: 1) it produces a series of different attributes that are useful for
 corpus exploration; 2) it generates our DTM.</p>
 <div class="cell docutils container">
@@ -768,7 +768,7 @@ metrics? The function below will pull up examples for each range.</p>
 <p class="sidebar-title">Code explanation</p>
 <p>This function uses <code class="docutils literal notranslate"><span class="pre">qcut()</span></code> to bin metric values into a set of categories. The
 output of <code class="docutils literal notranslate"><span class="pre">qcut()</span></code> is a Series. We match the index of this Series to our
-DataFrame, pull out the name, and print it.</p>
+DataFrame, pull out a random name from each bin, and print it.</p>
 </aside>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -788,21 +788,21 @@ DataFrame, pull out the name, and print it.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Examples for num_tokens
-+ low: Ansel Adams (549.00)
-+ medium: Thomas Mann (1101.00)
-+ high: Bella Abzug (1306.00)
++ low: Robert E Lee (638.00)
++ medium: Judy Garland (1182.00)
++ high: William McKinley (1465.00)
 
 
 Examples for num_types
-+ low: Ada Lovelace (331.00)
-+ medium: John Muir (428.00)
-+ high: Chiang Kai shek (1407.00)
++ low: Primo Levi (332.00)
++ medium: Jean Piaget (573.00)
++ high: Thomas P O Neill Jr (769.00)
 
 
 Examples for TTR
-+ low: Igor Stravinsky (55.29)
-+ medium: Satchel Paige (61.38)
-+ high: Walter White (75.00)
++ low: Deng Xiaoping (46.97)
++ medium: Gregory Pincus (64.72)
++ high: Jan Tinbergen (76.52)
 </pre></div>
 </div>
 </div>
@@ -814,54 +814,125 @@ Examples for TTR
 corpus:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">summed</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">summed</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>year    3929
-say     3009
-new     2350
-make    2258
-time    2191
-dtype: int64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>year</th>
+      <td>3929</td>
+    </tr>
+    <tr>
+      <th>say</th>
+      <td>3009</td>
+    </tr>
+    <tr>
+      <th>new</th>
+      <td>2350</td>
+    </tr>
+    <tr>
+      <th>make</th>
+      <td>2258</td>
+    </tr>
+    <tr>
+      <th>time</th>
+      <td>2191</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>And here are the bottom five:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summed</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>kuhn         1
-lohengrin    1
-loincloth    1
-lois         1
-loiseau      1
-dtype: int64
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>kappler</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>kapuskasing</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>karamchand</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>karat</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>zwilich</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Though there are likely to be quite a few one-count terms. We refer to them as
 <strong>hapax legomena</strong> (Greek for “only said once”). How many are in our corpus
 altogether?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="p">))</span>
-<span class="n">summed</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-
-<span class="n">hapaxes</span> <span class="o">=</span> <span class="n">summed</span><span class="p">[</span><span class="n">summed</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span><span class="si">}</span><span class="s2"> hapax legomena (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hapaxes</span> <span class="o">=</span> <span class="n">summed</span><span class="p">[</span><span class="n">summed</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span><span class="si">}</span><span class="s2"> hapaxes (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hapaxes</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">dtm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12399 hapax legomena (0.40%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12399 hapaxes (39.79%)
 </pre></div>
 </div>
 </div>
@@ -960,7 +1031,7 @@ scores for three texts.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Hilaire G E Degas
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Walt Disney
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -990,273 +1061,273 @@ scores for three texts.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>degas</td>
-      <td>4</td>
-      <td>degas</td>
-      <td>0.541707</td>
+      <td>disney</td>
+      <td>57</td>
+      <td>disney</td>
+      <td>0.848565</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>painter</td>
-      <td>3</td>
-      <td>hilaire</td>
-      <td>0.317410</td>
+      <td>cartoon</td>
+      <td>22</td>
+      <td>cartoon</td>
+      <td>0.233579</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>ago</td>
-      <td>2</td>
-      <td>painter</td>
-      <td>0.274980</td>
+      <td>mickey</td>
+      <td>16</td>
+      <td>mickey</td>
+      <td>0.196305</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>hilaire</td>
-      <td>2</td>
-      <td>noted</td>
-      <td>0.166484</td>
+      <td>movie</td>
+      <td>16</td>
+      <td>mouse</td>
+      <td>0.154724</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>noted</td>
-      <td>2</td>
-      <td>barre</td>
-      <td>0.158705</td>
+      <td>mouse</td>
+      <td>14</td>
+      <td>walt</td>
+      <td>0.142820</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>study</td>
-      <td>2</td>
-      <td>clichy</td>
-      <td>0.158705</td>
+      <td>walt</td>
+      <td>12</td>
+      <td>disneyland</td>
+      <td>0.133984</td>
     </tr>
     <tr>
       <th>6</th>
       <td>year</td>
-      <td>2</td>
-      <td>edgard</td>
-      <td>0.158705</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>aesthetic</td>
-      <td>1</td>
-      <td>guerbois</td>
-      <td>0.158705</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>arresting</td>
-      <td>1</td>
-      <td>aesthetic</td>
-      <td>0.148404</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>art</td>
-      <td>1</td>
-      <td>arresting</td>
-      <td>0.148404</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Florence Blanchfield
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count_term</th>
-      <th>count</th>
-      <th>tfidf_term</th>
-      <th>tfidf</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>nurse</td>
-      <td>18</td>
-      <td>blanchfield</td>
-      <td>0.549187</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>army</td>
-      <td>10</td>
-      <td>nurse</td>
-      <td>0.526825</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>blanchfield</td>
-      <td>10</td>
-      <td>corps</td>
-      <td>0.245890</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>corps</td>
-      <td>7</td>
-      <td>army</td>
-      <td>0.191472</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>colonel</td>
-      <td>6</td>
-      <td>colonel</td>
-      <td>0.164124</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>pay</td>
-      <td>6</td>
-      <td>florence</td>
-      <td>0.156668</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>war</td>
-      <td>5</td>
-      <td>flikke</td>
-      <td>0.109837</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>course</td>
-      <td>4</td>
-      <td>granda</td>
-      <td>0.109837</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>florence</td>
-      <td>4</td>
-      <td>pay</td>
-      <td>0.103566</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>hospital</td>
-      <td>4</td>
-      <td>secretarial</td>
-      <td>0.102708</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Menachem Begin
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count_term</th>
-      <th>count</th>
-      <th>tfidf_term</th>
-      <th>tfidf</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>begin</td>
-      <td>59</td>
-      <td>israel</td>
-      <td>0.369548</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>israel</td>
-      <td>29</td>
-      <td>begin</td>
-      <td>0.278845</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>minister</td>
-      <td>16</td>
-      <td>israeli</td>
-      <td>0.177458</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>war</td>
-      <td>15</td>
-      <td>arab</td>
-      <td>0.176105</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>labor</td>
-      <td>14</td>
-      <td>jewish</td>
-      <td>0.161198</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>party</td>
-      <td>14</td>
-      <td>lebanon</td>
-      <td>0.153704</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>arab</td>
-      <td>13</td>
-      <td>minister</td>
-      <td>0.151099</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>become</td>
-      <td>13</td>
-      <td>egypt</td>
-      <td>0.144346</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>jewish</td>
-      <td>13</td>
-      <td>settlement</td>
-      <td>0.144346</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>israeli</td>
       <td>12</td>
-      <td>zionist</td>
-      <td>0.136626</td>
+      <td>movie</td>
+      <td>0.093475</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>new</td>
+      <td>11</td>
+      <td>iwerks</td>
+      <td>0.059548</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>make</td>
+      <td>10</td>
+      <td>hollywood</td>
+      <td>0.053024</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>world</td>
+      <td>10</td>
+      <td>productions</td>
+      <td>0.047607</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Charles Merrill
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>merrill</td>
+      <td>44</td>
+      <td>merrill</td>
+      <td>0.854830</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>firm</td>
+      <td>23</td>
+      <td>firm</td>
+      <td>0.227634</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>charles</td>
+      <td>9</td>
+      <td>lynch</td>
+      <td>0.149321</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>lynch</td>
+      <td>9</td>
+      <td>stores</td>
+      <td>0.122606</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>new</td>
+      <td>8</td>
+      <td>beane</td>
+      <td>0.087411</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>street</td>
+      <td>8</td>
+      <td>fenner</td>
+      <td>0.087411</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>stock</td>
+      <td>7</td>
+      <td>safeway</td>
+      <td>0.087411</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>wall</td>
+      <td>7</td>
+      <td>pierce</td>
+      <td>0.079446</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>market</td>
+      <td>6</td>
+      <td>charles</td>
+      <td>0.072582</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>stores</td>
+      <td>6</td>
+      <td>wall</td>
+      <td>0.072265</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Marjorie Rawlings
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>rawlings</td>
+      <td>12</td>
+      <td>rawlings</td>
+      <td>0.668371</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>year</td>
+      <td>11</td>
+      <td>florida</td>
+      <td>0.225177</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>mrs</td>
+      <td>9</td>
+      <td>kinnan</td>
+      <td>0.222790</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>florida</td>
+      <td>7</td>
+      <td>scribner</td>
+      <td>0.148553</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>farm</td>
+      <td>5</td>
+      <td>marjorie</td>
+      <td>0.142584</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>story</td>
+      <td>5</td>
+      <td>mrs</td>
+      <td>0.141098</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>win</td>
+      <td>5</td>
+      <td>farm</td>
+      <td>0.118122</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>work</td>
+      <td>5</td>
+      <td>yearling</td>
+      <td>0.111395</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>book</td>
+      <td>4</td>
+      <td>backwoods</td>
+      <td>0.104165</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>great</td>
+      <td>4</td>
+      <td>moon</td>
+      <td>0.101766</td>
     </tr>
   </tbody>
 </table>
