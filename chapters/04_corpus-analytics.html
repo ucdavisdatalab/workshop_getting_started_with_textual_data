@@ -447,7 +447,6 @@ corpus, and we’ll also use it to keep track of our corpus construction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;manifest.csv&quot;</span><span class="p">),</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">manifest</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
 <span class="n">manifest</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -471,17 +470,13 @@ memory usage: 11.8+ KB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Number of obituaries per year&#39;</span>
-    <span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span>
-    <span class="p">,</span> <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="p">);</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Obituaries per year&#39;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8b843c6d144957c199a056070b16f997625aeda3344a6027932f10621475d745.png" src="../_images/8b843c6d144957c199a056070b16f997625aeda3344a6027932f10621475d745.png" />
+<img alt="../_images/8d6e66e29aed8d4a723a631a8852e375f8ea40db94f07984c370072f7ef32ffd.png" src="../_images/8d6e66e29aed8d4a723a631a8852e375f8ea40db94f07984c370072f7ef32ffd.png" />
 </div>
 </div>
 <div class="admonition tip">
@@ -793,21 +788,21 @@ DataFrame, pull out the name, and print it.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Examples for num_tokens
-+ low: William Golding (410.00)
-+ medium: Elizabeth Cady Stanton (678.00)
-+ high: Babe Ruth (2631.00)
++ low: Ansel Adams (549.00)
++ medium: Thomas Mann (1101.00)
++ high: Bella Abzug (1306.00)
 
 
 Examples for num_types
-+ low: Constantin Stanislavsky (363.00)
-+ medium: Ray A Kroc (563.00)
-+ high: Richard Rodgers (882.00)
++ low: Ada Lovelace (331.00)
++ medium: John Muir (428.00)
++ high: Chiang Kai shek (1407.00)
 
 
 Examples for TTR
-+ low: Andres Segovie (58.20)
-+ medium: Martha Graham (59.56)
-+ high: Jacques Monod (67.86)
++ low: Igor Stravinsky (55.29)
++ medium: Satchel Paige (61.38)
++ high: Walter White (75.00)
 </pre></div>
 </div>
 </div>
@@ -965,7 +960,7 @@ scores for three texts.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Louis L Amour
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Hilaire G E Degas
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -995,273 +990,273 @@ scores for three texts.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>lamour</td>
-      <td>22</td>
-      <td>lamour</td>
-      <td>0.831785</td>
+      <td>degas</td>
+      <td>4</td>
+      <td>degas</td>
+      <td>0.541707</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>write</td>
-      <td>11</td>
-      <td>sackett</td>
-      <td>0.151234</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>book</td>
-      <td>8</td>
-      <td>novel</td>
-      <td>0.093814</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>time</td>
-      <td>8</td>
-      <td>write</td>
-      <td>0.084799</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>read</td>
-      <td>7</td>
-      <td>read</td>
-      <td>0.082315</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>say</td>
-      <td>7</td>
-      <td>applebaum</td>
-      <td>0.075617</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>novel</td>
-      <td>6</td>
-      <td>hondo</td>
-      <td>0.075617</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>west</td>
-      <td>5</td>
-      <td>lumberjack</td>
-      <td>0.075617</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>world</td>
-      <td>5</td>
-      <td>book</td>
-      <td>0.074661</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>day</td>
-      <td>4</td>
-      <td>tibet</td>
-      <td>0.070709</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Walter Reuther
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count_term</th>
-      <th>count</th>
-      <th>tfidf_term</th>
-      <th>tfidf</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>reuther</td>
-      <td>13</td>
-      <td>reuther</td>
-      <td>0.718749</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>detroit</td>
-      <td>6</td>
-      <td>wolfman</td>
-      <td>0.248754</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>crash</td>
-      <td>5</td>
-      <td>detroit</td>
-      <td>0.224709</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>mrs</td>
-      <td>5</td>
-      <td>crash</td>
-      <td>0.172939</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>union</td>
-      <td>5</td>
-      <td>pellston</td>
-      <td>0.124377</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>president</td>
-      <td>4</td>
-      <td>airport</td>
-      <td>0.120946</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>survive</td>
-      <td>4</td>
-      <td>meany</td>
-      <td>0.116304</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>wife</td>
-      <td>4</td>
-      <td>wheeling</td>
-      <td>0.106134</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>wolfman</td>
-      <td>4</td>
-      <td>union</td>
-      <td>0.103936</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>airport</td>
+      <td>painter</td>
       <td>3</td>
-      <td>bodyguard</td>
-      <td>0.096776</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Thomas J Watson Sr
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count_term</th>
-      <th>count</th>
-      <th>tfidf_term</th>
-      <th>tfidf</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>watson</td>
-      <td>31</td>
-      <td>watson</td>
-      <td>0.733495</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>company</td>
-      <td>20</td>
-      <td>ibm</td>
-      <td>0.295963</td>
+      <td>hilaire</td>
+      <td>0.317410</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>machine</td>
-      <td>13</td>
-      <td>machine</td>
-      <td>0.187747</td>
+      <td>ago</td>
+      <td>2</td>
+      <td>painter</td>
+      <td>0.274980</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ibm</td>
-      <td>10</td>
-      <td>company</td>
-      <td>0.182200</td>
+      <td>hilaire</td>
+      <td>2</td>
+      <td>noted</td>
+      <td>0.166484</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>new</td>
-      <td>10</td>
-      <td>corporation</td>
-      <td>0.107006</td>
+      <td>noted</td>
+      <td>2</td>
+      <td>barre</td>
+      <td>0.158705</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>president</td>
-      <td>8</td>
-      <td>compensation</td>
-      <td>0.092114</td>
+      <td>study</td>
+      <td>2</td>
+      <td>clichy</td>
+      <td>0.158705</td>
     </tr>
     <tr>
       <th>6</th>
       <td>year</td>
-      <td>8</td>
-      <td>computing</td>
-      <td>0.083026</td>
+      <td>2</td>
+      <td>edgard</td>
+      <td>0.158705</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>corporation</td>
-      <td>7</td>
-      <td>machines</td>
-      <td>0.078937</td>
+      <td>aesthetic</td>
+      <td>1</td>
+      <td>guerbois</td>
+      <td>0.158705</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>world</td>
-      <td>7</td>
-      <td>cash</td>
-      <td>0.077830</td>
+      <td>arresting</td>
+      <td>1</td>
+      <td>aesthetic</td>
+      <td>0.148404</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>business</td>
+      <td>art</td>
+      <td>1</td>
+      <td>arresting</td>
+      <td>0.148404</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Florence Blanchfield
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>nurse</td>
+      <td>18</td>
+      <td>blanchfield</td>
+      <td>0.549187</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>army</td>
+      <td>10</td>
+      <td>nurse</td>
+      <td>0.526825</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>blanchfield</td>
+      <td>10</td>
+      <td>corps</td>
+      <td>0.245890</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>corps</td>
+      <td>7</td>
+      <td>army</td>
+      <td>0.191472</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>colonel</td>
       <td>6</td>
-      <td>rental</td>
-      <td>0.075766</td>
+      <td>colonel</td>
+      <td>0.164124</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>pay</td>
+      <td>6</td>
+      <td>florence</td>
+      <td>0.156668</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>war</td>
+      <td>5</td>
+      <td>flikke</td>
+      <td>0.109837</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>course</td>
+      <td>4</td>
+      <td>granda</td>
+      <td>0.109837</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>florence</td>
+      <td>4</td>
+      <td>pay</td>
+      <td>0.103566</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>hospital</td>
+      <td>4</td>
+      <td>secretarial</td>
+      <td>0.102708</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Menachem Begin
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>begin</td>
+      <td>59</td>
+      <td>israel</td>
+      <td>0.369548</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>israel</td>
+      <td>29</td>
+      <td>begin</td>
+      <td>0.278845</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>minister</td>
+      <td>16</td>
+      <td>israeli</td>
+      <td>0.177458</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>war</td>
+      <td>15</td>
+      <td>arab</td>
+      <td>0.176105</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>labor</td>
+      <td>14</td>
+      <td>jewish</td>
+      <td>0.161198</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>party</td>
+      <td>14</td>
+      <td>lebanon</td>
+      <td>0.153704</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>arab</td>
+      <td>13</td>
+      <td>minister</td>
+      <td>0.151099</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>become</td>
+      <td>13</td>
+      <td>egypt</td>
+      <td>0.144346</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>jewish</td>
+      <td>13</td>
+      <td>settlement</td>
+      <td>0.144346</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>israeli</td>
+      <td>12</td>
+      <td>zionist</td>
+      <td>0.136626</td>
     </tr>
   </tbody>
 </table>
