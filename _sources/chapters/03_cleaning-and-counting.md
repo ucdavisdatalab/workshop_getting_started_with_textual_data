@@ -327,7 +327,7 @@ number of words in the novel!
 ```{code-cell}
 top50 = sum(count for word, count in cleaned_counts.most_common(50))
 total = cleaned_counts.total()
-print(f"Percentage of 50-most frequent words: {top50 / total:.02f}%")
+print(f"Percentage of 50-most frequent words: {top50 / total * 100:.02f}%")
 ```
 
 The problem here is that, even though these high frequency words help us mean
