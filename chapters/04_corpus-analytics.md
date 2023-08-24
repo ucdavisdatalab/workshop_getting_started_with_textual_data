@@ -201,7 +201,7 @@ about them [here][cvdoc].
 ```
 
 The `scikit-learn` library makes generating a DTM very easy. All we need to do
-is initialize a `Countectorizer` and fit it to our corpus. This does two
+is initialize a `CountVectorizer` and fit it to our corpus. This does two
 things: 1) it produces a series of different attributes that are useful for
 corpus exploration; 2) it generates our DTM.
 
@@ -284,7 +284,7 @@ metrics? The function below will pull up examples for each range.
 ```{margin} Code explanation
 This function uses `qcut()` to bin metric values into a set of categories. The
 output of `qcut()` is a Series. We match the index of this Series to our
-DataFrame, pull out the name, and print it.
+DataFrame, pull out a random name from each bin, and print it.
 ```
 
 ```{code-cell}
@@ -308,13 +308,15 @@ Let's move on to terms. Here are the top-five most frequent terms in the
 corpus:
 
 ```{code-cell}
-dtm.sum().sort_values(ascending = False).head(5)
+summed = pd.DataFrame(dtm.sum(), columns = ('count', ))
+summed.sort_values('count', ascending = False, inplace = True)
+summed.head(5)
 ```
 
 And here are the bottom five:
 
 ```{code-cell}
-dtm.sum().sort_values().head(5)
+summed.tail(5)
 ```
 
 Though there are likely to be quite a few one-count terms. We refer to them as
@@ -322,11 +324,8 @@ Though there are likely to be quite a few one-count terms. We refer to them as
 altogether?
 
 ```{code-cell}
-summed = pd.DataFrame(dtm.sum(), columns = ('count', ))
-summed.sort_values('count', ascending = False, inplace = True)
-
 hapaxes = summed[summed['count'] == 1]
-print(f"{len(hapaxes)} hapax legomena ({len(hapaxes) / len(dtm.T):0.2f}%)")
+print(f"{len(hapaxes)} hapaxes ({len(hapaxes) / len(dtm.T) * 100:0.2f}%)")
 ```
 
 If we plot our term counts, we'll see a familiar pattern: our term distribution
