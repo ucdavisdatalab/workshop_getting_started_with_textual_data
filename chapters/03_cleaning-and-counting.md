@@ -437,7 +437,7 @@ Let's look at a few words.
 ```{code-cell}
 to_stem = ('books', 'having', 'running', 'complicated', 'complicity')
 for word in to_stem:
-    print(f"{word:<10} => {stemmer.stem(word)}")
+    print(f"{word:<12} => {stemmer.stem(word)}")
 ```
 
 There's a lot of potential value in enacting these transformations. So far we
