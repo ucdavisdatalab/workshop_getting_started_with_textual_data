@@ -79,7 +79,6 @@ corpus, and we'll also use it to keep track of our corpus construction.
 
 ```{code-cell}
 manifest = pd.read_csv(indir.joinpath("manifest.csv"), index_col = 0)
-manifest.loc[:, 'year'] = pd.to_datetime(manifest['year'], format = "%Y").dt.year
 manifest.info()
 ```
 
@@ -87,12 +86,8 @@ A brief plot of the years covered:
 
 ```{code-cell}
 fig, ax = plt.subplots(figsize = (15, 5))
-g = sns.countplot(x = 'year', color = 'blue', data = manifest)
-g.set(
-    title = 'Number of obituaries per year'
-    , xlabel = 'Year', ylabel = 'Count'
-    , xticks = range(0, manifest['year'].nunique() + 1, 5)
-);
+g = sns.histplot(x = 'year', bins = 30, data = manifest, ax = ax)
+g.set(title = 'Obituaries per year', xlabel = 'Year', ylabel = 'Count');
 ```
 
 ```{tip}
