@@ -668,11 +668,11 @@ blurbs, so we’d expect to see words like “book,” “reader,” and “new.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+ Topic #0: 0.07%
-+ Topic #1: 0.17%
-+ Topic #2: 0.23%
-+ Topic #3: 0.02%
-+ Topic #4: 0.52%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+ Topic #0: 0.00%
++ Topic #1: 0.44%
++ Topic #2: 0.11%
++ Topic #3: 0.40%
++ Topic #4: 0.04%
 </pre></div>
 </div>
 </div>
@@ -691,11 +691,11 @@ top topics.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Privileged Information: #1 (0.28%)
-The Paranormal: #1 (0.47%)
-What a Lady Craves: #2 (0.61%)
-Mrs. Kaputnik&#39;s Pool Hall and Matzo Ball Emporium: #4 (0.33%)
-The Lost Daughter: #2 (0.67%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The Texan&#39;s Wager: #2 (0.71%)
+Ghost/Hellboy Special: #4 (0.58%)
+When Dreams Come True: #2 (0.66%)
+Carnal Acts: #2 (0.54%)
+Heir to the Empire: Star Wars Legends (The Thrawn Trilogy): #4 (0.64%)
 </pre></div>
 </div>
 </div>
@@ -715,16 +715,16 @@ method.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+ year (2)
-+ colossal (4)
-+ battle (4)
-+ megatron (4)
-+ optimus (4)
-+ prime (4)
-+ captivate (2)
-+ transformers (4)
-+ fan (4)
-+ world (4)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+ frustrate (3)
++ low (3)
++ fathigh (1)
++ carbohydrate (1)
++ protein (1)
++ diet (1)
++ don (3)
++ work (1)
++ tired (3)
++ white (3)
 </pre></div>
 </div>
 </div>
@@ -940,16 +940,16 @@ for each topic in general.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word: year
-Topic 2: life (0.0194%), love (0.0107%), new (0.0090%), year (0.0090%), woman (0.0089%)
-Word: colossal
-Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
-Word: battle
-Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
-Word: megatron
-Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
-Word: optimus
-Topic 4: new (0.0075%), world (0.0067%), city (0.0055%), mystery (0.0052%), murder (0.0048%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word: frustrate
+Topic 3: book (0.0154%), little (0.0081%), make (0.0078%), best (0.0068%), new (0.0068%)
+Word: low
+Topic 3: book (0.0154%), little (0.0081%), make (0.0078%), best (0.0068%), new (0.0068%)
+Word: fathigh
+Topic 1: book (0.0130%), guide (0.0079%), use (0.0076%), life (0.0063%), include (0.0059%)
+Word: carbohydrate
+Topic 1: book (0.0130%), guide (0.0079%), use (0.0076%), life (0.0063%), include (0.0059%)
+Word: protein
+Topic 1: book (0.0130%), guide (0.0079%), use (0.0076%), life (0.0063%), include (0.0059%)
 </pre></div>
 </div>
 </div>
@@ -1959,7 +1959,7 @@ theta.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8d32e55aef840a0a9ff256760542626a3a1be34a9b37c1781e58bc2d72e2e3a0.png" src="../_images/8d32e55aef840a0a9ff256760542626a3a1be34a9b37c1781e58bc2d72e2e3a0.png" />
+<img alt="../_images/eb1fed9950a8c796920797e9fcb54bd817103129c162dd31eceebf6dac1d77f6.png" src="../_images/eb1fed9950a8c796920797e9fcb54bd817103129c162dd31eceebf6dac1d77f6.png" />
 </div>
 </div>
 <p>Topic 15 appears to be about the classics. What kind of titles have a
@@ -2428,8 +2428,8 @@ called <code class="docutils literal notranslate"><span class="pre">pyLDAvis</sp
 <span class="n">term_frequency</span> <span class="o">=</span> <span class="n">tuned</span><span class="o">.</span><span class="n">used_vocab_freq</span>
 
 <span class="n">vis</span> <span class="o">=</span> <span class="n">pyLDAvis</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
-    <span class="n">topic_terms</span><span class="p">,</span> <span class="n">theta</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">doc_lengths</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">term_frequency</span>
-    <span class="p">,</span> <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sort_topics</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">topic_terms</span><span class="p">,</span> <span class="n">theta</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">doc_lengths</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">term_frequency</span><span class="p">,</span>
+    <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sort_topics</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span>
 
 <span class="n">outdir</span> <span class="o">=</span> <span class="n">indir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;output/topic_model_plot.html&quot;</span><span class="p">)</span>

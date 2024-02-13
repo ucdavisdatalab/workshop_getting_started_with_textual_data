@@ -568,9 +568,9 @@ texts, so it matters if a text does or doesn’t contain a term.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="p">]</span>
 <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D1&#39;</span><span class="p">,</span> <span class="s1">&#39;D2&#39;</span><span class="p">,</span> <span class="s1">&#39;D3&#39;</span><span class="p">]</span>
 <span class="n">terms</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;only&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;cats&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;dogs&#39;</span><span class="p">,</span> <span class="s1">&#39;do&#39;</span><span class="p">,</span> <span class="s1">&#39;you&#39;</span><span class="p">]</span>
@@ -691,9 +691,9 @@ values from our manifest to the index of our DTM.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-    <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
-    <span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="n">vectorized</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -788,21 +788,21 @@ DataFrame, pull out a random name from each bin, and print it.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Examples for num_tokens
-+ low: Robert E Lee (638.00)
-+ medium: Judy Garland (1182.00)
-+ high: William McKinley (1465.00)
++ low: Walker Evans (523.00)
++ medium: Eugene O Neill (1128.00)
++ high: Orson Welles (1484.00)
 
 
 Examples for num_types
-+ low: Primo Levi (332.00)
-+ medium: Jean Piaget (573.00)
-+ high: Thomas P O Neill Jr (769.00)
++ low: Yuri Gagarin (332.00)
++ medium: Frank Capra (612.00)
++ high: Jane Addams (744.00)
 
 
 Examples for TTR
-+ low: Deng Xiaoping (46.97)
-+ medium: Gregory Pincus (64.72)
-+ high: Jan Tinbergen (76.52)
++ low: Harry S Truman (43.00)
++ medium: Fred W Friendly (60.06)
++ high: Edna St V Millay (68.75)
 </pre></div>
 </div>
 </div>
@@ -1000,9 +1000,9 @@ of producing a DTM of raw term counts, it produces one with tf-idf scores.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
 <span class="n">vectorized_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
 <span class="n">tfidf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">vectorized_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-    <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
-    <span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="n">vectorized_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1017,8 +1017,8 @@ scores for three texts.</p>
     <span class="n">c</span> <span class="o">=</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">n_terms</span><span class="p">)</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">n_terms</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="s1">&#39;count_term&#39;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">values</span>
-        <span class="p">,</span> <span class="s1">&#39;tfidf_term&#39;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tfidf&#39;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">values</span>
+        <span class="s1">&#39;count_term&#39;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="s1">&#39;tfidf_term&#39;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tfidf&#39;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">values</span>
     <span class="p">})</span>
 
     <span class="k">return</span> <span class="n">df</span>
@@ -1031,7 +1031,7 @@ scores for three texts.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Walt Disney
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Geronimo
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -1061,273 +1061,273 @@ scores for three texts.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>disney</td>
-      <td>57</td>
-      <td>disney</td>
-      <td>0.848565</td>
+      <td>geronimo</td>
+      <td>13</td>
+      <td>geronimo</td>
+      <td>0.542158</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>cartoon</td>
-      <td>22</td>
-      <td>cartoon</td>
-      <td>0.233579</td>
+      <td>chief</td>
+      <td>12</td>
+      <td>miles</td>
+      <td>0.277617</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>mickey</td>
-      <td>16</td>
-      <td>mickey</td>
-      <td>0.196305</td>
+      <td>old</td>
+      <td>10</td>
+      <td>lawton</td>
+      <td>0.277554</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>movie</td>
-      <td>16</td>
-      <td>mouse</td>
-      <td>0.154724</td>
+      <td>year</td>
+      <td>10</td>
+      <td>fort</td>
+      <td>0.199686</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>mouse</td>
-      <td>14</td>
-      <td>walt</td>
-      <td>0.142820</td>
+      <td>gen</td>
+      <td>8</td>
+      <td>gen</td>
+      <td>0.187141</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>walt</td>
-      <td>12</td>
-      <td>disneyland</td>
-      <td>0.133984</td>
+      <td>miles</td>
+      <td>8</td>
+      <td>chief</td>
+      <td>0.182307</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>year</td>
-      <td>12</td>
-      <td>movie</td>
-      <td>0.093475</td>
+      <td>fort</td>
+      <td>7</td>
+      <td>indian</td>
+      <td>0.178554</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>new</td>
-      <td>11</td>
-      <td>iwerks</td>
-      <td>0.059548</td>
+      <td>indian</td>
+      <td>7</td>
+      <td>crook</td>
+      <td>0.152230</td>
     </tr>
     <tr>
       <th>8</th>
+      <td>lawton</td>
+      <td>7</td>
+      <td>apache</td>
+      <td>0.125113</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>men</td>
+      <td>7</td>
+      <td>apaches</td>
+      <td>0.125113</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Ferdinand Marcos
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>marcos</td>
+      <td>39</td>
+      <td>marcos</td>
+      <td>0.886187</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>say</td>
+      <td>20</td>
+      <td>tiwanak</td>
+      <td>0.170100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>family</td>
+      <td>8</td>
+      <td>aquino</td>
+      <td>0.145800</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>body</td>
+      <td>7</td>
+      <td>philippines</td>
+      <td>0.106012</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>mrs</td>
+      <td>7</td>
+      <td>say</td>
+      <td>0.084641</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>tiwanak</td>
+      <td>7</td>
+      <td>kidney</td>
+      <td>0.077714</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>aquino</td>
+      <td>6</td>
+      <td>aruiza</td>
+      <td>0.072900</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>death</td>
+      <td>6</td>
+      <td>ferdinand</td>
+      <td>0.060080</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>die</td>
+      <td>6</td>
+      <td>body</td>
+      <td>0.056858</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>philippines</td>
+      <td>6</td>
+      <td>dialysis</td>
+      <td>0.048600</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Coleman Hawkins
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count_term</th>
+      <th>count</th>
+      <th>tfidf_term</th>
+      <th>tfidf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>hawkins</td>
+      <td>28</td>
+      <td>hawkins</td>
+      <td>0.690168</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>play</td>
+      <td>18</td>
+      <td>jazz</td>
+      <td>0.244983</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>jazz</td>
+      <td>12</td>
+      <td>saxophone</td>
+      <td>0.211016</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>style</td>
+      <td>9</td>
+      <td>saxophonist</td>
+      <td>0.184639</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>saxophone</td>
+      <td>8</td>
+      <td>play</td>
+      <td>0.155607</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>use</td>
+      <td>8</td>
+      <td>tenor</td>
+      <td>0.150996</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>musician</td>
+      <td>7</td>
+      <td>trumpet</td>
+      <td>0.133719</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>saxophonist</td>
+      <td>7</td>
+      <td>musician</td>
+      <td>0.123503</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>develop</td>
+      <td>6</td>
+      <td>style</td>
+      <td>0.108070</td>
+    </tr>
+    <tr>
+      <th>9</th>
       <td>make</td>
-      <td>10</td>
-      <td>hollywood</td>
-      <td>0.053024</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>world</td>
-      <td>10</td>
-      <td>productions</td>
-      <td>0.047607</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Charles Merrill
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count_term</th>
-      <th>count</th>
-      <th>tfidf_term</th>
-      <th>tfidf</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>merrill</td>
-      <td>44</td>
-      <td>merrill</td>
-      <td>0.854830</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>firm</td>
-      <td>23</td>
-      <td>firm</td>
-      <td>0.227634</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>charles</td>
-      <td>9</td>
-      <td>lynch</td>
-      <td>0.149321</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>lynch</td>
-      <td>9</td>
-      <td>stores</td>
-      <td>0.122606</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>new</td>
-      <td>8</td>
-      <td>beane</td>
-      <td>0.087411</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>street</td>
-      <td>8</td>
-      <td>fenner</td>
-      <td>0.087411</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>stock</td>
-      <td>7</td>
-      <td>safeway</td>
-      <td>0.087411</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>wall</td>
-      <td>7</td>
-      <td>pierce</td>
-      <td>0.079446</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>market</td>
       <td>6</td>
-      <td>charles</td>
-      <td>0.072582</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>stores</td>
-      <td>6</td>
-      <td>wall</td>
-      <td>0.072265</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Person: Marjorie Rawlings
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count_term</th>
-      <th>count</th>
-      <th>tfidf_term</th>
-      <th>tfidf</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>rawlings</td>
-      <td>12</td>
-      <td>rawlings</td>
-      <td>0.668371</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>year</td>
-      <td>11</td>
-      <td>florida</td>
-      <td>0.225177</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>mrs</td>
-      <td>9</td>
-      <td>kinnan</td>
-      <td>0.222790</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>florida</td>
-      <td>7</td>
-      <td>scribner</td>
-      <td>0.148553</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>farm</td>
-      <td>5</td>
-      <td>marjorie</td>
-      <td>0.142584</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>story</td>
-      <td>5</td>
-      <td>mrs</td>
-      <td>0.141098</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>win</td>
-      <td>5</td>
-      <td>farm</td>
-      <td>0.118122</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>work</td>
-      <td>5</td>
-      <td>yearling</td>
-      <td>0.111395</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>book</td>
-      <td>4</td>
-      <td>backwoods</td>
-      <td>0.104165</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>great</td>
-      <td>4</td>
-      <td>moon</td>
-      <td>0.101766</td>
+      <td>henderson</td>
+      <td>0.100664</td>
     </tr>
   </tbody>
 </table>

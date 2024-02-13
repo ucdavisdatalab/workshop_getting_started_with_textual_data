@@ -495,14 +495,14 @@ with a value for two terms.</p>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="n">dtm</span><span class="p">[</span><span class="n">col1</span><span class="p">],</span> <span class="n">dtm</span><span class="p">[</span><span class="n">col2</span><span class="p">],</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;xy&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-        <span class="p">,</span> <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
-        <span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="n">col1</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="n">col2</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+        <span class="n">xticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span> <span class="n">yticks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span>
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="n">col1</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="n">col2</span>
     <span class="p">)</span>
     <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">toy</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
-            <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="n">col1</span><span class="p">],</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="n">col2</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span>
-            <span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span>
+            <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="n">col1</span><span class="p">],</span> <span class="n">dtm</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc</span><span class="p">,</span> <span class="n">col2</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span>
+            <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span>
         <span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
@@ -789,12 +789,12 @@ citations to the papers that first introduced it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reducer</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span>
-    <span class="n">n_components</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
-    <span class="p">,</span> <span class="n">init</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span>
-    <span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.35</span>
-    <span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">357</span>
-    <span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">n_components</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">learning_rate</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.35</span><span class="p">,</span>
+    <span class="n">random_state</span> <span class="o">=</span> <span class="mi">357</span><span class="p">,</span>
+    <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 <span class="p">)</span>
 <span class="n">reduced</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">sims</span><span class="p">)</span>
 </pre></div>
@@ -818,9 +818,8 @@ graphs.</p>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
     <span class="n">pal</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;colorblind&#39;</span><span class="p">,</span> <span class="n">n_colors</span> <span class="o">=</span> <span class="n">n_colors</span><span class="p">)</span> <span class="k">if</span> <span class="n">hue</span> <span class="k">else</span> <span class="kc">None</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span>
-        <span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="n">hue</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="n">pal</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.8</span>
-        <span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="n">hue</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="n">pal</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
     <span class="p">)</span>
     <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">yticks</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Dim. 1&#39;</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s1">&#39;Dim. 2&#39;</span><span class="p">)</span>
 
@@ -828,7 +827,7 @@ graphs.</p>
         <span class="n">to_label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
         <span class="n">to_label</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="n">sim_plot</span><span class="p">(</span><span class="n">vis</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">people</span><span class="p">)</span>
 </pre></div>
@@ -941,28 +940,28 @@ Print each label of the sample results.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster: 0
 ----------
 Katharine Cornell
-Jerome Kern
 Lionel Barrymore
-Will Rogers
-Coleman Hawkins
+John Philip Sousa
+Andres Segovie
+Marlene Dietrich
 
 
 Cluster: 1
 ----------
-Franco
-Eddie Rickenbacker
-John Rockefeller
-Eugene O Neill
-Sam Rayburn
+John Dewey
+Queen Victoria
+Dash Ended
+I F Stone
+Claude Pepper
 
 
 Cluster: 2
 ----------
-Nancy Mitford
+Bob Kane
 Willa Cather
-Isaac Asimov
-Eva Peron
-Ray A Kroc
+Jack London
+Elizabeth Cady Stanton
+Nella Larsen
 </pre></div>
 </div>
 </div>

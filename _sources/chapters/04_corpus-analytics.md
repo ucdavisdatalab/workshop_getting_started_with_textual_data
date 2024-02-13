@@ -173,9 +173,9 @@ Transforming them into a DTM would yield:
 
 ```{code-cell}
 example = [
-    [1, 0, 1, 1, 0, 0, 1, 1]
-    , [1, 1, 1, 0, 1, 1, 0, 1]
-    , [1, 0, 1, 1, 1, 1, 0, 0]
+    [1, 0, 1, 1, 0, 0, 1, 1],
+    [1, 1, 1, 0, 1, 1, 0, 1],
+    [1, 0, 1, 1, 1, 1, 0, 0]
 ]
 names = ['D1', 'D2', 'D3']
 terms = ['i', 'only', 'like', 'cats', 'and', 'dogs', 'do', 'you']
@@ -226,9 +226,9 @@ values from our manifest to the index of our DTM.
 
 ```{code-cell}
 dtm = pd.DataFrame(
-    vectorized.toarray()
-    , columns = count_vectorizer.get_feature_names_out()
-    , index = manifest['name']
+    vectorized.toarray(),
+    columns = count_vectorizer.get_feature_names_out(),
+    index = manifest['name']
 )
 ```
 
@@ -391,9 +391,9 @@ of producing a DTM of raw term counts, it produces one with tf-idf scores.
 tfidf_vectorizer = TfidfVectorizer()
 vectorized_tfidf = tfidf_vectorizer.fit_transform(corpus)
 tfidf = pd.DataFrame(
-    vectorized_tfidf.toarray()
-    , columns = tfidf_vectorizer.get_feature_names_out()
-    , index = manifest['name']
+    vectorized_tfidf.toarray(),
+    columns = tfidf_vectorizer.get_feature_names_out(),
+    index = manifest['name']
 )
 ```
 
@@ -406,8 +406,8 @@ def counts_vs_tfidf(dtm, tfidf, idx, n_terms = 10):
     c = dtm.loc[idx].nlargest(n_terms)
     t = tfidf.loc[idx].nlargest(n_terms)
     df = pd.DataFrame({
-        'count_term': c.index, 'count': c.values
-        , 'tfidf_term': t.index, 'tfidf': t.values
+        'count_term': c.index, 'count': c.values,
+        'tfidf_term': t.index, 'tfidf': t.values
     })
 
     return df
