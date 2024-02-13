@@ -91,14 +91,14 @@ def quiver_plot(dtm, col1, col2):
     fig, ax = plt.subplots(figsize = (8, 8))
     ax.quiver(*origin, dtm[col1], dtm[col2], scale = 1, units = 'xy')
     ax.set(
-        xlim = (0, 20), ylim = (0, 20)
-        , xticks = range(0, 21), yticks = range(0, 21)
-        , xlabel = col1, ylabel = col2
+        xlim = (0, 20), ylim = (0, 20),
+        xticks = range(0, 21), yticks = range(0, 21),
+        xlabel = col1, ylabel = col2
     )
     for doc in toy.index:
         ax.text(
-            dtm.loc[doc, col1], dtm.loc[doc, col2] + 0.5
-            , doc, va = 'top', ha = 'center'
+            dtm.loc[doc, col1], dtm.loc[doc, col2] + 0.5, doc,
+            va = 'top', ha = 'center'
         )
     plt.show()
 
@@ -227,12 +227,12 @@ citations to the papers that first introduced it.
 
 ```{code-cell}
 reducer = TSNE(
-    n_components = 2
-    , learning_rate = 'auto'
-    , init = 'random'
-    , angle = 0.35
-    , random_state = 357
-    , n_jobs = -1
+    n_components = 2,
+    learning_rate = 'auto',
+    init = 'random',
+    angle = 0.35,
+    random_state = 357,
+    n_jobs = -1
 )
 reduced = reducer.fit_transform(sims)
 ```
@@ -252,9 +252,8 @@ def sim_plot(data, hue = None, labels = None, n_colors = 3):
     fig, ax = plt.subplots(figsize = (10, 10))
     pal = sns.color_palette('colorblind', n_colors = n_colors) if hue else None
     g = sns.scatterplot(
-        x = 'x', y = 'y'
-        , hue = hue, palette = pal, alpha = 0.8
-        , data = data, ax = ax
+        x = 'x', y = 'y', hue = hue, palette = pal, alpha = 0.8,
+        data = data, ax = ax
     )
     g.set(xticks = [], yticks = [], xlabel = 'Dim. 1', ylabel = 'Dim. 2')
 
@@ -262,7 +261,7 @@ def sim_plot(data, hue = None, labels = None, n_colors = 3):
         to_label = data[data['label'].isin(labels)]
         to_label[['x', 'y', 'label']].apply(lambda x: g.text(*x), axis = 1)
 
-    plt.show();
+    plt.show()
 
 sim_plot(vis, labels = people)
 ```

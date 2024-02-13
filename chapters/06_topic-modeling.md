@@ -827,8 +827,8 @@ vocab = list(tuned.used_vocabs)
 term_frequency = tuned.used_vocab_freq
 
 vis = pyLDAvis.prepare(
-    topic_terms, theta.values, doc_lengths, vocab, term_frequency
-    , start_index = 0, sort_topics = False
+    topic_terms, theta.values, doc_lengths, vocab, term_frequency,
+    start_index = 0, sort_topics = False
 )
 
 outdir = indir.joinpath("output/topic_model_plot.html")
